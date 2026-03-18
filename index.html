@@ -339,10 +339,14 @@ function showSaved(){const t=document.getElementById('save-toast');t.textContent
 // 🏨 HOTELS
 // ══════════════════════════════════════════════════════════
 const HOTELS=[
-  {id:'kyoto',emoji:'🌙',grad:'#C8A88A,#A87A5A',name:'京都八條都酒店',nameEN:'Kyoto Hachijo Miyako Hotel',
+  {id:'kyoto',emoji:'🌙',grad:'#C8A88A,#A87A5A',
+   photo:'assets/photos/hotels/kyoto.jpg',
+   name:'京都八條都酒店',nameEN:'Kyoto Hachijo Miyako Hotel',
    addrJP:'〒601-8412 京都府京都市南区西九条院町17',addrNote:'（京都駅八条口 徒歩1分）',
    checkin:'14:00',checkout:'11:00',nights:'1晚',period:'5/14 Thu → 5/15 Fri',lat:34.9849,lng:135.7541},
-  {id:'osaka',emoji:'🌃',grad:'#8AA8C8,#5A7898',name:'艾思利德酒店 難波南III',nameEN:'ESLEAD HOTEL Namba Minami III',
+  {id:'osaka',emoji:'🌃',grad:'#8AA8C8,#5A7898',
+   photo:'assets/photos/hotels/osaka.jpg',
+   name:'艾思利德酒店 難波南III',nameEN:'ESLEAD HOTEL Namba Minami III',
    addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',addrNote:'',
    checkin:'15:00',checkout:'10:00',nights:'4晚',period:'5/15 Fri → 5/19 Tue',lat:34.6603,lng:135.5006}
 ];
@@ -352,15 +356,39 @@ const HOTELS=[
 // ══════════════════════════════════════════════════════════
 const TICKETS=[
   {id:'haruka1',emoji:'🚄',name:'JR HARUKA 特急券',sub:'關西機場 → 京都站 · Day 1',detail:'関西空港駅 → 京都駅\n外国人向け割引きっぷ ¥3,690\n所要時間：約75分'},
+   photos:['assets/photos/tickets/haruka1_1.jpg'],
   {id:'haruka2',emoji:'🚄',name:'JR HARUKA 特急券',sub:'京都站 → 天王寺 · Day 2',detail:'京都駅 → 天王寺駅\n所要時間：約30分'},
+   photos:['assets/photos/tickets/haruka2_1.jpg'],
   {id:'kimono',emoji:'🌸',name:'璃光和服 清水寺店',sub:'✅ 已預約09:00 · Day 2',detail:'〒605-0074 京都府京都市東山区桝屋町351-16\n09:00予約済み · ヘアスタイリング含む\n翌日10:00までに返却'},
+   photos:['assets/photos/tickets/kimono_1.jpg'],
   {id:'kkday',emoji:'🚢',name:'KKDAY 一日遊',sub:'伊根·天橋立·美山町 · Day 3',detail:'集合：大阪難波 06:50\n行程：伊根舟屋 → 天橋立 → 美山町合掌村\n繁体字中国語ガイド'},
+   photos:['assets/photos/tickets/kkday_1.jpg'],
   {id:'yakiniku',emoji:'🥩',name:'燒肉力丸 梅田お初天神',sub:'可預約 · Day 4',detail:'大阪府大阪市北区曽根崎2丁目8番9号 八幸ビルB1F\n11:30〜24:00'},
+   photos:['assets/photos/tickets/yakiniku_1.jpg'],
   {id:'osakapass',emoji:'🎡',name:'大阪周遊卷',sub:'Day 4 使用',detail:'使用日：Day 4 (5/17)\n✓ 梅田スカイビル 09:30-15:00 無料\n✓ 通天閣 入場割引\n※ 携帯必須・当日のみ有効'},
+   photos:['assets/photos/tickets/osakapass_1.jpg'],
   {id:'charter',emoji:'🚐',name:'阪神旅遊包車',sub:'神戶一日 · Day 5',detail:'Day 5 (5/18) 全日チャーター\n難波出発 → 神戸どうぶつ王国 → 南京町 → 神戸港観光船 → umie → 難波帰着'},
+   photos:['assets/photos/tickets/charter_1.jpg'],
   {id:'kobeZoo',emoji:'🐼',name:'神戶動物王國',sub:'⚠ 週四公休 · Day 5',detail:'兵庫県神戸市中央区港島南町7丁目1番9号\n平日10:00–17:00 / 土日祝10:00–17:30\n⚠ 毎週木曜定休'},
+   photos:['assets/photos/tickets/kobeZoo_1.jpg'],
   {id:'kobeShip',emoji:'⛴',name:'神戶觀光船',sub:'Day 5',detail:'兵庫県神戸市中央区波止場町4番3号\n事前予約推奨 · 約60〜90分'}
+   photos:['assets/photos/tickets/kobeShip_1.jpg'],
 ];
+
+// ═══════════════════════════════════════════════════════════════
+// 📍 景點附件 / 路線圖設定
+// key 格式: 'dayIndex-itemIndex'  (Day1=0, 第1個景點=0)
+// 每個景點可放多張圖片 (路線圖、參考照片等)
+// 圖片放在 assets/photos/spots/ 資料夾
+// ═══════════════════════════════════════════════════════════════
+const SPOT_PHOTOS = {
+  // 'dayIndex-itemIndex': ['assets/photos/spots/檔名.jpg', ...]
+  // 範例 (Day1 第3個景點 = 祇園):
+  // '0-3': ['assets/photos/spots/gion_map.jpg'],
+  // 範例 (Day2 第2個景點 = 清水寺):
+  // '1-2': ['assets/photos/spots/kiyomizu_map.jpg', 'assets/photos/spots/kiyomizu_route.jpg'],
+};
+
 
 // ══════════════════════════════════════════════════════════
 // 🗓 SCHEDULE DATA
@@ -524,12 +552,18 @@ function bTab(id,btn){
 
 // Hotels
 function buildHotels(){
-  document.getElementById('hotel-list').innerHTML=HOTELS.map(h=>`
+  document.getElementById('hotel-list').innerHTML=HOTELS.map(h=>{
+    const hasRepoPhoto = h.photo;
+    const hasCachedPhoto = lsLoad('hotelPhoto_'+h.id,'');
+    const photoSrc = hasCachedPhoto || (hasRepoPhoto ? h.photo : '');
+    const showImg = photoSrc ? 'display:block' : 'display:none';
+    const showPh  = photoSrc ? 'display:none' : '';
+    return `
     <div class="hotel-card">
       <div class="hotel-photo" onclick="triggerHotelPhoto('${h.id}')">
-        <img id="img-${h.id}" src="${lsLoad('hotelPhoto_'+h.id,'')}" style="${lsLoad('hotelPhoto_'+h.id,'')?'display:block':'display:none'}">
-        <span id="ph-${h.id}-ph" style="${lsLoad('hotelPhoto_'+h.id,'')?'display:none':''}font-size:40px">${h.emoji}</span>
-        <div class="hotel-photo-label">📷 點擊上傳照片</div>
+        <img id="img-${h.id}" src="${photoSrc}" style="${showImg}" onerror="this.style.display='none';document.getElementById('ph-${h.id}-ph').style.display=''">
+        <span id="ph-${h.id}-ph" style="${showPh}font-size:40px">${h.emoji}</span>
+        <div class="hotel-photo-label">📷 點擊更換照片</div>
         <input type="file" id="fu-hotel-${h.id}" accept="image/*" style="display:none" onchange="handleHotelPhoto('${h.id}',this)">
       </div>
       <div style="padding:14px">
@@ -539,7 +573,7 @@ function buildHotels(){
           <div style="font-size:11px;font-weight:500;color:#8B6445;margin-bottom:5px">📍 日文地址（計程車出示）</div>
           <div style="font-size:14px;color:#2A1A0A;line-height:1.7">${h.addrJP}<br><span style="font-size:12px;color:#8B6445">${h.addrNote}</span></div>
           <div style="display:flex;gap:8px;margin-top:10px">
-            <button onclick="showAddr('${h.addrJP.replace(/'/g,"\\'")}','${h.name.replace(/'/g,"\\'")}',${h.lat},${h.lng})"
+            <button onclick="showAddr('${h.addrJP.replace(/'/g,"\'")}','${h.name.replace(/'/g,"\'")}',${h.lat},${h.lng})"
               style="flex:1;padding:7px 0;background:#D4855A;color:#fff;border:none;border-radius:8px;font-size:12px">🔍 放大出示</button>
             <button onclick="openNav(${h.lat},${h.lng})"
               style="flex:1;padding:7px 0;background:var(--eva);color:#fff;border:none;border-radius:8px;font-size:12px">🧭 導航</button>
@@ -552,7 +586,8 @@ function buildHotels(){
         </div>
         <div style="font-size:12px;color:#8B6445;margin-top:5px">📅 ${h.period}</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 function triggerHotelPhoto(id){document.getElementById('fu-hotel-'+id).click();}
 function handleHotelPhoto(id,input){
@@ -577,23 +612,45 @@ function buildTickets(){
       </div>
       <div id="tk-bd-${tk.id}" style="display:none;padding:0 14px 14px">
         <div style="background:#F5EDE5;border-radius:10px;padding:11px 12px;font-size:13px;color:#5D3A1A;line-height:1.9;margin-bottom:10px;white-space:pre-line">${tk.detail}</div>
+        <div id="tk-repo-imgs-${tk.id}"></div>
         <div class="upload-area" onclick="triggerTkUpload('${tk.id}')">
           <div style="font-size:22px;margin-bottom:4px">📎</div>
-          <div style="font-size:13px;color:#8B6445">上傳 PDF 或圖片憑證</div>
+          <div style="font-size:13px;color:#8B6445">上傳額外圖片或 PDF</div>
         </div>
         <div id="files-${tk.id}"></div>
         <input type="file" id="fu-${tk.id}" accept=".pdf,image/*" style="display:none" onchange="handleTkUpload('${tk.id}',this)">
       </div>
     </div>`).join('');
-  // Restore ticket files from localStorage
+
+  // After building, wire up repo images (loaded after unlock)
   TICKETS.forEach(tk=>{
     const saved=lsLoad('tkFiles_'+tk.id,[]);
     saved.forEach(f=>renderTkFile(tk.id,f));
   });
 }
+
+function loadTkRepoImgs(id){
+  const tk = TICKETS.find(t=>t.id===id);
+  if(!tk||!tk.photos) return;
+  const container = document.getElementById('tk-repo-imgs-'+id);
+  if(!container || container.children.length) return; // already loaded
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px';
+  tk.photos.forEach((src,i)=>{
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.cssText = 'width:calc(50% - 4px);border-radius:10px;object-fit:cover;cursor:pointer;max-height:160px';
+    img.onerror = ()=>{ img.style.display='none'; };
+    img.onclick = ()=>{ viewImgFull(src, tk.name+' ('+(i+1)+')'); };
+    wrap.appendChild(img);
+  });
+  container.appendChild(wrap);
+}
 function toggleTk(id){
-  if(!openTk[id]){pinCallback=()=>{openTk[id]=true;showTkBody(id);};openPin('請輸入 PIN 碼解鎖票券');}
-  else{openTk[id]=false;showTkBody(id);}
+  if(!openTk[id]){
+    pinCallback=()=>{openTk[id]=true;showTkBody(id);loadTkRepoImgs(id);};
+    openPin('請輸入 PIN 碼解鎖票券');
+  } else {openTk[id]=false;showTkBody(id);}
 }
 function showTkBody(id){
   const body=document.getElementById('tk-bd-'+id),ic=document.getElementById('tk-ic-'+id);
@@ -769,6 +826,22 @@ function renderTimeline(){
     tl.appendChild(div);
     // Restore saved attachments
     (itemFiles[key]||[]).forEach(f=>renderItemThumb(key,f));
+    // Load repo spot photos (shown after PIN unlock)
+    const spotImgs = SPOT_PHOTOS[key]||[];
+    if(spotImgs.length){
+      const al=document.getElementById('al-'+key);
+      spotImgs.forEach(src=>{
+        const el=document.createElement('img');
+        el.className='attach-thumb';
+        el.src=src;
+        el.title='景點圖片';
+        el.style.cssText='opacity:0.4;filter:blur(4px);cursor:pointer';
+        el.dataset.locked='1';
+        el.dataset.src=src;
+        el.onclick=()=>{ if(el.dataset.locked){pinCallback=()=>{el.style.opacity='1';el.style.filter='';el.dataset.locked='';};openPin('請輸入 PIN 碼查看景點附件');}else{viewImgFull(src,'景點圖片');} };
+        if(al)al.appendChild(el);
+      });
+    }
     updateAttachCount(key);
   });
 }
@@ -795,7 +868,16 @@ function renderItemThumb(key,f){
 }
 function updateAttachCount(key){
   const cnt=document.getElementById('ac-'+key);
-  if(cnt){const n=(itemFiles[key]||[]).length;cnt.textContent=n?n:'';}
+  if(cnt){
+    const n=(itemFiles[key]||[]).length + (SPOT_PHOTOS[key]||[]).length;
+    cnt.textContent=n?n:'';
+  }
+}
+function viewImgFull(src, title){
+  document.getElementById('modalBody').innerHTML=
+    `<div style="font-size:14px;font-weight:500;color:#3D2A1A;margin-bottom:10px">${title||'📷 圖片'}</div>
+    <img src="${src}" style="width:100%;border-radius:10px;max-height:65vh;object-fit:contain">`;
+  document.getElementById('modal').classList.add('on');
 }
 function viewAttachFull(f){
   document.getElementById('modalBody').innerHTML=f.isPdf
