@@ -127,6 +127,12 @@ input,select,textarea{font-family:inherit}
 .exp-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .day-row{font-size:11px;font-weight:500;color:#8B6445;letter-spacing:.04em;margin:14px 0 6px;padding-left:2px}
 .em-item{background:#FFF2E8;border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1.5px solid #F0D8C0;display:flex;align-items:center;justify-content:space-between}
+/* ITEM ATTACHMENTS */
+.attach-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;font-size:11px;border:1.5px dashed #E8D5C0;background:#FFFDF8;color:#8B6445;margin-top:6px;cursor:pointer}
+.attach-btn:hover{border-color:#D4855A;color:#D4855A}
+.attach-thumb{width:44px;height:44px;object-fit:cover;border-radius:7px;cursor:pointer}
+.attach-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.attach-pdf{width:44px;height:44px;background:#F0E8E0;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -393,6 +399,12 @@ const TICKETS=[
    detail:'兵庫県神戸市中央区波止場町4番3号\n事前予約推奨 · 所要時間：約60〜90分'}
 ];
 
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║  🗓 行程資料庫 — 直接在這裡編輯每日景點                          ║
+// ║  est:false = 確認時間（黑色）  est:true = 預估時間（紫色）       ║
+// ║  type: sight/food/transport/hotel/shopping                       ║
+// ║  lat/lng: Google Maps 搜尋景點後從網址取得座標                   ║
+// ╚══════════════════════════════════════════════════════════════════╝
 // ════ SCHEDULE ════
 const DAYS=[
   {label:'Day 1',date:'5/14',dow:'Thu',emoji:'✈',weather:{icon:'⛅',desc:'多雲轉晴',temp:'22°C',city:'大阪'},items:[
@@ -532,6 +544,11 @@ const DAYS=[
   ]}
 ];
 
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║  📝 準備清單資料庫 — 直接在這裡編輯                              ║
+// ║  格式：{t:'項目名稱', d:false(未完成)/true(已完成), w:'負責人'}   ║
+// ║  新增：在陣列末尾加一行，刪除：移除該行即可                      ║
+// ╚══════════════════════════════════════════════════════════════════╝
 const LISTS={
   todo:[
     {t:'確認KKDay集合地點',d:false,w:'小花'},{t:'購買ICOCA IC卡',d:true,w:'小明'},
@@ -569,6 +586,62 @@ let emergencyContacts=[
   {name:'台灣外交部旅外緊急求助',phone:'+886-800-085-095'},
   {name:'台灣駐大阪辦事處',phone:'+81-6-4301-7333'}
 ];
+
+// ════ ITEM ATTACHMENTS ════
+const itemFiles = {}; // key: "dayIdx-itemIdx", value: [{name, dataUrl, isPdf}]
+
+function getItemKey(dayIdx, itemIdx){ return dayIdx+'-'+itemIdx; }
+
+function addItemFile(dayIdx, itemIdx, file){
+  const key = getItemKey(dayIdx, itemIdx);
+  if(!itemFiles[key]) itemFiles[key] = [];
+  const isPdf = file.type === 'application/pdf';
+  if(isPdf){
+    itemFiles[key].push({name: file.name, dataUrl: null, isPdf: true, size: file.size});
+    refreshTimelineAttach(dayIdx, itemIdx);
+  } else {
+    const r = new FileReader();
+    r.onload = e => {
+      itemFiles[key].push({name: file.name, dataUrl: e.target.result, isPdf: false, size: file.size});
+      refreshTimelineAttach(dayIdx, itemIdx);
+    };
+    r.readAsDataURL(file);
+  }
+}
+
+function refreshTimelineAttach(dayIdx, itemIdx){
+  const key = getItemKey(dayIdx, itemIdx);
+  const files = itemFiles[key] || [];
+  const listEl = document.getElementById('attach-list-'+key);
+  if(!listEl) return;
+  const countEl = document.getElementById('attach-count-'+key);
+  if(countEl) countEl.textContent = files.length > 0 ? files.length+'個附件' : '';
+  listEl.innerHTML = files.map((f,fi) =>
+    f.isPdf
+      ? `<div class="attach-pdf" title="${f.name}" onclick="viewAttach('${key}',${fi})">📄</div>`
+      : `<img class="attach-thumb" src="${f.dataUrl}" title="${f.name}" onclick="viewAttach('${key}',${fi})">`
+  ).join('');
+}
+
+function triggerItemUpload(dayIdx, itemIdx){
+  document.getElementById('fu-item-'+getItemKey(dayIdx,itemIdx)).click();
+}
+
+function viewAttach(key, fi){
+  const f = (itemFiles[key]||[])[fi];
+  if(!f) return;
+  if(f.isPdf){
+    document.getElementById('modalBody').innerHTML =
+      '<div style="font-size:16px;font-weight:500;color:#3D2A1A;margin-bottom:8px">📄 '+f.name+'</div>'+
+      '<div style="font-size:13px;color:#8B6445">PDF 檔案已上傳（本版本不支援預覽，請下載後開啟）</div>';
+    document.getElementById('modal').classList.add('on');
+  } else {
+    document.getElementById('modalBody').innerHTML =
+      '<div style="font-size:14px;font-weight:500;color:#3D2A1A;margin-bottom:10px">🖼 '+f.name+'</div>'+
+      '<img src="'+f.dataUrl+'" style="width:100%;border-radius:10px;max-height:60vh;object-fit:contain">';
+    document.getElementById('modal').classList.add('on');
+  }
+}
 
 // ════ INIT ════
 function init(){
@@ -642,11 +715,16 @@ function handleHotelPhoto(id,input){
 
 // NAVIGATE
 function openGoogleMapsNav(lat,lng){
+  // Force Google Maps app on all platforms
   const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
   if(isIOS){
-    window.open('https://maps.apple.com/?daddr='+lat+','+lng+'&dirflg=d','_blank');
+    // Try Google Maps app first, fallback to web
+    window.open('comgooglemaps://?daddr='+lat+','+lng+'&directionsmode=driving','_blank');
+    setTimeout(function(){
+      window.open('https://maps.google.com/maps?daddr='+lat+','+lng,'_blank');
+    },500);
   } else {
-    window.open('https://www.google.com/maps/search/?api=1&query='+lat+','+lng,'_blank');
+    window.open('https://maps.google.com/maps?daddr='+lat+','+lng,'_blank');
   }
 }
 
@@ -827,7 +905,10 @@ function renderWeather(){
 function renderTimeline(){
   const tl=document.getElementById('timeline');tl.innerHTML='';
   DAYS[curDay].items.forEach((item,idx)=>{
+    const key=getItemKey(curDay,idx);
     const div=document.createElement('div');div.className='ti';
+    const addrSafe=item.addrJP.replace(/'/g,"\\'");
+    const nameSafe=item.name.replace(/'/g,"\\'");
     div.innerHTML=`
       <div class="ti-time${item.est?' est':''}">${item.time}${item.est?'<br><span style="font-size:9px;background:#F0E0F8;color:#7A3A9A;padding:1px 5px;border-radius:5px">預估</span>':''}</div>
       <div class="ti-dot" style="box-shadow:0 0 0 2px ${TC[item.type]||'#D4855A'};background:#fff"></div>
@@ -836,11 +917,15 @@ function renderTimeline(){
         <div style="font-size:14px;font-weight:500;color:#3D2A1A;margin-top:4px">${item.name}</div>
         <div class="hours-row">🕐 ${item.hours}</div>
         <div style="font-size:12px;color:#8B6445;margin-top:3px">${item.note.slice(0,55)}${item.note.length>55?'…':''}</div>
-        <div>
+        <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px">
           <button class="nav-sm" style="background:#E0F0E8;color:#007B5E" onclick="event.stopPropagation();openGoogleMapsNav(${item.lat},${item.lng})">🧭 導航</button>
-          <button class="nav-sm" style="background:#F5EDE5;color:#5D3A1A" onclick="event.stopPropagation();showAddr('${item.addrJP.replace(/'/g,"\\'")}','${item.name.replace(/'/g,"\\'")}',${item.lat},${item.lng})">📍 地址</button>
+          <button class="nav-sm" style="background:#F5EDE5;color:#5D3A1A" onclick="event.stopPropagation();showAddr('${addrSafe}','${nameSafe}',${item.lat},${item.lng})">📍 地址</button>
           <button class="nav-sm" style="background:#F0E8E0;color:#D4855A" onclick="event.stopPropagation();openDetail(${idx})">📋 詳情</button>
+          <label class="attach-btn" onclick="event.stopPropagation();triggerItemUpload(${curDay},${idx})">📎 附件<span id="attach-count-${key}" style="margin-left:3px;color:#D4855A;font-weight:500"></span></label>
         </div>
+        <div class="attach-list" id="attach-list-${key}"></div>
+        <input type="file" id="fu-item-${key}" accept="image/*,.pdf" style="display:none"
+          onchange="addItemFile(${curDay},${idx},this.files[0]);this.value=''">
       </div>`;
     tl.appendChild(div);
   });
