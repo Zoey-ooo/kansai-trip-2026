@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="theme-color" content="#007B5E"/>
 <title>🌸 關西六日遊 2026</title>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--eva:#007B5E;--eva2:#00A878;--shadow:4px 4px 0px #E0D5C5;--accent:#D4855A}
-body{font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px;-webkit-font-smoothing:antialiased}
+body{padding-top:26px;font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px;-webkit-font-smoothing:antialiased}
 button{cursor:pointer;font-family:inherit;transition:transform .15s}
 button:active{transform:scale(.95)}
 a{color:inherit;text-decoration:none}
@@ -134,10 +138,19 @@ input,select,textarea{font-family:inherit}
 .attach-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .attach-pdf{width:44px;height:44px;background:#F0E8E0;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer}
 </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
 <!-- ══ BOOKINGS ══ -->
+<!-- Sync status bar (shown on all tabs via fixed position) -->
+<div id="sync-bar" style="position:fixed;top:0;left:0;right:0;z-index:999;text-align:center;font-size:11px;padding:5px 12px;border-bottom:1px solid #ddd;background:#F5F5F5;color:#999;transition:all .3s">
+  🔄 連線中…
+</div>
+<div style="height:26px"></div>
+
 <div class="tab on" id="t-bookings">
   <div class="ph"><h1>🎫 預訂資料</h1><p>機票 · 住宿 · 票券 · 緊急聯絡</p></div>
   <div class="tg">
@@ -587,22 +600,104 @@ let emergencyContacts=[
   {name:'台灣駐大阪辦事處',phone:'+81-6-4301-7333'}
 ];
 
-// ════ ITEM ATTACHMENTS ════
-const itemFiles = {}; // key: "dayIdx-itemIdx", value: [{name, dataUrl, isPdf}]
+// ╔══════════════════════════════════════════════════════════════════╗
+// ║  🔥 FIREBASE 設定區 — 把你的 Firebase 設定貼在這裡               ║
+// ║  步驟：firebase.google.com → 專案設定 → 你的應用程式 → firebaseConfig ║
+// ╚══════════════════════════════════════════════════════════════════╝
+const firebaseConfig = {
+  apiKey:            "AIzaSyCVDxjXElB5jwRm8zgRhxcbVpTKKw1QERc",
+  authDomain:        "kansai-trip-2026-eaa17.firebaseapp.com",
+  databaseURL:       "https://kansai-trip-2026-eaa17-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:         "kansai-trip-2026-eaa17",
+  storageBucket:     "kansai-trip-2026-eaa17.firebasestorage.app",
+  messagingSenderId: "725465245760",
+  appId:             "1:725465245760:web:16f7ccf3849b1a778c57a5"
+};
+
+// ── Firebase 初始化 ──
+let db = null, storage = null, fbReady = false;
+try {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+  storage = firebase.storage();
+  fbReady = true;
+  console.log('Firebase connected');
+} catch(e) {
+  console.warn('Firebase not configured yet:', e.message);
+}
+
+// ── 同步狀態 UI ──
+function showSyncStatus(msg, ok){
+  let el = document.getElementById('sync-status');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'sync-status';
+    el.style.cssText = 'position:fixed;top:12px;right:12px;z-index:999;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;transition:opacity .5s';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.background = ok ? '#007B5E' : '#D4855A';
+  el.style.color = '#fff';
+  el.style.opacity = '1';
+  setTimeout(()=>{ el.style.opacity='0'; }, 2500);
+}
+
+// ════ REALTIME SYNC HELPERS ════
+// Save any key-value to Firebase, fallback to localStorage
+function fbSet(path, value){
+  if(fbReady && db){
+    db.ref(path).set(value)
+      .then(()=>showSyncStatus('✓ 已同步', true))
+      .catch(e=>showSyncStatus('⚠ 同步失敗', false));
+  }
+}
+function fbOn(path, cb){
+  if(fbReady && db){ db.ref(path).on('value', snap=>cb(snap.val())); }
+}
+
+// ════ ITEM ATTACHMENTS (Firebase Storage + Realtime DB) ════
+const itemFiles = {}; // local cache
 
 function getItemKey(dayIdx, itemIdx){ return dayIdx+'-'+itemIdx; }
 
 function addItemFile(dayIdx, itemIdx, file){
+  if(!file) return;
   const key = getItemKey(dayIdx, itemIdx);
-  if(!itemFiles[key]) itemFiles[key] = [];
   const isPdf = file.type === 'application/pdf';
+  showSyncStatus('⏳ 上傳中...', true);
+
+  if(fbReady && storage){
+    // Upload to Firebase Storage
+    const ref = storage.ref('attachments/'+key+'/'+Date.now()+'_'+file.name);
+    ref.put(file).then(snap => snap.ref.getDownloadURL()).then(url => {
+      const entry = {name: file.name, url, isPdf, ts: Date.now()};
+      if(!itemFiles[key]) itemFiles[key] = [];
+      itemFiles[key].push(entry);
+      fbSet('attachments/'+key+'/'+Date.now(), entry);
+      refreshTimelineAttach(dayIdx, itemIdx);
+      showSyncStatus('✓ 附件已上傳', true);
+    }).catch(e => {
+      showSyncStatus('⚠ 上傳失敗', false);
+      console.error(e);
+      // fallback to base64
+      _addFileBase64(key, dayIdx, itemIdx, file, isPdf);
+    });
+  } else {
+    // Fallback: base64 local only
+    _addFileBase64(key, dayIdx, itemIdx, file, isPdf);
+  }
+}
+
+function _addFileBase64(key, dayIdx, itemIdx, file, isPdf){
   if(isPdf){
-    itemFiles[key].push({name: file.name, dataUrl: null, isPdf: true, size: file.size});
+    if(!itemFiles[key]) itemFiles[key] = [];
+    itemFiles[key].push({name:file.name, url:null, dataUrl:null, isPdf:true});
     refreshTimelineAttach(dayIdx, itemIdx);
   } else {
     const r = new FileReader();
     r.onload = e => {
-      itemFiles[key].push({name: file.name, dataUrl: e.target.result, isPdf: false, size: file.size});
+      if(!itemFiles[key]) itemFiles[key] = [];
+      itemFiles[key].push({name:file.name, url:null, dataUrl:e.target.result, isPdf:false});
       refreshTimelineAttach(dayIdx, itemIdx);
     };
     r.readAsDataURL(file);
@@ -615,12 +710,13 @@ function refreshTimelineAttach(dayIdx, itemIdx){
   const listEl = document.getElementById('attach-list-'+key);
   if(!listEl) return;
   const countEl = document.getElementById('attach-count-'+key);
-  if(countEl) countEl.textContent = files.length > 0 ? files.length+'個附件' : '';
-  listEl.innerHTML = files.map((f,fi) =>
-    f.isPdf
+  if(countEl) countEl.textContent = files.length > 0 ? ' '+files.length+'個' : '';
+  listEl.innerHTML = files.map((f,fi) => {
+    const imgSrc = f.url || f.dataUrl;
+    return f.isPdf
       ? `<div class="attach-pdf" title="${f.name}" onclick="viewAttach('${key}',${fi})">📄</div>`
-      : `<img class="attach-thumb" src="${f.dataUrl}" title="${f.name}" onclick="viewAttach('${key}',${fi})">`
-  ).join('');
+      : `<img class="attach-thumb" src="${imgSrc}" title="${f.name}" onclick="viewAttach('${key}',${fi})">`;
+  }).join('');
 }
 
 function triggerItemUpload(dayIdx, itemIdx){
@@ -630,17 +726,58 @@ function triggerItemUpload(dayIdx, itemIdx){
 function viewAttach(key, fi){
   const f = (itemFiles[key]||[])[fi];
   if(!f) return;
+  const imgSrc = f.url || f.dataUrl;
   if(f.isPdf){
     document.getElementById('modalBody').innerHTML =
       '<div style="font-size:16px;font-weight:500;color:#3D2A1A;margin-bottom:8px">📄 '+f.name+'</div>'+
-      '<div style="font-size:13px;color:#8B6445">PDF 檔案已上傳（本版本不支援預覽，請下載後開啟）</div>';
+      (f.url ? '<a href="'+f.url+'" target="_blank" style="display:inline-block;padding:10px 20px;background:#007B5E;color:#fff;border-radius:10px;font-size:14px">開啟 PDF</a>' : '<div style="font-size:13px;color:#8B6445">本地 PDF（僅你可見）</div>');
     document.getElementById('modal').classList.add('on');
   } else {
     document.getElementById('modalBody').innerHTML =
       '<div style="font-size:14px;font-weight:500;color:#3D2A1A;margin-bottom:10px">🖼 '+f.name+'</div>'+
-      '<img src="'+f.dataUrl+'" style="width:100%;border-radius:10px;max-height:60vh;object-fit:contain">';
+      '<img src="'+imgSrc+'" style="width:100%;border-radius:10px;max-height:60vh;object-fit:contain">';
     document.getElementById('modal').classList.add('on');
   }
+}
+
+// ════ FIREBASE REALTIME LISTENERS ════
+function setupFirebaseListeners(){
+  if(!fbReady || !db) return;
+
+  // Sync attachments from all devices
+  db.ref('attachments').on('value', snap => {
+    const data = snap.val() || {};
+    Object.keys(data).forEach(key => {
+      const entries = Object.values(data[key]);
+      itemFiles[key] = entries;
+      // key format: dayIdx-itemIdx
+      const [d,i] = key.split('-').map(Number);
+      if(d === curDay) refreshTimelineAttach(d, i);
+    });
+  });
+
+  // Sync todo/luggage/shopping lists
+  db.ref('lists').on('value', snap => {
+    const data = snap.val();
+    if(!data) return;
+    ['todo','luggage','shopping'].forEach(id => {
+      if(data[id]) {
+        LISTS[id] = data[id];
+        renderPlan(id);
+      }
+    });
+  });
+
+  // Sync expenses
+  db.ref('expenses').on('value', snap => {
+    const data = snap.val();
+    if(data && Array.isArray(data)){
+      expenses = data;
+      renderExp();
+    }
+  });
+
+  showSyncStatus('✓ 已連線同步', true);
 }
 
 // ════ INIT ════
@@ -1054,7 +1191,248 @@ function pk(k){
   }
 }
 
+// ════════════════════════════════════════════════════════════════
+// 🔥 FIREBASE CONFIG
+// 👉 步驟：將你的 Firebase 設定貼到下方 firebaseConfig 物件中
+
+
+// ════ Firebase 初始化 ════
+let db = null;
+let fbReady = false;
+
+function initFirebase(){
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    fbReady = true;
+    console.log('✅ Firebase connected');
+    showSyncStatus('connected');
+    loadAllFromFirebase();
+    setupRealtimeListeners();
+  } catch(e){
+    console.warn('⚠️ Firebase not configured, running offline:', e.message);
+    showSyncStatus('offline');
+  }
+}
+
+function showSyncStatus(status){
+  const bar = document.getElementById('sync-bar');
+  if(!bar) return;
+  if(status === 'connected'){
+    bar.innerHTML = '🔥 已連線・資料即時同步中';
+    bar.style.background = '#E8F5F0';
+    bar.style.color = '#007B5E';
+    bar.style.borderColor = '#B0DDD0';
+  } else if(status === 'saving'){
+    bar.innerHTML = '💾 同步中…';
+    bar.style.background = '#FFF8E8';
+    bar.style.color = '#8B6445';
+    bar.style.borderColor = '#E8D5C0';
+  } else {
+    bar.innerHTML = '📴 離線模式（未設定 Firebase）';
+    bar.style.background = '#F5F5F5';
+    bar.style.color = '#999';
+    bar.style.borderColor = '#ddd';
+  }
+}
+
+// ════ SAVE helpers ════
+function fbSave(path, data){
+  if(!fbReady) return;
+  showSyncStatus('saving');
+  db.ref(path).set(data)
+    .then(()=> showSyncStatus('connected'))
+    .catch(e=> console.error('Save error:', e));
+}
+function fbPush(path, data){
+  if(!fbReady) return;
+  showSyncStatus('saving');
+  db.ref(path).push(data)
+    .then(()=> showSyncStatus('connected'))
+    .catch(e=> console.error('Push error:', e));
+}
+
+// ════ LOAD all data from Firebase on first open ════
+function loadAllFromFirebase(){
+  // Lists (todo/luggage/shopping)
+  ['todo','luggage','shopping'].forEach(id => {
+    db.ref('lists/'+id).once('value', snap => {
+      const val = snap.val();
+      if(val && Array.isArray(val)){
+        LISTS[id] = val;
+        renderPlan(id);
+      }
+    });
+  });
+
+  // Expenses
+  db.ref('expenses').once('value', snap => {
+    const val = snap.val();
+    if(val && Array.isArray(val)){
+      expenses = val;
+      renderExp();
+    }
+  });
+
+  // Item attachments (images stored as base64)
+  db.ref('itemFiles').once('value', snap => {
+    const val = snap.val();
+    if(val){
+      Object.assign(itemFiles, val);
+      // Refresh visible timeline
+      DAYS[curDay].items.forEach((_,idx) => refreshTimelineAttach(curDay, idx));
+    }
+  });
+
+  // Coupons
+  db.ref('coupons').once('value', snap => {
+    const val = snap.val();
+    if(val && Array.isArray(val)){
+      coupons = val;
+      renderCoupons();
+    }
+  });
+}
+
+// ════ REALTIME listeners — push updates to all users ════
+function setupRealtimeListeners(){
+  // Lists
+  ['todo','luggage','shopping'].forEach(id => {
+    db.ref('lists/'+id).on('value', snap => {
+      const val = snap.val();
+      if(val && Array.isArray(val)){
+        LISTS[id] = val;
+        renderPlan(id);
+      }
+    });
+  });
+
+  // Expenses
+  db.ref('expenses').on('value', snap => {
+    const val = snap.val();
+    expenses = val && Array.isArray(val) ? val : [];
+    renderExp();
+  });
+
+  // itemFiles
+  db.ref('itemFiles').on('value', snap => {
+    const val = snap.val();
+    if(val){ Object.assign(itemFiles, val); }
+    DAYS[curDay].items.forEach((_,idx) => refreshTimelineAttach(curDay, idx));
+  });
+
+  // Coupons
+  db.ref('coupons').on('value', snap => {
+    const val = snap.val();
+    coupons = val && Array.isArray(val) ? val : [];
+    renderCoupons();
+  });
+}
+
+// ════ Override key functions to also save to Firebase ════
+
+// --- Planning ---
+const _origToggleTodo = toggleTodo;
+toggleTodo = function(id, i){
+  LISTS[id][i].d = !LISTS[id][i].d;
+  renderPlan(id);
+  fbSave('lists/'+id, LISTS[id]);
+};
+const _origEditTodo = editTodo;
+editTodo = function(id, i, val){
+  LISTS[id][i].t = val;
+  updateProg(id);
+  fbSave('lists/'+id, LISTS[id]);
+};
+const _origDeleteTodo = deleteTodo;
+deleteTodo = function(id, i){
+  LISTS[id].splice(i,1);
+  renderPlan(id);
+  fbSave('lists/'+id, LISTS[id]);
+};
+const _origAddTodo = addTodo;
+addTodo = function(id){
+  const inp = document.getElementById('new-'+id);
+  const val = inp.value.trim();
+  if(!val) return;
+  LISTS[id].push({t:val, d:false, w:''});
+  inp.value = '';
+  renderPlan(id);
+  fbSave('lists/'+id, LISTS[id]);
+};
+
+// --- Expenses ---
+const _origAddExp = addExp;
+addExp = function(){
+  const n = document.getElementById('en').value.trim();
+  const a = parseFloat(document.getElementById('ea').value) || 0;
+  if(!n || !a) return;
+  expenses.push({
+    n, a,
+    c:     document.getElementById('ec').value,
+    cat:   document.getElementById('ecat').value,
+    payer: document.getElementById('epayer').value,
+    day:   document.getElementById('eday').value
+  });
+  document.getElementById('en').value = '';
+  document.getElementById('ea').value = '';
+  toggleExpForm();
+  renderExp();
+  fbSave('expenses', expenses);
+};
+const _origDeleteExp = deleteExp;
+deleteExp = function(i){
+  expenses.splice(i, 1);
+  renderExp();
+  fbSave('expenses', expenses);
+};
+
+// --- Item attachments ---
+const _origAddItemFile = addItemFile;
+addItemFile = function(dayIdx, itemIdx, file){
+  const key = getItemKey(dayIdx, itemIdx);
+  if(!itemFiles[key]) itemFiles[key] = [];
+  const isPdf = file.type === 'application/pdf';
+  const MAX_SIZE = 800 * 1024; // 800KB limit for Firebase free tier
+  if(!isPdf && file.size > MAX_SIZE){
+    alert('圖片過大，請選擇 800KB 以下的圖片');
+    return;
+  }
+  if(isPdf){
+    itemFiles[key].push({name: file.name, dataUrl: null, isPdf: true, size: file.size});
+    refreshTimelineAttach(dayIdx, itemIdx);
+    fbSave('itemFiles/'+key, itemFiles[key]);
+  } else {
+    const r = new FileReader();
+    r.onload = e => {
+      itemFiles[key].push({name: file.name, dataUrl: e.target.result, isPdf: false, size: file.size});
+      refreshTimelineAttach(dayIdx, itemIdx);
+      fbSave('itemFiles/'+key, itemFiles[key]);
+    };
+    r.readAsDataURL(file);
+  }
+};
+
+// --- Coupons ---
+const _origSaveCoupon = saveCoupon;
+saveCoupon = function(){
+  const n = document.getElementById('cp-name').value.trim();
+  if(!n) return;
+  coupons.push({name: n, note: document.getElementById('cp-note').value.trim()});
+  closeModal();
+  renderCoupons();
+  fbSave('coupons', coupons);
+};
+const _origDeleteCoupon = deleteCoupon;
+deleteCoupon = function(i){
+  coupons.splice(i,1);
+  openCp = {};
+  renderCoupons();
+  fbSave('coupons', coupons);
+};
+
 init();
+initFirebase();
 </script>
 </body>
 </html>
