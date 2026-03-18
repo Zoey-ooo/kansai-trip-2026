@@ -3,42 +3,47 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<meta name="theme-color" content="#D4855A"/>
+<meta name="theme-color" content="#007B5E"/>
 <title>🌸 關西六日遊 2026</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--accent:#D4855A;--shadow:4px 4px 0px #E0D5C5}
+:root{--eva:#007B5E;--eva2:#00A878;--shadow:4px 4px 0px #E0D5C5;--accent:#D4855A}
 body{font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px;-webkit-font-smoothing:antialiased}
 button{cursor:pointer;font-family:inherit;transition:transform .15s}
 button:active{transform:scale(.95)}
 a{color:inherit;text-decoration:none}
 input,select,textarea{font-family:inherit}
+/* NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;background:#FFFDF8;border-top:1.5px solid #E8DDD0;display:flex;z-index:100}
 .bnav button{flex:1;padding:8px 2px 12px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#A09080}
-.bnav button.on{color:#D4855A}
+.bnav button.on{color:var(--eva)}
 .bnav button .ic{font-size:20px}
+/* TABS */
 .tab{display:none;padding:16px}
 .tab.on{display:block}
+/* PAGE HEADER */
 .ph{background:linear-gradient(135deg,#F7E8D8,#EAD9C8);border-radius:16px;padding:18px;margin-bottom:16px;position:relative;overflow:hidden}
 .ph::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(212,133,90,.1)}
 .ph h1{font-size:22px;font-weight:500;color:#5D3A1A}
 .ph p{font-size:13px;color:#8B6445;margin-top:4px}
+/* CARD */
 .card{background:#fff;border-radius:14px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:12px;padding:14px}
+/* SUB TAB */
 .tg{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
 .tg::-webkit-scrollbar{display:none}
 .tgb{flex-shrink:0;padding:7px 14px;border:1.5px solid #E8D5C0;border-radius:20px;font-size:12px;color:#8B6445;background:transparent;white-space:nowrap}
-.tgb.on{background:#D4855A;border-color:#D4855A;color:#fff}
-/* Modal */
+.tgb.on{background:var(--eva);border-color:var(--eva);color:#fff}
+/* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(80,50,30,.5);z-index:200;align-items:flex-end}
 .overlay.on{display:flex}
 .sheet{background:#FFFDF8;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:90vh;overflow-y:auto}
 .handle{width:40px;height:4px;background:#E0D0C0;border-radius:2px;margin:0 auto 16px}
-.close-btn{width:100%;padding:12px;background:#D4855A;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:14px}
-/* Form elements */
+.close-btn{width:100%;padding:12px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:14px}
+/* FORM */
 .fl{font-size:12px;color:#8B6445;margin-bottom:4px;margin-top:10px}
 .fi{width:100%;padding:10px 12px;border:1.5px solid #E8D5C0;border-radius:10px;font-size:14px;color:#3D2A1A;background:#FFF8F4;outline:none}
-.fi:focus{border-color:#D4855A}
-.submit{width:100%;padding:12px;background:#D4855A;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:12px}
+.fi:focus{border-color:var(--eva)}
+.submit{width:100%;padding:12px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:12px}
 .row2{display:flex;gap:8px}
 /* PIN */
 .pin-ov{display:none;position:fixed;inset:0;background:rgba(80,50,30,.75);z-index:400;align-items:center;justify-content:center}
@@ -46,38 +51,48 @@ input,select,textarea{font-family:inherit}
 .pin-box{background:#FFFDF8;border-radius:20px;padding:28px 24px;width:290px;text-align:center}
 .pin-dots{display:flex;gap:12px;justify-content:center;margin:16px 0 20px}
 .pdot{width:16px;height:16px;border-radius:50%;background:#E8D5C0;transition:background .15s}
-.pdot.on{background:#D4855A}.pdot.err{background:#E24B4A}
+.pdot.on{background:var(--eva)}.pdot.err{background:#E24B4A}
 .pkpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .pk{padding:15px;background:#F5EDE5;border:none;border-radius:10px;font-size:20px;color:#3D2A1A}
-/* Address fullscreen */
-.addr-full{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;align-items:center;justify-content:center;padding:24px}
+/* ADDRESS FULL */
+.addr-full{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:center;justify-content:center;padding:24px}
 .addr-full.on{display:flex}
-.addr-card{background:#fff;border-radius:20px;padding:28px 24px;width:100%;max-width:360px;text-align:center}
-/* Boarding pass */
-.bp{border-radius:16px;padding:20px 22px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden}
-.bp::after{content:'';position:absolute;right:-22px;top:50%;transform:translateY(-50%);width:44px;height:44px;border:22px solid #FFF6ED;border-radius:50%}
-.bp::before{content:'';position:absolute;left:-22px;top:50%;transform:translateY(-50%);width:44px;height:44px;border:22px solid #FFF6ED;border-radius:50%}
-.bp-sep{border:none;border-top:1px dashed rgba(255,255,255,.35);margin:12px 0}
-/* Hotel */
+.addr-card{background:#fff;border-radius:20px;padding:30px 24px;width:100%;max-width:360px;text-align:center}
+/* EVA BOARDING PASS */
+.eva-bp{border-radius:14px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,100,70,.2)}
+.eva-bp-head{background:var(--eva);padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.eva-bp-body{background:#fff;padding:18px}
+.eva-bp-route{display:flex;align-items:center;gap:8px;margin:12px 0}
+.eva-iata{font-size:32px;font-weight:700;color:#1A1A1A;letter-spacing:2px}
+.eva-city{font-size:11px;color:#666;margin-top:2px}
+.eva-arrow{flex:1;text-align:center;position:relative;height:30px;display:flex;align-items:center;justify-content:center}
+.eva-arrow::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:#ccc}
+.eva-plane{font-size:20px;background:#fff;padding:0 4px;position:relative;z-index:1;transform:rotate(45deg)}
+.eva-divider{border:none;border-top:1px dashed #ddd;margin:14px 0}
+.eva-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.eva-field-label{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.06em}
+.eva-field-val{font-size:13px;font-weight:600;color:#1A1A1A;margin-top:3px}
+.eva-stub{background:#F5F5F5;border-top:1px dashed #ddd;padding:12px 18px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* HOTEL */
 .hotel-card{background:#fff;border-radius:16px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
 .hotel-photo{height:120px;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative;overflow:hidden;cursor:pointer}
 .hotel-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .hotel-photo-label{position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.45);color:#fff;font-size:11px;padding:3px 8px;border-radius:8px}
-/* Ticket */
+/* TICKET */
 .ticket-item{background:#fff;border-radius:12px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
 .ticket-hdr{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
 .upload-area{border:2px dashed #E8D5C0;border-radius:12px;padding:16px;text-align:center;cursor:pointer;background:#FFFDF8;transition:all .2s;margin-bottom:8px}
-.upload-area:hover{border-color:#D4855A;background:#FFF6F0}
+.upload-area:hover{border-color:var(--eva);background:#F0FFF8}
 .ufile{background:#F5EDE5;border-radius:10px;padding:9px 12px;display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:13px}
-/* Schedule */
-.cd{background:#5D3A1A;border-radius:14px;padding:16px 20px;color:#FFF6ED;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.cd-num{font-size:36px;font-weight:500;color:#F5C882}
+/* SCHEDULE */
+.cd{background:#1A3A2A;border-radius:14px;padding:16px 20px;color:#fff;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cd-num{font-size:36px;font-weight:500;color:#7ADFC0}
 .ds{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:none}
 .ds::-webkit-scrollbar{display:none}
 .dp{flex-shrink:0;padding:8px 14px;border-radius:20px;background:#FFF2E8;border:1.5px solid #E8D5C0;cursor:pointer;text-align:center;transition:all .2s}
-.dp.on{background:#D4855A;border-color:#D4855A;color:#fff}
+.dp.on{background:var(--eva);border-color:var(--eva);color:#fff}
 .dp .dn{font-size:14px;font-weight:500}.dp .dl{font-size:10px;opacity:.7}
-.wc{background:#E8F2F8;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:16px;border:1.5px solid #C8DCE8}
+.wc{background:#E8F5F0;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:16px;border:1.5px solid #B0DDD0}
 .tl{position:relative}
 .tl::before{content:'';position:absolute;left:62px;top:0;bottom:0;width:2px;background:#E8D5C0}
 .ti{display:flex;gap:12px;margin-bottom:12px}
@@ -87,31 +102,30 @@ input,select,textarea{font-family:inherit}
 .ti-card{flex:1;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0}
 .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500;margin-bottom:4px}
 .b-sight{background:#E8F2D8;color:#3A6A1A}.b-food{background:#FDE8D0;color:#8A3A0A}
-.b-transport{background:#E0E8F8;color:#1A3A6A}.b-hotel{background:#F0E0F8;color:#5A1A7A}.b-shopping{background:#FEF0D0;color:#7A4A0A}
+.b-transport{background:#E0F0E8;color:#0A4A2A}.b-hotel{background:#F0E0F8;color:#5A1A7A}.b-shopping{background:#FEF0D0;color:#7A4A0A}
 .hours-row{font-size:11px;color:#6B9B8A;margin-top:3px}
 .nav-sm{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;font-size:11px;border:none;margin-top:6px;margin-right:4px}
-/* Planning */
+/* PLANNING */
 .pbar{height:6px;background:#F0E8E0;border-radius:3px;margin-bottom:14px}
-.pfill{height:100%;border-radius:3px;background:#D4855A;transition:width .3s}
+.pfill{height:100%;border-radius:3px;background:var(--eva);transition:width .3s}
 .todo-item{background:#fff;border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px}
-.chk{width:22px;height:22px;border-radius:50%;border:2px solid #D4855A;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;transition:all .2s;cursor:pointer;margin-top:1px}
-.chk.on{background:#D4855A}
+.chk{width:22px;height:22px;border-radius:50%;border:2px solid var(--eva);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;transition:all .2s;cursor:pointer;margin-top:1px}
+.chk.on{background:var(--eva)}
 .edit-input{border:none;outline:none;background:transparent;font-size:14px;color:#3D2A1A;width:100%;font-family:inherit}
 .edit-input.done{text-decoration:line-through;opacity:.5}
 .add-row{display:flex;gap:8px;margin-top:8px}
 .add-row input{flex:1;padding:9px 12px;border:1.5px dashed #E8D5C0;border-radius:10px;font-size:13px;background:#FFFDF8;outline:none}
-.add-row input:focus{border-color:#D4855A;border-style:solid}
-.add-row button{padding:9px 14px;background:#D4855A;color:#fff;border:none;border-radius:10px;font-size:13px}
+.add-row input:focus{border-color:var(--eva);border-style:solid}
+.add-row button{padding:9px 14px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:13px}
 .del-btn{background:none;border:none;color:#C0A090;font-size:16px;padding:2px 4px;flex-shrink:0}
-/* Expense */
+/* EXPENSE */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .stat{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0}
 .stat-l{font-size:11px;color:#8B6445}.stat-v{font-size:18px;font-weight:500;color:#3D2A1A;margin-top:2px}
-.fab{position:fixed;bottom:90px;right:20px;width:52px;height:52px;background:#D4855A;border:none;border-radius:50%;font-size:24px;color:#fff;box-shadow:0 4px 12px rgba(212,133,90,.4);align-items:center;justify-content:center;z-index:50;display:none}
+.fab{position:fixed;bottom:90px;right:20px;width:52px;height:52px;background:var(--eva);border:none;border-radius:50%;font-size:24px;color:#fff;box-shadow:0 4px 12px rgba(0,120,90,.35);align-items:center;justify-content:center;z-index:50;display:none}
 .exp-row{background:#fff;border-radius:12px;padding:11px 13px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:7px;display:flex;align-items:center;gap:10px}
 .exp-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .day-row{font-size:11px;font-weight:500;color:#8B6445;letter-spacing:.04em;margin:14px 0 6px;padding-left:2px}
-/* Emergency */
 .em-item{background:#FFF2E8;border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1.5px solid #F0D8C0;display:flex;align-items:center;justify-content:space-between}
 </style>
 </head>
@@ -130,62 +144,101 @@ input,select,textarea{font-family:inherit}
 
   <!-- 機票 -->
   <div id="b-flight">
-    <div class="bp" style="background:linear-gradient(135deg,#1A2F4A,#2D4A6A,#3A5A7A)">
-      <div style="font-size:10px;opacity:.55;letter-spacing:.1em;margin-bottom:10px">BOARDING PASS · OUTBOUND</div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-        <div><div style="font-size:28px;font-weight:600;letter-spacing:3px">TPE</div><div style="font-size:10px;opacity:.65;margin-top:2px">臺北桃園</div></div>
-        <div style="flex:1;text-align:center;font-size:20px;opacity:.5">─ ✈ ─</div>
-        <div style="text-align:right"><div style="font-size:28px;font-weight:600;letter-spacing:3px">KIX</div><div style="font-size:10px;opacity:.65;margin-top:2px">大阪關西</div></div>
+    <!-- 去程 EVA BR 182 -->
+    <div class="eva-bp">
+      <div class="eva-bp-head">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="background:#fff;border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--eva);letter-spacing:.05em">EVA AIR</div>
+          <div style="color:#fff;font-size:12px;opacity:.85">長榮航空</div>
+        </div>
+        <div style="color:#fff;font-size:12px;font-weight:500;letter-spacing:.05em">BOARDING PASS</div>
       </div>
-      <div class="bp-sep"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-        <div><div style="font-size:9px;opacity:.55;text-transform:uppercase">Date</div><div style="font-size:13px;font-weight:500;margin-top:2px">14 MAY 2026</div></div>
-        <div><div style="font-size:9px;opacity:.55;text-transform:uppercase">Flight</div><div style="font-size:13px;font-weight:500;margin-top:2px">待確認</div></div>
-        <div><div style="font-size:9px;opacity:.55;text-transform:uppercase">Arrives</div><div style="font-size:13px;font-weight:500;margin-top:2px">11:10</div></div>
+      <div class="eva-bp-body">
+        <div style="font-size:10px;color:#999;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Outbound · 去程</div>
+        <div class="eva-bp-route">
+          <div><div class="eva-iata">KHH</div><div class="eva-city">高雄小港</div><div style="font-size:12px;font-weight:600;color:#333;margin-top:3px">07:05</div></div>
+          <div class="eva-arrow"><span class="eva-plane">✈</span></div>
+          <div style="text-align:right"><div class="eva-iata">KIX</div><div class="eva-city">大阪關西</div><div style="font-size:12px;font-weight:600;color:#333;margin-top:3px">11:10</div></div>
+        </div>
+        <div class="eva-divider"></div>
+        <div class="eva-fields">
+          <div><div class="eva-field-label">Flight</div><div class="eva-field-val">BR 182</div></div>
+          <div><div class="eva-field-label">Date</div><div class="eva-field-val">14 MAY 2026</div></div>
+          <div><div class="eva-field-label">Duration</div><div class="eva-field-val">3h 05m</div></div>
+          <div><div class="eva-field-label">Aircraft</div><div class="eva-field-val">A321</div></div>
+          <div><div class="eva-field-label">Terminal</div><div class="eva-field-val">T1 → T1</div></div>
+          <div><div class="eva-field-label">Class</div><div class="eva-field-val">Economy V</div></div>
+        </div>
+      </div>
+      <div class="eva-stub">
+        <div><div class="eva-field-label">Boarding Time</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
+        <div><div class="eva-field-label">Gate</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
+        <div><div class="eva-field-label">Seat</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
+        <div><div class="eva-field-label">Bag Allowance</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">23kg</div></div>
       </div>
     </div>
-    <div class="bp" style="background:linear-gradient(135deg,#1A3A28,#2A5A3A,#3A6A4A)">
-      <div style="font-size:10px;opacity:.55;letter-spacing:.1em;margin-bottom:10px">BOARDING PASS · RETURN</div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-        <div><div style="font-size:28px;font-weight:600;letter-spacing:3px">KIX</div><div style="font-size:10px;opacity:.65;margin-top:2px">大阪關西</div></div>
-        <div style="flex:1;text-align:center;font-size:20px;opacity:.5">─ ✈ ─</div>
-        <div style="text-align:right"><div style="font-size:28px;font-weight:600;letter-spacing:3px">TPE</div><div style="font-size:10px;opacity:.65;margin-top:2px">臺北桃園</div></div>
+    <!-- 回程 EVA BR 147 -->
+    <div class="eva-bp">
+      <div class="eva-bp-head">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="background:#fff;border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--eva);letter-spacing:.05em">EVA AIR</div>
+          <div style="color:#fff;font-size:12px;opacity:.85">長榮航空</div>
+        </div>
+        <div style="color:#fff;font-size:12px;font-weight:500;letter-spacing:.05em">BOARDING PASS</div>
       </div>
-      <div class="bp-sep"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-        <div><div style="font-size:9px;opacity:.55;text-transform:uppercase">Date</div><div style="font-size:13px;font-weight:500;margin-top:2px">19 MAY 2026</div></div>
-        <div><div style="font-size:9px;opacity:.55;text-transform:uppercase">Flight</div><div style="font-size:13px;font-weight:500;margin-top:2px">待確認</div></div>
-        <div><div style="font-size:9px;opacity:.55;text-transform:uppercase">Departs</div><div style="font-size:13px;font-weight:500;margin-top:2px">待確認</div></div>
+      <div class="eva-bp-body">
+        <div style="font-size:10px;color:#999;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Return · 回程</div>
+        <div class="eva-bp-route">
+          <div><div class="eva-iata">KIX</div><div class="eva-city">大阪關西</div><div style="font-size:12px;font-weight:600;color:#333;margin-top:3px">20:35</div></div>
+          <div class="eva-arrow"><span class="eva-plane">✈</span></div>
+          <div style="text-align:right"><div class="eva-iata">KHH</div><div class="eva-city">高雄小港</div><div style="font-size:12px;font-weight:600;color:#333;margin-top:3px">22:55</div></div>
+        </div>
+        <div class="eva-divider"></div>
+        <div class="eva-fields">
+          <div><div class="eva-field-label">Flight</div><div class="eva-field-val">BR 147</div></div>
+          <div><div class="eva-field-label">Date</div><div class="eva-field-val">19 MAY 2026</div></div>
+          <div><div class="eva-field-label">Duration</div><div class="eva-field-val">3h 20m</div></div>
+          <div><div class="eva-field-label">Aircraft</div><div class="eva-field-val">A321</div></div>
+          <div><div class="eva-field-label">Terminal</div><div class="eva-field-val">T1 → T1</div></div>
+          <div><div class="eva-field-label">Class</div><div class="eva-field-val">Economy V</div></div>
+        </div>
       </div>
+      <div class="eva-stub">
+        <div><div class="eva-field-label">Check-in</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">17:35前</div></div>
+        <div><div class="eva-field-label">Gate Closes</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">20:15</div></div>
+        <div><div class="eva-field-label">Seat</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
+        <div><div class="eva-field-label">Bag Allowance</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">23kg</div></div>
+      </div>
+    </div>
+    <div style="background:#E8F5F0;border-radius:12px;padding:12px 14px;font-size:12px;color:#007B5E;border:1.5px solid #B0DDD0">
+      ⚠️ 去程建議 05:00 前到高雄小港機場 · 回程建議 17:30 前抵達關西機場
     </div>
   </div>
 
   <!-- 住宿 -->
-  <div id="b-hotel" style="display:none">
-    <div id="hotel-list"></div>
-  </div>
+  <div id="b-hotel" style="display:none"><div id="hotel-list"></div></div>
 
   <!-- 票券 -->
   <div id="b-ticket" style="display:none">
-    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">點擊展開 · 可上傳 PDF 或圖片憑證</div>
+    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">🔒 所有票券均已上鎖，請輸入 PIN 碼查看</div>
     <div id="ticket-list"></div>
   </div>
 
   <!-- 折價券 -->
   <div id="b-coupon" style="display:none">
-    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">新增各類折扣券與優惠券</div>
+    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">🏷 折價券與優惠券（均已上鎖）</div>
     <div id="coupon-list"></div>
-    <button class="submit" style="background:#6B9B8A" onclick="addCoupon()">＋ 新增折價券</button>
+    <button class="submit" style="background:#6B9B8A" onclick="addCouponModal()">＋ 新增折價券</button>
   </div>
 
-  <!-- 緊急聯絡 -->
+  <!-- 緊急 -->
   <div id="b-emergency" style="display:none">
     <div class="card" style="background:#FFF2E8;border-color:#F0D8C0">
       <div style="font-size:15px;font-weight:500;margin-bottom:12px">🆘 緊急聯絡資訊</div>
       <div id="emergency-list"></div>
       <button class="submit" style="background:#C06840;margin-top:4px" onclick="showAddEmergency()">＋ 新增聯絡人</button>
     </div>
-    <div class="card" style="background:#E8F2F8;border-color:#C8DCE8">
+    <div class="card" style="background:#E8F5F0;border-color:#B0DDD0">
       <div style="font-size:14px;font-weight:500;margin-bottom:10px">📞 日本緊急電話</div>
       <div style="font-size:13px;line-height:2.2">
         🚨 警察：<strong>110</strong><br>🚒 火災／救護：<strong>119</strong><br>
@@ -199,8 +252,8 @@ input,select,textarea{font-family:inherit}
 <div class="tab" id="t-schedule">
   <div class="ph"><h1>🌸 關西六日遊</h1><p>2026年 5/14–5/19 · 京都 × 大阪 × 神戶</p></div>
   <div class="cd">
-    <div><div style="font-size:12px;opacity:.8">距離出發還有</div><div class="cd-num" id="cdnum">—</div><div style="font-size:12px;opacity:.8">天</div></div>
-    <div style="text-align:right"><div style="font-size:12px;opacity:.7">出發日</div><div style="font-size:15px;margin-top:4px;font-weight:500">5/14 Thu</div><div style="font-size:11px;opacity:.6">關西國際機場 KIX</div></div>
+    <div><div style="font-size:12px;opacity:.7">距離出發還有</div><div class="cd-num" id="cdnum">—</div><div style="font-size:12px;opacity:.7">天</div></div>
+    <div style="text-align:right"><div style="font-size:12px;opacity:.7">出發</div><div style="font-size:15px;font-weight:500;margin-top:2px">5/14 Thu KHH</div><div style="font-size:11px;opacity:.6">BR 182 · 07:05</div></div>
   </div>
   <div class="ds" id="dateScroll"></div>
   <div id="weatherArea"></div>
@@ -229,8 +282,7 @@ input,select,textarea{font-family:inherit}
     <div class="stat"><div class="stat-l">總支出 (JPY)</div><div class="stat-v" id="s-jpy">¥0</div></div>
     <div class="stat"><div class="stat-l">約合台幣</div><div class="stat-v" id="s-twd">NT$0</div></div>
     <div class="stat"><div class="stat-l">人均費用</div><div class="stat-v" id="s-pp">¥0</div></div>
-    <div class="stat">
-      <div class="stat-l">JPY/TWD 匯率</div>
+    <div class="stat"><div class="stat-l">JPY/TWD 匯率</div>
       <input type="number" id="rateInput" value="0.22" step="0.001" oninput="updateRate(this.value)"
         style="border:none;outline:none;font-size:18px;font-weight:500;color:#3D2A1A;background:transparent;width:100%;margin-top:2px">
     </div>
@@ -284,9 +336,14 @@ input,select,textarea{font-family:inherit}
 <!-- ADDRESS FULLSCREEN -->
 <div class="addr-full" id="addrFull" onclick="if(event.target===this)closeAddr()">
   <div class="addr-card">
-    <div style="font-size:13px;color:#8B6445;margin-bottom:14px">📍 出示此畫面給計程車司機</div>
-    <div id="addrText" style="font-size:22px;font-weight:500;color:#1A1A1A;line-height:1.6;margin-bottom:20px"></div>
-    <button onclick="closeAddr()" style="width:100%;padding:12px;background:#D4855A;color:#fff;border:none;border-radius:10px;font-size:14px">關閉</button>
+    <div style="font-size:13px;color:#007B5E;font-weight:500;margin-bottom:6px">📍 出示此畫面給計程車司機</div>
+    <div style="font-size:11px;color:#999;margin-bottom:14px">Please take me to this address</div>
+    <div id="addrText" style="font-size:20px;font-weight:500;color:#1A1A1A;line-height:1.7;margin-bottom:8px"></div>
+    <div id="addrName" style="font-size:13px;color:#666;margin-bottom:20px"></div>
+    <div style="display:flex;gap:8px">
+      <button onclick="closeAddr()" style="flex:1;padding:12px;background:#F0F0F0;color:#3D2A1A;border:none;border-radius:10px;font-size:14px">關閉</button>
+      <button onclick="navigateFromAddr()" style="flex:1;padding:12px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:14px">🧭 導航</button>
+    </div>
   </div>
 </div>
 
@@ -298,200 +355,194 @@ input,select,textarea{font-family:inherit}
 </nav>
 
 <script>
-// ════════════════════════════════════════════
-// HOTELS
-// ════════════════════════════════════════════
+// ════ HOTELS ════
 const HOTELS=[
   {id:'kyoto',emoji:'🌙',grad:'#C8A88A,#A87A5A',
    name:'京都八條都酒店',nameEN:'Kyoto Hachijo Miyako Hotel',
-   addrJP:'〒601-8412 京都府京都市南区西九条院町17（京都駅八条口）',
-   checkin:'14:00',checkout:'11:00',nights:'1晚',period:'5/14 Thu → 5/15 Fri'},
+   addrJP:'〒601-8412 京都府京都市南区西九条院町17',
+   addrNote:'（京都駅八条口 徒歩1分）',
+   checkin:'14:00',checkout:'11:00',nights:'1晚',period:'5/14 Thu → 5/15 Fri',
+   lat:34.9849,lng:135.7541},
   {id:'osaka',emoji:'🌃',grad:'#8AA8C8,#5A7898',
    name:'艾思利德酒店 難波南III',nameEN:'ESLEAD HOTEL Namba Minami III',
    addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',
-   checkin:'15:00',checkout:'10:00',nights:'4晚',period:'5/15 Fri → 5/19 Tue'}
+   addrNote:'',
+   checkin:'15:00',checkout:'10:00',nights:'4晚',period:'5/15 Fri → 5/19 Tue',
+   lat:34.6603,lng:135.5006}
 ];
 
-// ════════════════════════════════════════════
-// TICKETS
-// ════════════════════════════════════════════
+// ════ TICKETS (all locked) ════
 const TICKETS=[
-  {id:'haruka1',emoji:'🚄',name:'JR HARUKA 特急券',sub:'關西機場→京都站 · Day 1',locked:false,
-   detail:'關西空港駅 → 京都駅\n外國人特惠票 ¥3,690\n需持護照購買 · 約75分鐘'},
-  {id:'haruka2',emoji:'🚄',name:'JR HARUKA 特急券',sub:'京都站→天王寺 · Day 2',locked:false,
-   detail:'京都駅 → 天王寺駅\n約30分鐘'},
-  {id:'kimono',emoji:'🌸',name:'璃光和服 清水寺店',sub:'✅ 已預約09:00 · Day 2',locked:false,
-   detail:'〒605-0074 京都府京都市東山区桝屋町351-16\n09:00預約入場 · 含頭髮造型 · 翌日10:00前歸還'},
-  {id:'kkday',emoji:'🚢',name:'KKDAY 一日遊',sub:'伊根·天橋立·美山町 · Day 3',locked:true,
-   detail:'✓ 集合：大阪難波 06:50（出發前確認地點）\n✓ 行程：伊根舟屋 → 天橋立 → 美山町合掌村\n✓ 繁體中文導遊帶團'},
-  {id:'yakiniku',emoji:'🥩',name:'燒肉力丸 梅田お初天神',sub:'可預約 · Day 4',locked:false,
-   detail:'大阪府大阪市北区曽根崎2-8-9 八幸ビルB1F\n11:30–24:00 · 建議電話預約'},
-  {id:'osakapass',emoji:'🎡',name:'大阪周遊卷',sub:'Day 4–5 使用',locked:false,
-   detail:'✓ 梅田空中庭園 09:30-15:00 免費\n✓ 通天閣 入場優惠\n✓ 難波八阪神社 周邊景點\n使用期間請隨身攜帶'},
-  {id:'charter',emoji:'🚐',name:'阪神旅遊包車',sub:'神戶一日 · Day 5',locked:true,
-   detail:'包車服務 · Day 5 全天\n行程：難波出發 → 神戶動物王國 → 南京町 → 神戶觀光船 → umie → 返回難波'},
-  {id:'kobeZoo',emoji:'🐼',name:'神戶動物王國',sub:'⚠ 週四公休 · Day 5',locked:false,
-   detail:'兵庫県神戸市中央区港島南町7丁目1番9号\n平日10:00–17:00 / 假日10:00–17:30\n⚠ 每週四定休（黃金週等除外）'},
-  {id:'kobeShip',emoji:'⛴',name:'神戶觀光船',sub:'Day 5',locked:false,
-   detail:'兵庫県神戸市中央区波止場町4番3号\n建議提前預約班次 · 約60–90分鐘'}
+  {id:'haruka1',emoji:'🚄',name:'JR HARUKA 特急券',sub:'關西機場 → 京都站 · Day 1',
+   detail:'関西空港駅 → 京都駅\n外国人向け割引きっぷ ¥3,690\n所要時間：約75分'},
+  {id:'haruka2',emoji:'🚄',name:'JR HARUKA 特急券',sub:'京都站 → 天王寺 · Day 2',
+   detail:'京都駅 → 天王寺駅\n所要時間：約30分'},
+  {id:'kimono',emoji:'🌸',name:'璃光和服 清水寺店',sub:'✅ 已預約09:00 · Day 2',
+   detail:'〒605-0074 京都府京都市東山区桝屋町351-16\n09:00予約済み · ヘアスタイリング含む\n翌日10:00までに返却'},
+  {id:'kkday',emoji:'🚢',name:'KKDAY 一日遊',sub:'伊根·天橋立·美山町 · Day 3',
+   detail:'集合：大阪難波 06:50（出発前に集合場所を確認）\n行程：伊根舟屋 → 天橋立 → 美山町合掌村\n繁体字中国語ガイド'},
+  {id:'yakiniku',emoji:'🥩',name:'燒肉力丸 梅田お初天神',sub:'可預約 · Day 4',
+   detail:'大阪府大阪市北区曽根崎2丁目8番9号 八幸ビルB1F\n11:30〜24:00 · 要予約推奨'},
+  {id:'osakapass',emoji:'🎡',name:'大阪周遊卷',sub:'Day 4 使用',
+   detail:'使用日：Day 4 (5/17)\n✓ 梅田スカイビル 空中庭園 09:30-15:00 無料\n✓ 通天閣 入場割引\n※ 使用当日のみ有効・携帯必須'},
+  {id:'charter',emoji:'🚐',name:'阪神旅遊包車',sub:'神戶一日 · Day 5',
+   detail:'Day 5 (5/18) 全日チャーター\nルート：難波出発 → 神戸どうぶつ王国 → 南京町 → 神戸港観光船 → umie → 難波帰着'},
+  {id:'kobeZoo',emoji:'🐼',name:'神戶動物王國',sub:'⚠ 週四公休 · Day 5',
+   detail:'兵庫県神戸市中央区港島南町7丁目1番9号\n平日 10:00–17:00 / 土日祝 10:00–17:30\n⚠ 毎週木曜定休（GW・夏休み等は営業）'},
+  {id:'kobeShip',emoji:'⛴',name:'神戶觀光船',sub:'Day 5',
+   detail:'兵庫県神戸市中央区波止場町4番3号\n事前予約推奨 · 所要時間：約60〜90分'}
 ];
 
-// ════════════════════════════════════════════
-// SCHEDULE DATA  (est=true 為推算時間，紫色顯示)
-// ════════════════════════════════════════════
+// ════ SCHEDULE ════
 const DAYS=[
-  // DAY 1
   {label:'Day 1',date:'5/14',dow:'Thu',emoji:'✈',weather:{icon:'⛅',desc:'多雲轉晴',temp:'22°C',city:'大阪'},items:[
+    {time:'07:05',est:false,name:'高雄小港機場 出發',type:'transport',hours:'BR182 高雄→大阪',
+     note:'長榮航空 BR 182 · 建議05:00前到機場・T1出境',
+     addrJP:'高雄市前鎮區中山三路2號 高雄國際機場',lat:22.5771,lng:120.3497},
     {time:'11:10',est:false,name:'關西國際機場 抵達',type:'transport',hours:'24小時',
-     note:'入境・辦理入境手續・換購ICOCA或大阪周遊券・領取行李約30-45分鐘',
+     note:'入境・辦理入境手續・換購ICOCA・領取行李約30-45分鐘',
      addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
     {time:'12:20',est:true,name:'搭乘 JR HARUKA',type:'transport',hours:'每30分一班',
-     note:'關西機場→京都站・約75分鐘・外國人特惠票¥3,690（需護照）',
-     addrJP:'大阪府泉佐野市臨空町11-5 関西空港駅',lat:34.4347,lng:135.2441},
+     note:'關西機場→京都站 · 約75分 · 外國人特惠票¥3,690（需護照）',
+     addrJP:'大阪府泉佐野市臨空町11番5号 関西空港駅',lat:34.4340,lng:135.2438},
     {time:'13:50',est:true,name:'京都車站 抵達',type:'transport',hours:'5:30–24:00',
-     note:'抵達後寄放行李至Coin Locker・再前往祇園（搭市巴士206號約20分）',
+     note:'寄放行李至Coin Locker・再前往祇園（市巴士206號約20分）',
      addrJP:'京都府京都市下京区東塩小路高倉町8番3号',lat:34.9858,lng:135.7588},
     {time:'14:30',est:true,name:'祇園・花見小路',type:'sight',hours:'全年開放（各店不一）',
-     note:'漫步石板小路・感受舞妓文化・傍晚燈籠亮起最美・請勿隨意進入料亭',
+     note:'漫步石板小路・舞妓文化街道・傍晚燈籠亮起最美',
      addrJP:'京都府京都市東山区祇園町南側',lat:35.0037,lng:135.7758},
     {time:'17:10',est:false,name:'In the Moon 酒館',type:'food',hours:'17:00–24:00（雨天不營業）',
-     note:'🔴 雨天不營業・無法預約・鴨川景觀屋頂吧・建議17:00前排隊等候',
+     note:'🔴 雨天不營業・無法預約・鴨川景觀屋頂吧・17:00前排隊',
      addrJP:'京都府京都市東山区中之町200 カモガワビル屋上',lat:35.0051,lng:135.7706},
-    {time:'19:30',est:true,name:'四條河原町 晚餐',type:'shopping',hours:'各店至22:00',
+    {time:'19:30',est:true,name:'四條河原町',type:'shopping',hours:'各店至22:00',
      note:'京都最繁華商業區・阪急、大丸百貨・藥妝店・宵夜美食',
      addrJP:'京都府京都市中京区河原町通四条上ル',lat:35.0036,lng:135.7701},
-    {time:'21:00',est:true,name:'京都八條都酒店 入住',type:'hotel',hours:'Check-in 14:00 / Check-out 11:00',
+    {time:'21:00',est:true,name:'京都八條都酒店 入住',type:'hotel',hours:'Check-in 14:00',
      note:'京都站八條口步行約1分鐘',
-     addrJP:'〒601-8412 京都府京都市南区西九条院町17（京都駅八条口）',lat:34.9849,lng:135.7541}
+     addrJP:'〒601-8412 京都府京都市南区西九条院町17',lat:34.9849,lng:135.7541}
   ]},
-  // DAY 2
   {label:'Day 2',date:'5/15',dow:'Fri',emoji:'👘',weather:{icon:'☀',desc:'晴時多雲',temp:'24°C',city:'京都'},items:[
     {time:'08:30',est:true,name:'搭計程車前往和服店',type:'transport',hours:'—',
-     note:'從京都站搭計程車約10-15分・計程車費約¥1,200-1,500・請出示和服店日文地址',
+     note:'從京都站搭計程車約10-15分 · 計程車費約¥1,200-1,500 · 出示日文地址',
      addrJP:'京都府京都市下京区東塩小路高倉町8番3号 京都駅',lat:34.9858,lng:135.7588},
     {time:'09:00',est:false,name:'璃光和服 清水寺店',type:'sight',hours:'09:00–18:00',
-     note:'✅ 已預約09:00・含頭髮造型・隔天10:00前歸還・可選振袖、浴衣、男仕和服',
+     note:'✅ 已預約09:00・含頭髮造型・隔天10:00前歸還',
      addrJP:'〒605-0074 京都府京都市東山区桝屋町351-16',lat:34.9999,lng:135.7784},
     {time:'10:30',est:true,name:'清水寺',type:'sight',hours:'06:00–18:00（特別期間至21:30）',
-     note:'門票¥500・世界文化遺產・清水舞台・地主神社預計2026年3月後重新開放',
+     note:'門票¥500・世界文化遺產・清水舞台・穿和服遊覽最美',
      addrJP:'京都府京都市東山区清水1丁目294',lat:34.9948,lng:135.7851},
     {time:'13:00',est:true,name:'錦市場',type:'food',hours:'各店10:00–18:00',
-     note:'「京都廚房」・約400公尺・醬菜、海鮮・⚠ 禁止邊走邊吃',
+     note:'「京都廚房」約400公尺・醬菜、海鮮・⚠ 禁止邊走邊吃',
      addrJP:'京都府京都市中京区錦小路通寺町西入',lat:35.0041,lng:135.7655},
     {time:'15:00',est:true,name:'京都車站→大阪',type:'transport',hours:'JR新快速 約27分',
-     note:'搭JR新快速至大阪・ICOCA約¥560・往難波轉御堂筋線',
+     note:'搭JR新快速至大阪・ICOCA約¥560',
      addrJP:'京都府京都市下京区東塩小路高倉町8番3号',lat:34.9858,lng:135.7588},
-    {time:'16:00',est:true,name:'艾思利德酒店 難波南III 入住',type:'hotel',hours:'Check-in 15:00 / Check-out 10:00',
+    {time:'16:00',est:true,name:'艾思利德酒店 難波南III 入住',type:'hotel',hours:'Check-in 15:00',
      note:'放置行李・難波站徒步約10分鐘',
      addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
-    {time:'17:30',est:true,name:'心齋橋・道頓堀',type:'shopping',hours:'各店11:00–22:00',
-     note:'大阪最大購物街・藥妝、服飾・道頓堀美食：章魚燒、串炸、蟹道樂',
-     addrJP:'大阪府大阪市中央区心斎橋筋1丁目',lat:34.6722,lng:135.5006}
+    {time:'17:00',est:true,name:'自由活動・難波周邊',type:'shopping',hours:'各店至22:00',
+     note:'休息後自由探索難波周邊・藥妝、超市採購・晚餐自理',
+     addrJP:'大阪府大阪市中央区難波',lat:34.6687,lng:135.5013}
   ]},
-  // DAY 3
   {label:'Day 3',date:'5/16',dow:'Sat',emoji:'⛵',weather:{icon:'⛅',desc:'多雲',temp:'21°C',city:'京都府'},items:[
     {time:'06:50',est:false,name:'KKDAY 集合出發',type:'transport',hours:'全天約10小時',
-     note:'✅ 集合地點：大阪難波（出發前確認確切地點）・請提前10分鐘抵達',
+     note:'✅ 集合：大阪難波（出發前確認確切地點）・請提前10分鐘抵達',
      addrJP:'大阪府大阪市中央区難波',lat:34.6687,lng:135.5013},
     {time:'09:00',est:true,name:'伊根舟屋（觀光船）',type:'sight',hours:'觀光船09:00–16:00',
-     note:'日本唯一海上船屋群・觀光船約30分鐘繞行・傳統漁村風情',
+     note:'日本唯一海上船屋群・觀光船約30分鐘繞行',
      addrJP:'京都府与謝郡伊根町平田',lat:35.6833,lng:135.3069},
     {time:'11:30',est:true,name:'天橋立',type:'sight',hours:'纜車08:30–17:00',
-     note:'日本三景之一・「股覗」體驗・文珠山展望台俯瞰砂嘴',
+     note:'日本三景之一・「股覗」體驗・文珠山展望台',
      addrJP:'京都府宮津市天橋立',lat:35.5611,lng:135.1894},
-    {time:'14:30',est:true,name:'美山町合掌村',type:'sight',hours:'全年開放（博物館09:00–17:00）',
-     note:'日本三大合掌村之一・茅草屋頂民家・5月有鯉魚旗裝飾',
+    {time:'14:30',est:true,name:'美山町合掌村',type:'sight',hours:'全年開放',
+     note:'日本三大合掌村之一・茅草屋頂民家・5月有鯉魚旗',
      addrJP:'京都府南丹市美山町北',lat:35.3472,lng:135.5086},
     {time:'19:00',est:true,name:'返回難波・心齋橋',type:'shopping',hours:'各店至22:00',
-     note:'一日遊結束返回難波・心齋橋逛街購物・藥妝補貨',
+     note:'一日遊結束返回難波・心齋橋逛街購物',
      addrJP:'大阪府大阪市中央区心斎橋筋1丁目',lat:34.6722,lng:135.5006},
     {time:'20:00',est:true,name:'道頓堀大観覧車',type:'sight',hours:'11:00–23:00',
-     note:'道頓堀戎橋畔摩天輪・夜景絕美・票價約¥800',
+     note:'道頓堀摩天輪・夜景絕美・票價約¥800',
      addrJP:'大阪府大阪市中央区宗右衛門町7番13号',lat:34.6687,lng:135.5010},
     {time:'20:30',est:true,name:'道頓堀宵夜',type:'food',hours:'各店不一（部分24H）',
-     note:'章魚燒・串炸・金龍拉麵24H・戎橋旁螃蟹本家',
+     note:'章魚燒・串炸・金龍拉麵24H',
      addrJP:'大阪府大阪市中央区道頓堀1丁目',lat:34.6690,lng:135.5012}
   ]},
-  // DAY 4
   {label:'Day 4',date:'5/17',dow:'Sun',emoji:'🦁',weather:{icon:'☀',desc:'晴天',temp:'26°C',city:'大阪'},items:[
     {time:'09:40',est:false,name:'露天神社（お初天神）',type:'sight',hours:'06:00–24:00',
-     note:'「曾根崎心中」舞台・縁結び・每月1日有朝市・免費參拜',
+     note:'「曾根崎心中」舞台・縁結び・免費參拜',
      addrJP:'大阪府大阪市北区曽根崎2丁目5番4号',lat:34.7000,lng:135.4986},
     {time:'10:50',est:false,name:'燒肉力丸 梅田お初天神店',type:'food',hours:'11:30–24:00',
-     note:'露天神社旁・可預約・平價和牛・推薦牛舌套餐・B1F',
+     note:'可預約・平價和牛・推薦牛舌套餐・B1F',
      addrJP:'大阪府大阪市北区曽根崎2丁目8番9号 八幸ビルB1F',lat:34.6999,lng:135.4988},
     {time:'12:30',est:true,name:'扭蛋之森 梅田茶屋町店',type:'shopping',hours:'11:00–21:00',
-     note:'約2400台扭蛋機・NU茶屋町3F・動漫周邊・連線限定商品',
+     note:'約2400台扭蛋機・NU茶屋町3F',
      addrJP:'大阪府大阪市北区茶屋町15番34号 NU茶屋町3F',lat:34.7030,lng:135.4958},
     {time:'14:10',est:false,name:'梅田藍天大廈 空中庭園展望台',type:'sight',hours:'09:30–22:30',
-     note:'⭐ 大阪周遊券09:30-15:00免費・15:00後9折・360度無牆展望',
+     note:'⭐ 大阪周遊券09:30-15:00免費・15:00後9折',
      addrJP:'大阪府大阪市北区大淀中1丁目1番88号 梅田スカイビル',lat:34.7056,lng:135.4906},
-    {time:'16:30',est:true,name:'通天閣',type:'sight',hours:'展望台09:00–21:45 / SLIDER 10:00–20:00',
-     note:'⚠ 必須現場換取入場預約券・TOWER SLIDER¥1,000・比利肯神像',
+    {time:'16:30',est:true,name:'通天閣',type:'sight',hours:'展望台09:00–21:45',
+     note:'⚠ 必須現場換取入場預約券・TOWER SLIDER¥1,000',
      addrJP:'大阪府大阪市浪速区恵美須東1丁目18番6号',lat:34.6527,lng:135.5064},
     {time:'18:00',est:true,name:'新世界本通商店街',type:'shopping',hours:'10:00–22:00',
-     note:'復古庶民氣氛・串炸名店・太陽之塔周邊商品',
+     note:'復古庶民氣氛・串炸名店',
      addrJP:'大阪府大阪市浪速区恵美須東2丁目4番5号',lat:34.6526,lng:135.5060}
   ]},
-  // DAY 5
   {label:'Day 5',date:'5/18',dow:'Mon',emoji:'🐼',weather:{icon:'⛅',desc:'多雲',temp:'23°C',city:'大阪/神戶'},items:[
     {time:'07:50',est:false,name:'難波八阪神社',type:'sight',hours:'境內全年 / 社務所09:00–17:00',
-     note:'12公尺超巨大獅子殿・吞邪迎福・距飯店徒步約8分鐘',
+     note:'12公尺超巨大獅子殿・距飯店徒步約8分鐘',
      addrJP:'大阪府大阪市浪速区元町2丁目9番19号',lat:34.6608,lng:135.4984},
-    {time:'09:40',est:false,name:'飯店出發→神戶（包車）',type:'transport',hours:'—',
-     note:'阪神旅遊包車・從難波出發前往神戶・全程含司機',
+    {time:'09:40',est:false,name:'飯店出發→神戶（包車）',type:'transport',hours:'阪神旅遊包車',
+     note:'包車從難波出發前往神戶・全程含司機',
      addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
-    {time:'10:30',est:true,name:'神戶動物王國',type:'sight',hours:'平日10:00–17:00 / 假日10:00–17:30（週四公休）',
-     note:'⚠ 週四公休・150種動物零距離互動・室內外均可',
+    {time:'10:30',est:true,name:'神戶動物王國',type:'sight',hours:'平日10:00–17:00（週四公休）',
+     note:'⚠ 週四公休・150種動物零距離互動',
      addrJP:'兵庫県神戸市中央区港島南町7丁目1番9号',lat:34.6382,lng:135.2136},
     {time:'13:00',est:true,name:'南京町（神戶中華街）',type:'food',hours:'各店10:00–21:00',
-     note:'日本三大中華街・老祥記豬肉包必吃・糖葫蘆',
+     note:'日本三大中華街・老祥記豬肉包必吃',
      addrJP:'兵庫県神戸市中央区元町通2丁目（南京町広場）',lat:34.6897,lng:135.1843},
-    {time:'14:30',est:true,name:'神戶觀光船（コンチェルト）',type:'transport',hours:'依班次（建議提前預約）',
+    {time:'14:30',est:true,name:'神戶觀光船',type:'transport',hours:'依班次（建議提前預約）',
      note:'神戶港灣遊覽・眺望六甲山・約60-90分鐘',
      addrJP:'兵庫県神戸市中央区波止場町4番3号',lat:34.6851,lng:135.1896},
     {time:'16:30',est:true,name:'神戶臨海樂園 umie',type:'shopping',hours:'10:00–21:00（餐廳至23:00）',
-     note:'神戶港邊大型購物中心・海景露台・MOSAIC廣場',
+     note:'神戶港邊大型購物中心・MOSAIC廣場',
      addrJP:'兵庫県神戸市中央区東川崎町1丁目7番2号',lat:34.6875,lng:135.1825},
     {time:'19:00',est:true,name:'包車返回難波',type:'transport',hours:'—',
      note:'搭乘阪神旅遊包車返回難波飯店',
      addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006}
   ]},
-  // DAY 6
   {label:'Day 6',date:'5/19',dow:'Tue',emoji:'🛍',weather:{icon:'☀',desc:'晴天',temp:'25°C',city:'大阪'},items:[
-    {time:'08:00',est:true,name:'飯店退房',type:'hotel',hours:'退房 10:00',
-     note:'⚠ 10:00前退房・行李可寄放至下午・手提購物袋前往黑門',
+    {time:'08:00',est:true,name:'飯店退房',type:'hotel',hours:'退房 10:00前',
+     note:'⚠ 10:00前退房・行李可寄放至下午',
      addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
     {time:'08:30',est:false,name:'黑門市場',type:'food',hours:'09:00–18:00',
-     note:'「大阪廚房」・海鮮螃蟹・和牛握壽司・⚠ 部分週一公休',
+     note:'「大阪廚房」・海鮮螃蟹・和牛握壽司',
      addrJP:'〒542-0073 大阪府大阪市中央区日本橋2丁目4番1号',lat:34.6623,lng:135.5085},
     {time:'11:00',est:true,name:'臨空城Outlet',type:'shopping',hours:'10:00–20:00',
-     note:'關西機場旁Outlet・COACH、GUCCI・退稅購物・南海電鐵至臨空城站約¥260',
+     note:'關西機場旁Outlet・退稅購物・南海電鐵至臨空城站',
      addrJP:'〒598-8508 大阪府泉佐野市りんくう往来南3番28号',lat:34.4309,lng:135.2797},
     {time:'14:00',est:true,name:'前往關西機場',type:'transport',hours:'24小時',
-     note:'臨空城步行至機場約15分・或計程車約¥1,500',
+     note:'臨空城步行至機場約15分',
      addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
     {time:'16:00',est:false,name:'關西機場 Check-in',type:'transport',hours:'24小時',
-     note:'提前3小時辦理・免稅店最後購物・確認行李23kg・辦理退稅',
+     note:'BR 147 · 20:35起飛 · 提前3小時到・免稅店・辦理退稅・確認行李23kg',
+     addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
+    {time:'20:35',est:false,name:'大阪關西機場 起飛',type:'transport',hours:'BR147 大阪→高雄',
+     note:'長榮航空 BR 147 · 20:35起飛 · 22:55抵達高雄小港',
      addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442}
   ]}
 ];
 
-// ════════════════════════════════════════════
-// PLANNING LISTS (editable)
-// ════════════════════════════════════════════
 const LISTS={
   todo:[
-    {t:'預訂關西機場接送或確認交通',d:false,w:'全體'},{t:'購買JR PASS / IC卡（ICOCA）',d:true,w:'小明'},
-    {t:'確認KKDay集合地點',d:false,w:'小花'},{t:'下載Google Maps離線地圖',d:false,w:'全體'},
+    {t:'確認KKDay集合地點',d:false,w:'小花'},{t:'購買ICOCA IC卡',d:true,w:'小明'},
     {t:'換日幣',d:true,w:'各自'},{t:'申請海外旅遊保險',d:false,w:'各自'},
     {t:'確認兩間旅館入住需求',d:true,w:'小華'},{t:'設定手機漫遊或購買日本SIM',d:false,w:'各自'},
-    {t:'預約燒肉力丸梅田お初天神',d:false,w:'小明'}
+    {t:'預約燒肉力丸梅田お初天神',d:false,w:'小明'},{t:'下載Google Maps離線地圖',d:false,w:'全體'}
   ],
   luggage:[
     {t:'護照（有效期6個月以上）',d:true,w:''},{t:'日圓現金',d:true,w:''},
     {t:'換洗衣物 x6天',d:false,w:''},{t:'輕便雨傘',d:false,w:''},
-    {t:'相機/手機充電器',d:true,w:''},{t:'轉接插頭（日規雙平腳）',d:false,w:''},
+    {t:'充電器 & 行動電源',d:true,w:''},{t:'轉接插頭（日規雙平腳）',d:false,w:''},
     {t:'常備藥品/腸胃藥',d:false,w:''},{t:'防曬乳 SPF50',d:true,w:''},
     {t:'行李束帶/行李秤',d:false,w:''}
   ],
@@ -504,16 +555,16 @@ const LISTS={
 };
 const LIST_NAMES={todo:'待辦清單',luggage:'行李清單',shopping:'購物清單'};
 
-const TC={sight:'#3A8A3A',food:'#8A4A0A',transport:'#1A3A7A',hotel:'#5A1A7A',shopping:'#7A4A0A'};
+const TC={sight:'#3A8A3A',food:'#8A4A0A',transport:'#007B5E',hotel:'#5A1A7A',shopping:'#7A4A0A'};
 const TL={sight:'景點',food:'美食',transport:'交通',hotel:'住宿',shopping:'購物'};
 const TB={sight:'b-sight',food:'b-food',transport:'b-transport',hotel:'b-hotel',shopping:'b-shopping'};
-const CAT_BG={'🍜 餐飲':'#FDE8D0','🎡 景點':'#E8F2D8','🚃 交通':'#E0E8F8','🛍 購物':'#FEF0D0','🏨 住宿':'#F0E0F8','🎟 票券':'#E8F0F8'};
+const CAT_BG={'🍜 餐飲':'#FDE8D0','🎡 景點':'#E8F2D8','🚃 交通':'#E0F0E8','🛍 購物':'#FEF0D0','🏨 住宿':'#F0E0F8','🎟 票券':'#E8F0F8'};
 const CAT_EM={'🍜 餐飲':'🍜','🎡 景點':'🎡','🚃 交通':'🚃','🛍 購物':'🛍','🏨 住宿':'🏨','🎟 票券':'🎟'};
 
 let curDay=0,expenses=[],expFormOpen=false,curPlan='todo',curRate=0.22;
 let pinVal='',pinCallback=null,curPIN='007';
-let openTk={};
-let coupons=[];
+let openTk={},openCp={},coupons=[];
+let addrNavLat=0,addrNavLng=0;
 let emergencyContacts=[
   {name:'台灣外交部旅外緊急求助',phone:'+886-800-085-095'},
   {name:'台灣駐大阪辦事處',phone:'+81-6-4301-7333'}
@@ -560,12 +611,14 @@ function buildHotels(){
         <div style="font-size:15px;font-weight:500">${h.name}</div>
         <div style="font-size:12px;color:#8B6445;margin-top:2px">${h.nameEN}</div>
         <div style="background:#F5EDE5;border-radius:10px;padding:10px 12px;margin-top:10px">
-          <div style="font-size:11px;font-weight:500;color:#8B6445;margin-bottom:5px">📍 地址（計程車出示用）</div>
-          <div style="font-size:14px;color:#2A1A0A;line-height:1.7">${h.addrJP}</div>
-          <button onclick="showAddr('${h.addrJP.replace(/'/g,'\\\'')}')"
-            style="margin-top:8px;padding:6px 14px;background:#D4855A;color:#fff;border:none;border-radius:8px;font-size:12px">
-            🔍 放大出示
-          </button>
+          <div style="font-size:11px;font-weight:500;color:#8B6445;margin-bottom:5px">📍 日文地址（計程車出示）</div>
+          <div style="font-size:14px;color:#2A1A0A;line-height:1.7">${h.addrJP}<br><span style="font-size:12px;color:#8B6445">${h.addrNote}</span></div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button onclick="showAddr('${h.addrJP.replace(/'/g,"\\'")}','${h.name.replace(/'/g,"\\'")}',${h.lat},${h.lng})"
+              style="flex:1;padding:7px 0;background:#D4855A;color:#fff;border:none;border-radius:8px;font-size:12px">🔍 放大出示</button>
+            <button onclick="openGoogleMapsNav(${h.lat},${h.lng})"
+              style="flex:1;padding:7px 0;background:#007B5E;color:#fff;border:none;border-radius:8px;font-size:12px">🧭 導航</button>
+          </div>
         </div>
         <div style="display:flex;gap:16px;margin-top:10px;font-size:12px">
           <span><span style="color:#8B6445">入住 </span><strong>${h.checkin}</strong></span>
@@ -587,26 +640,36 @@ function handleHotelPhoto(id,input){
   };reader.readAsDataURL(file);input.value='';
 }
 
+// NAVIGATE
+function openGoogleMapsNav(lat,lng){
+  window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`,'_blank');
+}
+
 // ADDRESS FULLSCREEN
-function showAddr(addr){
+function showAddr(addr,name,lat,lng){
   document.getElementById('addrText').textContent=addr;
+  document.getElementById('addrName').textContent=name||'';
+  addrNavLat=lat||0;addrNavLng=lng||0;
   document.getElementById('addrFull').classList.add('on');
 }
 function closeAddr(){document.getElementById('addrFull').classList.remove('on');}
+function navigateFromAddr(){
+  if(addrNavLat&&addrNavLng)openGoogleMapsNav(addrNavLat,addrNavLng);
+}
 
-// TICKETS
+// TICKETS (all locked)
 function buildTickets(){
   document.getElementById('ticket-list').innerHTML=TICKETS.map(tk=>`
     <div class="ticket-item">
-      <div class="ticket-hdr" onclick="toggleTk('${tk.id}',${tk.locked})">
+      <div class="ticket-hdr" onclick="toggleTk('${tk.id}')">
         <div>
           <div style="font-size:15px;font-weight:500">${tk.emoji} ${tk.name}</div>
           <div style="font-size:12px;color:#8B6445;margin-top:2px">${tk.sub}</div>
         </div>
-        <span id="tk-ic-${tk.id}" style="font-size:20px">${tk.locked?'🔒':'＋'}</span>
+        <span id="tk-ic-${tk.id}" style="font-size:20px">🔒</span>
       </div>
       <div id="tk-bd-${tk.id}" style="display:none;padding:0 14px 14px">
-        <div style="background:#F5EDE5;border-radius:10px;padding:11px 12px;font-size:13px;color:#5D3A1A;line-height:1.8;margin-bottom:10px;white-space:pre-line">${tk.detail}</div>
+        <div style="background:#F5EDE5;border-radius:10px;padding:11px 12px;font-size:13px;color:#5D3A1A;line-height:1.9;margin-bottom:10px;white-space:pre-line">${tk.detail}</div>
         <div class="upload-area" onclick="triggerTkUpload('${tk.id}')">
           <div style="font-size:22px;margin-bottom:4px">📎</div>
           <div style="font-size:13px;color:#8B6445">上傳 PDF 或圖片憑證</div>
@@ -617,29 +680,27 @@ function buildTickets(){
       </div>
     </div>`).join('');
 }
-function toggleTk(id,locked){
-  if(locked&&!openTk[id]){
+function toggleTk(id){
+  if(!openTk[id]){
     pinCallback=()=>{openTk[id]=true;showTkBody(id);};
-    openPin('解鎖票券');
+    openPin('請輸入 PIN 碼解鎖票券');
   } else {
-    openTk[id]=!openTk[id];showTkBody(id);
+    openTk[id]=false;showTkBody(id);
   }
 }
 function showTkBody(id){
   const body=document.getElementById('tk-bd-'+id);
   const ic=document.getElementById('tk-ic-'+id);
   if(!body)return;
-  const show=!!openTk[id];
-  body.style.display=show?'block':'none';
-  const tk=TICKETS.find(t=>t.id===id);
-  ic.textContent=show?(tk.locked?'🔓':'－'):(tk.locked?'🔒':'＋');
+  body.style.display=openTk[id]?'block':'none';
+  ic.textContent=openTk[id]?'🔓':'🔒';
 }
 function triggerTkUpload(id){document.getElementById('fu-'+id).click();}
 function handleTkUpload(id,input){
   const file=input.files[0];if(!file)return;
   const c=document.getElementById('files-'+id);
-  const isImg=file.type.startsWith('image/');
   const el=document.createElement('div');el.className='ufile';
+  const isImg=file.type.startsWith('image/');
   if(isImg){
     const r=new FileReader();
     r.onload=e=>{el.innerHTML=`<img src="${e.target.result}" style="width:46px;height:46px;object-fit:cover;border-radius:7px"><div style="flex:1"><div style="font-weight:500;font-size:13px">${file.name}</div><div style="font-size:11px;color:#8B6445">${(file.size/1024).toFixed(0)} KB</div></div>`;};
@@ -653,19 +714,16 @@ function handleTkUpload(id,input){
 // COUPONS
 function renderCoupons(){
   const list=document.getElementById('coupon-list');
-  list.innerHTML=coupons.length===0?'<div style="text-align:center;padding:24px;color:#B0A090;font-size:13px">尚未新增折價券</div>':'';
+  if(coupons.length===0){list.innerHTML='<div style="text-align:center;padding:24px;color:#B0A090;font-size:13px">尚未新增折價券</div>';return;}
+  list.innerHTML='';
   coupons.forEach((cp,i)=>{
-    const div=document.createElement('div');
-    div.className='ticket-item';
+    const div=document.createElement('div');div.className='ticket-item';
     div.innerHTML=`
       <div class="ticket-hdr" onclick="toggleCp(${i})">
-        <div>
-          <div style="font-size:15px;font-weight:500">🏷 ${cp.name}</div>
-          <div style="font-size:12px;color:#8B6445;margin-top:2px">${cp.note||'點擊展開查看'}</div>
-        </div>
+        <div><div style="font-size:15px;font-weight:500">🏷 ${cp.name}</div><div style="font-size:12px;color:#8B6445;margin-top:2px">${cp.note||'點擊解鎖查看'}</div></div>
         <div style="display:flex;align-items:center;gap:8px">
           <button onclick="event.stopPropagation();deleteCoupon(${i})" style="background:none;border:none;color:#C08080;font-size:16px">🗑</button>
-          <span id="cp-ic-${i}" style="font-size:18px">＋</span>
+          <span id="cp-ic-${i}" style="font-size:20px">🔒</span>
         </div>
       </div>
       <div id="cp-bd-${i}" style="display:none;padding:0 14px 14px">
@@ -679,19 +737,25 @@ function renderCoupons(){
     list.appendChild(div);
   });
 }
-let openCp={};
-function toggleCp(i){openCp[i]=!openCp[i];const b=document.getElementById('cp-bd-'+i);const ic=document.getElementById('cp-ic-'+i);if(b)b.style.display=openCp[i]?'block':'none';if(ic)ic.textContent=openCp[i]?'－':'＋';}
-function addCoupon(){
+function toggleCp(i){
+  if(!openCp[i]){
+    pinCallback=()=>{openCp[i]=true;const b=document.getElementById('cp-bd-'+i);const ic=document.getElementById('cp-ic-'+i);if(b)b.style.display='block';if(ic)ic.textContent='🔓';};
+    openPin('請輸入 PIN 碼解鎖折價券');
+  } else {
+    openCp[i]=false;const b=document.getElementById('cp-bd-'+i);const ic=document.getElementById('cp-ic-'+i);
+    if(b)b.style.display='none';if(ic)ic.textContent='🔒';
+  }
+}
+function addCouponModal(){
   document.getElementById('modalBody').innerHTML=`
     <div style="font-size:18px;font-weight:500;color:#3D2A1A;margin-bottom:16px">🏷 新增折價券</div>
     <div class="fl">名稱</div><input class="fi" id="cp-name" placeholder="如：大阪周遊券景點8折券">
-    <div class="fl">備註（選填）</div><input class="fi" id="cp-note" placeholder="如：Day 4-5 使用・出示畫面即可">
+    <div class="fl">備註（選填）</div><input class="fi" id="cp-note" placeholder="如：Day 4 使用">
     <button class="submit" style="background:#6B9B8A" onclick="saveCoupon()">新增</button>`;
   document.getElementById('modal').classList.add('on');
 }
 function saveCoupon(){
-  const n=document.getElementById('cp-name').value.trim();
-  if(!n)return;
+  const n=document.getElementById('cp-name').value.trim();if(!n)return;
   coupons.push({name:n,note:document.getElementById('cp-note').value.trim()});
   closeModal();renderCoupons();
 }
@@ -702,9 +766,8 @@ function handleCpUpload(i,input){
   const c=document.getElementById('cp-files-'+i);
   const el=document.createElement('div');el.className='ufile';
   const isImg=file.type.startsWith('image/');
-  if(isImg){
-    const r=new FileReader();r.onload=e=>{el.innerHTML=`<img src="${e.target.result}" style="width:46px;height:46px;object-fit:cover;border-radius:7px"><div style="flex:1;font-size:13px">${file.name}</div>`;};r.readAsDataURL(file);
-  } else {el.innerHTML=`<span style="font-size:22px">📄</span><div style="flex:1;font-size:13px">${file.name}</div>`;}
+  if(isImg){const r=new FileReader();r.onload=e=>{el.innerHTML=`<img src="${e.target.result}" style="width:46px;height:46px;object-fit:cover;border-radius:7px"><div style="flex:1;font-size:13px">${file.name}</div>`;};r.readAsDataURL(file);}
+  else{el.innerHTML=`<span style="font-size:22px">📄</span><div style="flex:1;font-size:13px">${file.name}</div>`;}
   c.appendChild(el);input.value='';
 }
 
@@ -712,8 +775,7 @@ function handleCpUpload(i,input){
 function renderEmergency(){
   document.getElementById('emergency-list').innerHTML=emergencyContacts.map((c,i)=>`
     <div class="em-item">
-      <div>
-        <div style="font-size:14px;font-weight:500">${c.name}</div>
+      <div><div style="font-size:14px;font-weight:500">${c.name}</div>
         <a href="tel:${c.phone}" style="font-size:15px;color:#C06840;font-weight:500;display:block;margin-top:3px">📞 ${c.phone}</a>
       </div>
       <button onclick="delEmergency(${i})" style="background:none;border:none;font-size:18px;color:#C08080">🗑</button>
@@ -753,17 +815,16 @@ function renderWeather(){
   document.getElementById('weatherArea').innerHTML=`
     <div class="wc">
       <span style="font-size:26px">${w.icon}</span>
-      <div><div style="font-size:20px;font-weight:500;color:#2A5F7A">${w.temp}</div><div style="font-size:12px;color:#4A7A8A">${w.city} · ${w.desc}</div></div>
-      <div style="margin-left:auto;font-size:11px;color:#4A7A8A;text-align:right"><div>☔ 建議帶傘</div><div>🧥 薄外套</div></div>
+      <div><div style="font-size:20px;font-weight:500;color:#007B5E">${w.temp}</div><div style="font-size:12px;color:#3A7A5A">${w.city} · ${w.desc}</div></div>
+      <div style="margin-left:auto;font-size:11px;color:#3A7A5A;text-align:right"><div>☔ 建議帶傘</div><div>🧥 薄外套</div></div>
     </div>`;
 }
 function renderTimeline(){
   const tl=document.getElementById('timeline');tl.innerHTML='';
   DAYS[curDay].items.forEach((item,idx)=>{
-    const est=item.est;
     const div=document.createElement('div');div.className='ti';
     div.innerHTML=`
-      <div class="ti-time${est?' est':''}">${item.time}${est?'<br><span style="font-size:9px;background:#F0E0F8;color:#7A3A9A;padding:1px 5px;border-radius:5px">預估</span>':''}</div>
+      <div class="ti-time${item.est?' est':''}">${item.time}${item.est?'<br><span style="font-size:9px;background:#F0E0F8;color:#7A3A9A;padding:1px 5px;border-radius:5px">預估</span>':''}</div>
       <div class="ti-dot" style="box-shadow:0 0 0 2px ${TC[item.type]||'#D4855A'};background:#fff"></div>
       <div class="ti-card">
         <span class="badge ${TB[item.type]}">${TL[item.type]||item.type}</span>
@@ -771,16 +832,14 @@ function renderTimeline(){
         <div class="hours-row">🕐 ${item.hours}</div>
         <div style="font-size:12px;color:#8B6445;margin-top:3px">${item.note.slice(0,55)}${item.note.length>55?'…':''}</div>
         <div>
-          <button class="nav-sm" style="background:#E8F0F8;color:#1A3A6A" onclick="event.stopPropagation();navigate(${item.lat},${item.lng})">🧭 導航</button>
-          <button class="nav-sm" style="background:#F5EDE5;color:#5D3A1A" onclick="event.stopPropagation();showAddrFromItem(${idx})">📍 地址</button>
+          <button class="nav-sm" style="background:#E0F0E8;color:#007B5E" onclick="event.stopPropagation();openGoogleMapsNav(${item.lat},${item.lng})">🧭 導航</button>
+          <button class="nav-sm" style="background:#F5EDE5;color:#5D3A1A" onclick="event.stopPropagation();showAddr('${item.addrJP.replace(/'/g,"\\'")}','${item.name.replace(/'/g,"\\'")}',${item.lat},${item.lng})">📍 地址</button>
           <button class="nav-sm" style="background:#F0E8E0;color:#D4855A" onclick="event.stopPropagation();openDetail(${idx})">📋 詳情</button>
         </div>
       </div>`;
     tl.appendChild(div);
   });
 }
-function navigate(lat,lng){window.open(`https://maps.google.com/?daddr=${lat},${lng}&dirflg=d`,'_blank');}
-function showAddrFromItem(idx){showAddr(DAYS[curDay].items[idx].addrJP);}
 function openDetail(idx){
   const item=DAYS[curDay].items[idx];
   document.getElementById('modalBody').innerHTML=`
@@ -788,27 +847,25 @@ function openDetail(idx){
       <span class="badge ${TB[item.type]}">${TL[item.type]}</span>
       ${item.est?'<span style="background:#F0E0F8;color:#7A3A9A;padding:2px 8px;border-radius:8px;font-size:11px">預估時間</span>':''}
     </div>
-    <div style="font-size:18px;font-weight:500;color:#3D2A1A;margin-bottom:8px">${item.time} ${item.name}</div>
+    <div style="font-size:18px;font-weight:500;color:#3D2A1A;margin-bottom:6px">${item.time} ${item.name}</div>
     <div style="font-size:13px;color:#6B9B8A;margin-bottom:10px">🕐 ${item.hours}</div>
     <div style="background:#FFF2E8;border-radius:10px;padding:12px;font-size:13px;color:#5D3A1A;line-height:1.7;margin-bottom:12px">${item.note}</div>
-    <div style="background:#F5EDE5;border-radius:10px;padding:12px;margin-bottom:12px">
+    <div style="background:#F5EDE5;border-radius:10px;padding:12px;margin-bottom:14px">
       <div style="font-size:11px;font-weight:500;color:#8B6445;margin-bottom:6px">📍 日文地址（計程車出示）</div>
-      <div style="font-size:15px;color:#2A1A0A;line-height:1.7">${item.addrJP}</div>
-      <button onclick="showAddr('${item.addrJP.replace(/'/g,'\\\'')}')"
-        style="margin-top:8px;padding:6px 14px;background:#D4855A;color:#fff;border:none;border-radius:8px;font-size:12px">
-        🔍 放大出示
-      </button>
+      <div style="font-size:15px;color:#2A1A0A;line-height:1.7;margin-bottom:10px">${item.addrJP}</div>
+      <button onclick="showAddr('${item.addrJP.replace(/'/g,"\\'")}','${item.name.replace(/'/g,"\\'")}',${item.lat},${item.lng})"
+        style="padding:7px 14px;background:#D4855A;color:#fff;border:none;border-radius:8px;font-size:12px;margin-right:8px">🔍 放大出示</button>
     </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <a href="https://maps.google.com/?q=${item.lat},${item.lng}" target="_blank"
-        style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:#F0E8E0;border-radius:8px;font-size:13px;color:#D4855A;font-weight:500">🗺 Google Maps</a>
-      <button onclick="navigate(${item.lat},${item.lng})"
-        style="display:inline-flex;align-items:center;gap:5px;padding:8px 14px;background:#E8F0F8;border-radius:8px;font-size:13px;color:#1A3A6A;font-weight:500;border:none">🧭 開始導航</button>
+    <div style="display:flex;gap:8px">
+      <button onclick="openGoogleMapsNav(${item.lat},${item.lng})"
+        style="flex:1;padding:10px;background:#007B5E;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:500">🧭 開始導航</button>
+      <a href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}" target="_blank"
+        style="flex:1;padding:10px;background:#F0E8E0;color:#D4855A;border-radius:10px;font-size:13px;font-weight:500;text-align:center;display:flex;align-items:center;justify-content:center">🗺 Google Maps</a>
     </div>`;
   document.getElementById('modal').classList.add('on');
 }
 
-// ════ PLANNING (editable) ════
+// ════ PLANNING ════
 function pTab(id,btn){
   ['todo','luggage','shopping'].forEach(x=>document.getElementById('p-'+x).style.display='none');
   document.getElementById('p-'+id).style.display='block';
@@ -818,14 +875,12 @@ function pTab(id,btn){
 }
 function renderPlan(id){
   const el=document.getElementById('p-'+id);
-  const items=LISTS[id];
-  el.innerHTML=items.map((item,i)=>`
+  el.innerHTML=LISTS[id].map((item,i)=>`
     <div class="todo-item">
       <div class="chk${item.d?' on':''}" onclick="toggleTodo('${id}',${i})">${item.d?'✓':''}</div>
       <div style="flex:1">
         <input class="edit-input${item.d?' done':''}" value="${item.t.replace(/"/g,'&quot;')}"
-          onchange="editTodo('${id}',${i},this.value)"
-          ${item.d?'disabled':''} placeholder="項目名稱">
+          onchange="editTodo('${id}',${i},this.value)" placeholder="項目名稱">
         ${item.w?`<div style="font-size:11px;color:#8B6445;margin-top:2px">👤 ${item.w}</div>`:''}
       </div>
       <button class="del-btn" onclick="deleteTodo('${id}',${i})">✕</button>
@@ -840,10 +895,8 @@ function toggleTodo(id,i){LISTS[id][i].d=!LISTS[id][i].d;renderPlan(id);}
 function editTodo(id,i,val){LISTS[id][i].t=val;updateProg(id);}
 function deleteTodo(id,i){LISTS[id].splice(i,1);renderPlan(id);}
 function addTodo(id){
-  const inp=document.getElementById('new-'+id);
-  const val=inp.value.trim();if(!val)return;
-  LISTS[id].push({t:val,d:false,w:''});
-  inp.value='';renderPlan(id);
+  const inp=document.getElementById('new-'+id);const val=inp.value.trim();if(!val)return;
+  LISTS[id].push({t:val,d:false,w:''});inp.value='';renderPlan(id);
 }
 function updateProg(id){
   const items=LISTS[id],done=items.filter(x=>x.d).length,total=items.length;
@@ -851,7 +904,7 @@ function updateProg(id){
   document.getElementById('prog-bar').style.width=total>0?`${(done/total)*100}%`:'0%';
 }
 
-// ════ EXPENSE (editable) ════
+// ════ EXPENSE ════
 function updateRate(v){curRate=parseFloat(v)||0.22;renderExp();}
 function toJPY(a,c){if(c==='JPY')return a;if(c==='TWD')return a/curRate;if(c==='USD')return a*149;if(c==='KRW')return a*0.11;return a;}
 function toggleExpForm(){
@@ -878,21 +931,16 @@ function renderExp(){
   keys.forEach(day=>{
     if(!byDay[day])return;
     const tot=byDay[day].reduce((s,e)=>s+toJPY(e.a,e.c),0);
-    html+=`<div class="day-row">${day} &nbsp;·&nbsp; 合計 ¥${Math.round(tot).toLocaleString()}</div>`;
-    byDay[day].forEach((e,i)=>{
+    html+=`<div class="day-row">${day} · 合計 ¥${Math.round(tot).toLocaleString()}</div>`;
+    byDay[day].forEach(e=>{
       const idx=expenses.indexOf(e);
       const sym=e.c==='JPY'?'¥':e.c==='TWD'?'NT$':e.c==='USD'?'$':'₩';
       html+=`<div class="exp-row">
         <div class="exp-icon" style="background:${CAT_BG[e.cat]||'#F5EDE5'}">${CAT_EM[e.cat]||'💴'}</div>
-        <div style="flex:1">
-          <div style="font-size:14px">${e.n}</div>
-          <div style="font-size:11px;color:#8B6445">${e.cat} · ${e.payer}</div>
-        </div>
+        <div style="flex:1"><div style="font-size:14px">${e.n}</div><div style="font-size:11px;color:#8B6445">${e.cat} · ${e.payer}</div></div>
         <div style="text-align:right;display:flex;align-items:center;gap:8px">
-          <div>
-            <div style="font-size:15px;font-weight:500;color:#D4855A">${sym}${e.a.toLocaleString()}</div>
-            <div style="font-size:11px;color:#B0A090">≈¥${Math.round(toJPY(e.a,e.c)).toLocaleString()}</div>
-          </div>
+          <div><div style="font-size:15px;font-weight:500;color:#D4855A">${sym}${e.a.toLocaleString()}</div>
+          <div style="font-size:11px;color:#B0A090">≈¥${Math.round(toJPY(e.a,e.c)).toLocaleString()}</div></div>
           <button onclick="deleteExp(${idx})" style="background:none;border:none;color:#C08080;font-size:16px">✕</button>
         </div>
       </div>`;
@@ -901,10 +949,8 @@ function renderExp(){
   document.getElementById('expList').innerHTML=html||'<div style="text-align:center;padding:30px;color:#B0A090;font-size:13px">點右下 ＋ 開始記帳</div>';
 }
 
-// ════ MODAL ════
+// ════ MODAL & PIN ════
 function closeModal(){document.getElementById('modal').classList.remove('on');}
-
-// ════ PIN ════
 function openPin(hint){pinVal='';updDots();document.getElementById('pinHint').textContent=hint||'請輸入 PIN 碼';document.getElementById('pinOv').classList.add('on');}
 function closePinOv(){document.getElementById('pinOv').classList.remove('on');pinVal='';}
 function updDots(){[0,1,2].forEach(i=>{document.getElementById('pd'+i).className='pdot'+(i<pinVal.length?' on':'');});}
