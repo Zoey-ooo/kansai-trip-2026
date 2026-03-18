@@ -1,160 +1,198 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<meta name="theme-color" content="#007B5E"/>
-<title>🌸 關西六日遊 2026</title>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
-
-<style>
-/* 這裡保留你原本強大的 CSS 樣式 */
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--eva:#007B5E;--eva2:#00A878;--shadow:4px 4px 0px #E0D5C5;--accent:#D4855A}
-body{padding-top:26px;font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px;-webkit-font-smoothing:antialiased}
-button{cursor:pointer;font-family:inherit;transition:transform .15s}
-button:active{transform:scale(.95)}
-a{color:inherit;text-decoration:none}
-/* ... (為了長度簡略，此處包含你原本所有的 CSS) ... */
-.bnav{position:fixed;bottom:0;left:0;right:0;background:#FFFDF8;border-top:1.5px solid #E8DDD0;display:flex;z-index:100}
-.bnav button{flex:1;padding:8px 2px 12px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#A09080}
-.bnav button.on{color:var(--eva)}
-.tab{display:none;padding:16px}.tab.on{display:block}
-.ph{background:linear-gradient(135deg,#F7E8D8,#EAD9C8);border-radius:16px;padding:18px;margin-bottom:16px;position:relative}
-.card{background:#fff;border-radius:14px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:12px;padding:14px}
-.tg{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto}.tgb{flex-shrink:0;padding:7px 14px;border:1.5px solid #E8D5C0;border-radius:20px;font-size:12px;background:transparent}
-.tgb.on{background:var(--eva);color:#fff}
-#sync-bar{position:fixed;top:0;left:0;right:0;z-index:999;text-align:center;font-size:11px;padding:5px 12px;border-bottom:1px solid #ddd;background:#F5F5F5;color:#999;transition:all .3s}
-/* 原有樣式結束 */
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026 日本關西手帳 🇯🇵</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Varela Round', 'Microsoft JhengHei', sans-serif; background-color: #FBF5ED; }
+        .ac-shadow { box-shadow: 4px 4px 0px 0px #E0E5D5; }
+        .active-scale:active { transform: scale(0.95); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .eva-gradient { background: linear-gradient(135deg, #006633 0%, #004d26 100%); }
+    </style>
 </head>
 <body>
+    <div id="root"></div>
 
-<div id="sync-bar">🔄 正在連線至雲端資料庫...</div>
-<div style="height:26px"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-<div class="tab on" id="t-bookings">
-  <div class="ph"><h1>🎫 預訂資料</h1><p>機票 · 住宿 · 票券</p></div>
-  <div class="tg">
-    <button class="tgb on" onclick="bTab('flight',this)">✈ 機票</button>
-    <button class="tgb" onclick="bTab('hotel',this)">🏨 住宿</button>
-    <button class="tgb" onclick="bTab('ticket',this)">🎟 票券</button>
-  </div>
-  <div id="b-flight">
-    <div class="eva-bp"><div class="eva-bp-head">長榮航空 BR 182</div><div class="eva-bp-body">KHH -> KIX</div></div>
-  </div>
-  <div id="b-hotel" style="display:none"></div>
-  <div id="b-ticket" style="display:none"></div>
-</div>
+        // --- 工具函數：Google Maps 導航 ---
+        const openMap = (address) => {
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}&travelmode=transit`;
+            window.open(url, '_blank');
+        };
 
-<div class="tab" id="t-schedule">
-  <div class="ph"><h1>🗓 行程安排</h1><div id="cdnum" style="font-size:20px">--</div>天後出發</div>
-  <div id="timeline"></div>
-</div>
+        // --- 資料庫：行程與預訂 ---
+        const TRAVEL_DATA = {
+          flights: [
+            { id: 'go', airline: 'EVA AIR', flightNo: 'BR182', from: 'KHH', to: 'KIX', date: '2026-05-14', time: '07:05', terminal: '1', gate: '05', seat: 'V' },
+            { id: 'back', airline: 'EVA AIR', flightNo: 'BR147', from: 'KIX', to: 'KHH', date: '2026-05-19', time: '20:35', terminal: '1', gate: '--', seat: 'V' }
+          ],
+          schedule: [
+            { day: 1, date: '05/14', weather: '☀️', events: [
+                { time: '11:10', title: '抵達關西機場', type: 'traffic', addr: '大阪府泉佐野市泉州空港北1' },
+                { time: '14:00', title: '京都八條都酒店 Check-in', type: 'hotel', addr: '京都府京都市南区西九条院町17' },
+                { time: '15:30', title: '祇園散策', type: 'spot', addr: '京都府京都市東山区祇園町南側' },
+                { time: '21:00', title: 'In the moon 酒館', type: 'food', addr: '京都府京都市東山区中之町200' }
+            ]},
+            { day: 2, date: '05/15', weather: '🌤️', events: [
+                { time: '09:00', title: '璃光和服清水寺店', type: 'spot', addr: '京都府京都市東山区桝屋町351-16' },
+                { time: '10:30', title: '清水寺', type: 'spot', addr: '京都府京都市東山区清水1-294' },
+                { time: '14:00', title: '錦市場', type: 'food', addr: '京都府京都市中京区錦小路通' },
+                { time: '18:00', title: '艾思利德酒店 難波南III', type: 'hotel', addr: '大阪府大阪市浪速区恵美須西2-8-6' }
+            ]}
+            // ... 後續天數可依此格式類推
+          ]
+        };
 
-<div class="tab" id="t-expense">
-  <div class="ph"><h1>💴 旅遊記帳</h1></div>
-  <div class="card" id="expForm" style="display:block">
-    <input class="fi" id="en" placeholder="項目"/>
-    <input class="fi" id="ea" type="number" placeholder="金額"/>
-    <button class="submit" onclick="addExp()">記帳</button>
-  </div>
-  <div id="expList"></div>
-</div>
+        // --- 元件：登機證卡片 ---
+        const BoardingPass = ({ flight }) => (
+            <div className={`rounded-ac-large p-5 mb-4 text-white ac-shadow ${flight.id==='go'?'eva-gradient':'bg-cat-traffic'}`} style={{borderRadius: '24px'}}>
+                <div className="flex justify-between items-center border-b border-white/20 pb-2 mb-3">
+                    <span className="font-bold text-lg">{flight.airline}</span>
+                    <span className="bg-white text-green-800 px-2 py-1 rounded-full text-xs font-bold">{flight.flightNo}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                    <div className="text-center">
+                        <div className="text-3xl font-bold">{flight.from}</div>
+                        <div className="text-xs opacity-80">{flight.date}</div>
+                    </div>
+                    <div className="flex-1 px-4 relative flex flex-col items-center">
+                        <div className="w-full border-t border-dashed border-white/50 absolute top-1/2"></div>
+                        <div className="bg-transparent z-10 transform -rotate-0 translate-y-[-12px]">✈️</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-3xl font-bold">{flight.to}</div>
+                        <div className="text-xs opacity-80">{flight.time}</div>
+                    </div>
+                </div>
+                <div className="grid grid-cols-3 mt-4 text-center text-sm border-t border-white/20 pt-3">
+                    <div>GATE<br/><b>{flight.gate}</b></div>
+                    <div>TERM<br/><b>{flight.terminal}</b></div>
+                    <div>SEAT<br/><b>{flight.seat}</b></div>
+                </div>
+            </div>
+        );
 
-<nav class="bnav">
-  <button class="on" onclick="sw('bookings',this)">預訂</button>
-  <button onclick="sw('schedule',this)">行程</button>
-  <button onclick="sw('expense',this)">記帳</button>
-</nav>
+        // --- 主程式 ---
+        function App() {
+            const [activeTab, setActiveTab] = useState('bookings');
+            const [selectedDay, setSelectedDay] = useState(1);
+            const [pin, setPin] = useState('');
+            const [isLocked, setIsLocked] = useState(true);
 
-<script>
-// 1. Firebase 初始化
-const firebaseConfig = {
-  apiKey: "AIzaSyCVDxjXElB5jwRm8zgRhxcbVpTKKw1QERc",
-  authDomain: "kansai-trip-2026-eaa17.firebaseapp.com",
-  databaseURL: "https://kansai-trip-2026-eaa17-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "kansai-trip-2026-eaa17",
-  storageBucket: "kansai-trip-2026-eaa17.firebasestorage.app",
-  messagingSenderId: "725465245760",
-  appId: "1:725465245760:web:7d1fdab73d380c978c57a5"
-};
+            // 倒數計時
+            const daysLeft = Math.ceil((new Date('2026-05-14') - new Date()) / (1000 * 60 * 60 * 24));
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+            return (
+                <div className="max-w-md mx-auto min-h-screen pb-24 relative px-4 pt-6">
+                    {/* Header */}
+                    <div className="flex justify-between items-end mb-6">
+                        <div>
+                            <h1 className="text-2xl font-bold text-theme-primary">2026 Kansai Trip</h1>
+                            <p className="text-gray-500 text-sm">Countdown: <span className="text-cat-food font-bold">{daysLeft}</span> Days</p>
+                        </div>
+                        <div className="w-12 h-12 bg-white rounded-full ac-shadow flex items-center justify-center text-2xl">🇯🇵</div>
+                    </div>
 
-// 2. 狀態監聽
-const syncBar = document.getElementById('sync-bar');
-db.ref(".info/connected").on("value", (snap) => {
-    if (snap.val() === true) {
-        syncBar.style.background = "#E8F5E9";
-        syncBar.style.color = "#2E7D32";
-        syncBar.innerText = "✅ 雲端已同步 (團員即時連線中)";
-    } else {
-        syncBar.style.background = "#FFEBEE";
-        syncBar.style.color = "#C62828";
-        syncBar.innerText = "📡 斷線中... 請檢查網路";
-    }
-});
+                    {/* Tab: 預訂 Bookings */}
+                    {activeTab === 'bookings' && (
+                        <div>
+                            <h2 className="text-lg font-bold mb-3 flex items-center text-theme-primary">🎫 機票與住宿</h2>
+                            {TRAVEL_DATA.flights.map(f => <BoardingPass key={f.id} flight={f} />)}
+                            
+                            <div className="bg-white p-4 rounded-ac-card ac-shadow mb-4" style={{borderRadius: '16px'}}>
+                                <div className="flex justify-between items-start mb-2">
+                                    <h3 className="font-bold">艾思利德酒店 難波南III</h3>
+                                    <button onClick={()=>openMap('大阪府大阪市浪速区恵美須西2-8-6')} className="bg-theme-primary text-white p-2 rounded-full active-scale">📍</button>
+                                </div>
+                                <p className="text-xs text-gray-500 mb-2">大阪府大阪市浪速区恵美須西2-8-6</p>
+                                <div className="text-sm bg-theme-bg p-2 rounded">Check-in: 15:00 / Out: 10:00</div>
+                            </div>
 
-// 3. 資料結構
-let expenses = [];
-const TARGET_DATE = new Date('2026-05-14T07:05:00');
+                            {/* 附件上鎖區 */}
+                            <div className="mt-8 border-t border-dashed border-gray-300 pt-4">
+                                <h3 className="text-sm font-bold text-gray-400 mb-2">🔒 機密附件 (PIN: 007)</h3>
+                                {isLocked ? (
+                                    <div className="flex gap-2">
+                                        <input type="password" placeholder="輸入 PIN" className="bg-white border rounded px-3 py-2 text-sm w-full" onChange={(e)=>setPin(e.target.value)} />
+                                        <button onClick={()=>pin==='007' && setIsLocked(false)} className="bg-gray-800 text-white px-4 py-2 rounded text-sm">解鎖</button>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="bg-white p-3 rounded ac-shadow text-xs">📄 HARUKA 憑證.pdf</div>
+                                        <div className="bg-white p-3 rounded ac-shadow text-xs">📄 燒肉力丸預約單.jpg</div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
-// 4. 同步功能：記帳 (Firebase 即時讀寫)
-db.ref('expenses').on('value', (snap) => {
-    expenses = snap.val() || [];
-    renderExpList();
-});
+                    {/* Tab: 行程 Schedule */}
+                    {activeTab === 'schedule' && (
+                        <div>
+                            <div className="flex overflow-x-auto gap-3 hide-scrollbar mb-6 pb-2">
+                                {[1,2,3,4,5,6].map(d => (
+                                    <button key={d} onClick={()=>setSelectedDay(d)} className={`min-w-[60px] py-2 rounded-xl flex flex-col items-center ac-shadow transition-all ${selectedDay===d?'bg-theme-primary text-white':'bg-white text-gray-400'}`}>
+                                        <span className="text-[10px]">DAY</span>
+                                        <span className="text-lg font-bold">{d}</span>
+                                    </button>
+                                ))}
+                            </div>
 
-function addExp() {
-    const name = document.getElementById('en').value;
-    const amount = parseFloat(document.getElementById('ea').value);
-    if(!name || !amount) return;
+                            <div className="space-y-4">
+                                {TRAVEL_DATA.schedule.find(s=>s.day===selectedDay)?.events.map((e, idx) => (
+                                    <div key={idx} className="flex gap-4">
+                                        <div className="flex flex-col items-center">
+                                            <div className="text-xs font-bold text-gray-400">{e.time}</div>
+                                            <div className="w-[2px] h-full bg-theme-border my-1"></div>
+                                        </div>
+                                        <div className="flex-1 bg-white p-4 rounded-ac-card ac-shadow flex justify-between items-center" style={{borderRadius: '16px'}}>
+                                            <div>
+                                                <div className="text-xs text-cat-food font-bold">{e.type.toUpperCase()}</div>
+                                                <div className="font-bold text-sm">{e.title}</div>
+                                            </div>
+                                            {e.addr && <button onClick={()=>openMap(e.addr)} className="text-blue-500 text-xl active-scale">🗺️</button>}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
-    expenses.push({ name, amount, time: new Date().toLocaleTimeString() });
-    
-    // 存入 Firebase，所有團員會立刻看到
-    db.ref('expenses').set(expenses);
-    
-    document.getElementById('en').value = '';
-    document.getElementById('ea').value = '';
-}
+                    {/* 底部導航 */}
+                    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-white/80 backdrop-blur-md rounded-full h-16 flex items-center justify-around px-6 ac-shadow z-50">
+                        <button onClick={()=>setActiveTab('bookings')} className={`flex flex-col items-center ${activeTab==='bookings'?'text-theme-primary':'text-gray-300'}`}>
+                            <span className="text-xl">🎫</span>
+                            <span className="text-[10px] font-bold">預訂</span>
+                        </button>
+                        <button onClick={()=>setActiveTab('schedule')} className={`flex flex-col items-center ${activeTab==='schedule'?'text-theme-primary':'text-gray-300'}`}>
+                            <span className="text-xl">📅</span>
+                            <span className="text-[10px] font-bold">行程</span>
+                        </button>
+                        <button onClick={()=>setActiveTab('planning')} className={`flex flex-col items-center ${activeTab==='planning'?'text-theme-primary':'text-gray-300'}`}>
+                            <span className="text-xl">📝</span>
+                            <span className="text-[10px] font-bold">清單</span>
+                        </button>
+                        <button onClick={()=>setActiveTab('expense')} className={`flex flex-col items-center ${activeTab==='expense'?'text-theme-primary':'text-gray-300'}`}>
+                            <span className="text-xl">💰</span>
+                            <span className="text-[10px] font-bold">記帳</span>
+                        </button>
+                    </nav>
+                </div>
+            );
+        }
 
-function renderExpList() {
-    const list = document.getElementById('expList');
-    list.innerHTML = expenses.map(e => `
-        <div class="card">${e.name}: ¥${e.amount} <small>${e.time}</small></div>
-    `).reverse().join('');
-}
-
-// 5. 分頁切換邏輯
-function sw(tabId, btn) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-    document.getElementById('t-' + tabId).classList.add('on');
-    document.querySelectorAll('.bnav button').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-}
-
-function bTab(id, btn) {
-    ['flight','hotel','ticket'].forEach(s => document.getElementById('b-'+s).style.display='none');
-    document.getElementById('b-'+id).style.display='block';
-    document.querySelectorAll('.tgb').forEach(b => b.classList.remove('on'));
-    btn.classList.add('on');
-}
-
-// 6. 倒數計時
-function updateCD() {
-    const diff = Math.ceil((TARGET_DATE - new Date()) / (1000 * 60 * 60 * 24));
-    document.getElementById('cdnum').innerText = diff > 0 ? diff : 0;
-}
-
-window.onload = () => {
-    updateCD();
-};
-</script>
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
