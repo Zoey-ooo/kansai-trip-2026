@@ -7,17 +7,18 @@
 <title>🌸 關西六日遊</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--accent:#D4855A;--accent2:#6B9B8A;--shadow:4px 4px 0px #E0D5C5}
-body{font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px}
+:root{--accent:#D4855A;--shadow:4px 4px 0px #E0D5C5}
+body{font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px;-webkit-font-smoothing:antialiased}
 button{cursor:pointer;font-family:inherit;transition:transform .15s}
 button:active{transform:scale(0.95)}
 a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit}
 
 /* NAV */
-.bnav{position:fixed;bottom:0;left:0;right:0;background:#FFFDF8;border-top:1.5px solid #E8DDD0;display:flex;z-index:100}
-.bnav button{flex:1;padding:8px 4px 12px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#A09080}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:#FFFDF8;border-top:1.5px solid #E8DDD0;display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.bnav button{flex:1;padding:8px 2px 10px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#A09080}
 .bnav button.on{color:#D4855A}
-.bnav button span{font-size:20px}
+.bnav button .ic{font-size:20px}
 
 /* TABS */
 .tab{display:none;padding:16px}
@@ -32,26 +33,62 @@ a{color:inherit;text-decoration:none}
 /* CARD */
 .card{background:#fff;border-radius:14px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:12px;padding:14px}
 
-/* COUNTDOWN */
+/* SUB TAB GROUP */
+.tg{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
+.tg::-webkit-scrollbar{display:none}
+.tgb{flex-shrink:0;padding:8px 14px;border:1.5px solid #E8D5C0;border-radius:20px;font-size:12px;color:#8B6445;background:transparent;white-space:nowrap}
+.tgb.on{background:#D4855A;border-color:#D4855A;color:#fff}
+
+/* FORM */
+.fl{font-size:12px;color:#8B6445;margin-bottom:4px;margin-top:10px}
+.fi{width:100%;padding:10px 12px;border:1.5px solid #E8D5C0;border-radius:10px;font-size:14px;color:#3D2A1A;background:#FFF8F4;outline:none}
+.fi:focus{border-color:#D4855A}
+.submit{width:100%;padding:12px;background:#D4855A;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:12px}
+.row2{display:flex;gap:8px}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(80,50,30,.45);z-index:200;align-items:flex-end}
+.overlay.on{display:flex}
+.sheet{background:#FFFDF8;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:85vh;overflow-y:auto}
+.handle{width:40px;height:4px;background:#E0D0C0;border-radius:2px;margin:0 auto 16px}
+.close-btn{width:100%;padding:12px;background:#D4855A;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:12px}
+
+/* PIN */
+.pin-ov{display:none;position:fixed;inset:0;background:rgba(80,50,30,.7);z-index:400;align-items:center;justify-content:center}
+.pin-ov.on{display:flex}
+.pin-box{background:#FFFDF8;border-radius:20px;padding:28px 24px;width:290px;text-align:center}
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:16px 0 20px}
+.pdot{width:16px;height:16px;border-radius:50%;background:#E8D5C0;transition:background .15s}
+.pdot.on{background:#D4855A}
+.pdot.err{background:#E24B4A}
+.pkpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pk{padding:15px;background:#F5EDE5;border:none;border-radius:10px;font-size:20px;color:#3D2A1A}
+
+/* ── BOOKINGS ── */
+.bp{border-radius:14px;padding:20px;color:#fff;margin-bottom:12px;position:relative;overflow:hidden}
+.bp::after{content:'';position:absolute;right:-20px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:20px solid #FFF6ED;border-radius:50%}
+.bp::before{content:'';position:absolute;left:-20px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:20px solid #FFF6ED;border-radius:50%}
+.bp-sep{border:none;border-top:1px dashed rgba(255,255,255,.3);margin:12px 0}
+.hotel-img{height:110px;display:flex;align-items:center;justify-content:center;font-size:40px}
+.ticket-item{background:#fff;border-radius:12px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
+.ticket-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.emergency-item{background:#FFF2E8;border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1.5px solid #F0D8C0}
+.pin-change-btn{background:#F0E8E0;border:none;border-radius:8px;padding:6px 12px;font-size:12px;color:#8B6445;margin-top:8px}
+
+/* ── SCHEDULE ── */
 .cd{background:#5D3A1A;border-radius:14px;padding:16px 20px;color:#FFF6ED;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .cd-num{font-size:36px;font-weight:500;color:#F5C882}
-
-/* DATE SCROLL */
 .ds{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:none}
 .ds::-webkit-scrollbar{display:none}
-.dp{flex-shrink:0;padding:8px 16px;border-radius:20px;background:#FFF2E8;border:1.5px solid #E8D5C0;cursor:pointer;text-align:center;transition:all .2s}
+.dp{flex-shrink:0;padding:8px 14px;border-radius:20px;background:#FFF2E8;border:1.5px solid #E8D5C0;cursor:pointer;text-align:center;transition:all .2s}
 .dp.on{background:#D4855A;border-color:#D4855A;color:#fff}
-.dp .dn{font-size:16px;font-weight:500}
+.dp .dn{font-size:15px;font-weight:500}
 .dp .dl{font-size:10px;opacity:.7}
-
-/* WEATHER */
 .wc{background:#E8F2F8;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:16px;border:1.5px solid #C8DCE8}
-
-/* TIMELINE */
 .tl{position:relative}
 .tl::before{content:'';position:absolute;left:60px;top:0;bottom:0;width:2px;background:#E8D5C0}
 .ti{display:flex;gap:12px;margin-bottom:12px;cursor:pointer}
-.ti-time{width:60px;text-align:right;font-size:12px;color:#8B6445;padding-top:12px;flex-shrink:0}
+.ti-time{width:60px;text-align:right;font-size:11px;color:#8B6445;padding-top:12px;flex-shrink:0;line-height:1.3}
 .ti-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:12px;border:2px solid #fff}
 .ti-card{flex:1;background:#fff;border-radius:12px;padding:10px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0}
 .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500;margin-bottom:4px}
@@ -60,79 +97,207 @@ a{color:inherit;text-decoration:none}
 .b-transport{background:#E0E8F8;color:#1A3A6A}
 .b-hotel{background:#F0E0F8;color:#5A1A7A}
 .b-shopping{background:#FEF0D0;color:#7A4A0A}
+.nav-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;background:#E8F0F8;border-radius:8px;font-size:12px;color:#1A3A6A;margin-top:6px;border:none}
 
-/* MODAL */
-.overlay{display:none;position:fixed;inset:0;background:rgba(80,50,30,.45);z-index:200;align-items:flex-end}
-.overlay.on{display:flex}
-.sheet{background:#FFFDF8;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:80vh;overflow-y:auto}
-.handle{width:40px;height:4px;background:#E0D0C0;border-radius:2px;margin:0 auto 16px}
-.close-btn{width:100%;padding:12px;background:#D4855A;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:12px}
-.map-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#F0E8E0;border-radius:8px;font-size:13px;color:#D4855A;font-weight:500;margin-top:8px}
+/* ── PLANNING ── */
+.pbar-wrap{margin-bottom:14px}
+.pbar{height:6px;background:#F0E8E0;border-radius:3px}
+.pfill{height:100%;border-radius:3px;background:#D4855A;transition:width .3s}
+.todo-item{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.chk{width:22px;height:22px;border-radius:50%;border:2px solid #D4855A;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;transition:all .2s}
+.chk.on{background:#D4855A}
 
-/* BOOKING */
-.bp{border-radius:14px;padding:20px;color:#fff;margin-bottom:12px;position:relative;overflow:hidden}
-.bp::after{content:'';position:absolute;right:-20px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:20px solid #FFF6ED;border-radius:50%}
-.bp::before{content:'';position:absolute;left:-20px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:20px solid #FFF6ED;border-radius:50%}
-.bp-sep{border:none;border-top:1px dashed rgba(255,255,255,.3);margin:12px 0}
-.hotel-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:32px}
-
-/* EXPENSE */
+/* ── EXPENSE ── */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
 .stat{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0}
 .stat-l{font-size:11px;color:#8B6445}
 .stat-v{font-size:20px;font-weight:500;color:#3D2A1A;margin-top:2px}
 .fab{position:fixed;bottom:90px;right:20px;width:52px;height:52px;background:#D4855A;border:none;border-radius:50%;font-size:24px;color:#fff;box-shadow:0 4px 12px rgba(212,133,90,.4);display:flex;align-items:center;justify-content:center;z-index:50}
-.form-box{background:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:16px}
-.fl{font-size:12px;color:#8B6445;margin-bottom:4px}
-.fi{width:100%;padding:10px 12px;border:1.5px solid #E8D5C0;border-radius:10px;font-size:14px;color:#3D2A1A;background:#FFF8F4;font-family:inherit;outline:none}
-.fi:focus{border-color:#D4855A}
-.row2{display:flex;gap:8px}
-.submit{width:100%;padding:12px;background:#D4855A;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:12px}
 .exp-item{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:8px;display:flex;align-items:center;gap:12px}
 .exp-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.day-label-row{font-size:11px;font-weight:500;color:#8B6445;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 6px;padding-left:2px}
 
-/* JOURNAL */
-.jgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.jcard{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);border:1.5px solid #F0E8E0}
-.jimg{height:100px;display:flex;align-items:center;justify-content:center;font-size:36px}
-.jbody{padding:8px 10px}
-
-/* PLANNING */
-.tg{display:flex;gap:6px;margin-bottom:14px}
-.tgb{flex:1;padding:8px;border:1.5px solid #E8D5C0;border-radius:10px;font-size:12px;color:#8B6445;background:transparent}
-.tgb.on{background:#D4855A;border-color:#D4855A;color:#fff}
-.pbar{height:6px;background:#F0E8E0;border-radius:3px;margin-bottom:14px}
-.pfill{height:100%;border-radius:3px;background:#D4855A;transition:width .3s}
-.todo-item{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:opacity .2s}
-.todo-item.done{opacity:.5}
-.chk{width:22px;height:22px;border-radius:50%;border:2px solid #D4855A;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;transition:all .2s}
-.chk.on{background:#D4855A}
-
-/* MEMBERS */
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mcard{background:#fff;border-radius:14px;padding:16px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;text-align:center}
-.mav{width:60px;height:60px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;font-weight:500}
-
-/* PIN */
-.pin-ov{display:none;position:fixed;inset:0;background:rgba(80,50,30,.6);z-index:300;align-items:center;justify-content:center}
-.pin-ov.on{display:flex}
-.pin-box{background:#FFFDF8;border-radius:20px;padding:28px 24px;width:280px;text-align:center}
-.pin-dots{display:flex;gap:10px;justify-content:center;margin:16px 0}
-.pdot{width:14px;height:14px;border-radius:50%;background:#E8D5C0;transition:background .15s}
-.pdot.on{background:#D4855A}
-.pdot.err{background:#E24B4A}
-.pkpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.pk{padding:14px;background:#F5EDE5;border:none;border-radius:10px;font-size:18px;color:#3D2A1A}
-
-/* SUB TABS */
-.stabs{display:none}
-.stabs.on{display:block}
+/* upload area */
+.upload-area{border:2px dashed #E8D5C0;border-radius:12px;padding:20px;text-align:center;cursor:pointer;margin-bottom:10px;background:#FFFDF8}
+.upload-area:hover{border-color:#D4855A;background:#FFF6F0}
+.uploaded-file{background:#F5EDE5;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
 </style>
 </head>
 <body>
 
-<!-- ── SCHEDULE ── -->
-<div class="tab on" id="t-schedule">
+<!-- ══ BOOKINGS TAB ══ -->
+<div class="tab on" id="t-bookings">
+  <div class="ph"><h1>🎫 預訂資料</h1><p>機票 · 住宿 · 票券 · 緊急聯絡</p></div>
+  <div class="tg">
+    <button class="tgb on" onclick="bTab('flight',this)">✈ 機票</button>
+    <button class="tgb" onclick="bTab('hotel',this)">🏨 住宿</button>
+    <button class="tgb" onclick="bTab('ticket',this)">🎟 票券</button>
+    <button class="tgb" onclick="bTab('emergency',this)">🆘 緊急聯絡</button>
+  </div>
+
+  <!-- 機票 -->
+  <div id="b-flight">
+    <div class="bp" style="background:linear-gradient(135deg,#2D4A6A,#1A3050)">
+      <div style="font-size:11px;opacity:.6;margin-bottom:8px">BOARDING PASS · OUTBOUND</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+        <div style="text-align:center"><div style="font-size:26px;font-weight:500;letter-spacing:2px">TPE</div><div style="font-size:11px;opacity:.7">桃園國際</div></div>
+        <div style="flex:1;text-align:center;font-size:18px;opacity:.6">✈ ─ ─</div>
+        <div style="text-align:center"><div style="font-size:26px;font-weight:500;letter-spacing:2px">KIX</div><div style="font-size:11px;opacity:.7">關西國際</div></div>
+      </div>
+      <hr class="bp-sep">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div><div style="font-size:10px;opacity:.6">日期</div><div style="font-size:13px">Day 1 · 4/1</div></div>
+        <div><div style="font-size:10px;opacity:.6">班次</div><div style="font-size:13px">待確認</div></div>
+        <div><div style="font-size:10px;opacity:.6">艙等</div><div style="font-size:13px">經濟艙</div></div>
+      </div>
+    </div>
+    <div class="bp" style="background:linear-gradient(135deg,#2A5A3A,#1A3A28)">
+      <div style="font-size:11px;opacity:.6;margin-bottom:8px">BOARDING PASS · RETURN</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+        <div style="text-align:center"><div style="font-size:26px;font-weight:500;letter-spacing:2px">KIX</div><div style="font-size:11px;opacity:.7">關西國際</div></div>
+        <div style="flex:1;text-align:center;font-size:18px;opacity:.6">─ ─ ✈</div>
+        <div style="text-align:center"><div style="font-size:26px;font-weight:500;letter-spacing:2px">TPE</div><div style="font-size:11px;opacity:.7">桃園國際</div></div>
+      </div>
+      <hr class="bp-sep">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div><div style="font-size:10px;opacity:.6">日期</div><div style="font-size:13px">Day 6 · 4/6</div></div>
+        <div><div style="font-size:10px;opacity:.6">班次</div><div style="font-size:13px">待確認</div></div>
+        <div><div style="font-size:10px;opacity:.6">艙等</div><div style="font-size:13px">經濟艙</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 住宿 -->
+  <div id="b-hotel" style="display:none">
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#C8A88A,#A87A5A)">🌙</div>
+      <div style="padding:14px">
+        <div style="font-size:15px;font-weight:500">京都八條都酒店</div>
+        <div style="font-size:12px;color:#8B6445;margin-top:4px">📍 〒601-8412 京都市南區西九條院町17（京都站八條口）</div>
+        <div style="display:flex;gap:16px;margin-top:10px;font-size:12px">
+          <span><span style="color:#8B6445">入住 </span><strong>14:00</strong></span>
+          <span><span style="color:#8B6445">退房 </span><strong>11:00</strong></span>
+          <span><span style="color:#8B6445">夜數 </span><strong>1晚</strong></span>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:#8B6445">📅 Day 1 (4/1) → Day 2 (4/2)</div>
+      </div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#8AA8C8,#5A7898)">🌃</div>
+      <div style="padding:14px">
+        <div style="font-size:15px;font-weight:500">艾思利德酒店 難波南III</div>
+        <div style="font-size:12px;color:#8B6445;margin-top:4px">📍 556-0003 大阪府大阪市浪速區惠美須西2-8-6</div>
+        <div style="display:flex;gap:16px;margin-top:10px;font-size:12px">
+          <span><span style="color:#8B6445">入住 </span><strong>15:00</strong></span>
+          <span><span style="color:#8B6445">退房 </span><strong>10:00</strong></span>
+          <span><span style="color:#8B6445">夜數 </span><strong>4晚</strong></span>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:#8B6445">📅 Day 2 (4/2) → Day 6 (4/6)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 票券 -->
+  <div id="b-ticket" style="display:none">
+    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">點擊票券可上傳 PDF 或圖片憑證</div>
+    <div class="ticket-item" id="tk-kkday">
+      <div class="ticket-header" onclick="openTicket('kkday')">
+        <div>
+          <div style="font-size:15px;font-weight:500">🚢 KKDay 一日遊</div>
+          <div style="font-size:12px;color:#8B6445;margin-top:3px">伊根舟屋·天橋立·美山町 · Day 3</div>
+        </div>
+        <span style="font-size:20px" id="tk-kkday-lock">🔒</span>
+      </div>
+      <div id="tk-kkday-body" style="display:none;padding:0 14px 14px">
+        <div style="background:#E8F2D8;border-radius:10px;padding:12px;font-size:13px;color:#2A5A1A;line-height:1.8;margin-bottom:12px">
+          ✓ 行程：伊根舟屋觀光船 + 天橋立 + 美山町合掌村<br>
+          ✓ 語言：繁體中文導遊<br>
+          ✓ 集合：大阪難波（詳細地點確認後補充）<br>
+          ✓ 預計出發：07:00-08:00
+        </div>
+        <div class="upload-area" onclick="triggerUpload('kkday')">
+          <div style="font-size:24px;margin-bottom:6px">📎</div>
+          <div style="font-size:13px;color:#8B6445">點擊上傳 PDF 或圖片憑證</div>
+          <div style="font-size:11px;color:#B0A090;margin-top:4px">支援 PDF · JPG · PNG</div>
+        </div>
+        <div id="files-kkday"></div>
+        <input type="file" id="fu-kkday" accept=".pdf,image/*" style="display:none" onchange="handleUpload('kkday',this)">
+      </div>
+    </div>
+    <div class="ticket-item" id="tk-kanransha">
+      <div class="ticket-header" onclick="openTicketDirect('kanransha')">
+        <div>
+          <div style="font-size:15px;font-weight:500">🎡 道頓堀大観覧車</div>
+          <div style="font-size:12px;color:#8B6445;margin-top:3px">現場購票 · Day 3</div>
+        </div>
+        <span style="font-size:16px">＋</span>
+      </div>
+      <div id="tk-kanransha-body" style="display:none;padding:0 14px 14px">
+        <div class="upload-area" onclick="triggerUpload('kanransha')">
+          <div style="font-size:24px;margin-bottom:6px">📎</div>
+          <div style="font-size:13px;color:#8B6445">上傳票券截圖</div>
+        </div>
+        <div id="files-kanransha"></div>
+        <input type="file" id="fu-kanransha" accept=".pdf,image/*" style="display:none" onchange="handleUpload('kanransha',this)">
+      </div>
+    </div>
+    <div class="ticket-item" id="tk-tsutenkaku">
+      <div class="ticket-header" onclick="openTicketDirect('tsutenkaku')">
+        <div>
+          <div style="font-size:15px;font-weight:500">🗼 通天閣</div>
+          <div style="font-size:12px;color:#8B6445;margin-top:3px">⚠ 現場換取預約券 · Day 4</div>
+        </div>
+        <span style="font-size:16px">＋</span>
+      </div>
+      <div id="tk-tsutenkaku-body" style="display:none;padding:0 14px 14px">
+        <div class="upload-area" onclick="triggerUpload('tsutenkaku')">
+          <div style="font-size:24px;margin-bottom:6px">📎</div>
+          <div style="font-size:13px;color:#8B6445">上傳票券截圖</div>
+        </div>
+        <div id="files-tsutenkaku"></div>
+        <input type="file" id="fu-tsutenkaku" accept=".pdf,image/*" style="display:none" onchange="handleUpload('tsutenkaku',this)">
+      </div>
+    </div>
+    <div class="ticket-item" id="tk-kimono">
+      <div class="ticket-header" onclick="openTicketDirect('kimono')">
+        <div>
+          <div style="font-size:15px;font-weight:500">🌸 璃光和服清水寺店</div>
+          <div style="font-size:12px;color:#8B6445;margin-top:3px">✅ 已預約09:00 · Day 2</div>
+        </div>
+        <span style="font-size:16px">＋</span>
+      </div>
+      <div id="tk-kimono-body" style="display:none;padding:0 14px 14px">
+        <div class="upload-area" onclick="triggerUpload('kimono')">
+          <div style="font-size:24px;margin-bottom:6px">📎</div>
+          <div style="font-size:13px;color:#8B6445">上傳預約確認截圖</div>
+        </div>
+        <div id="files-kimono"></div>
+        <input type="file" id="fu-kimono" accept=".pdf,image/*" style="display:none" onchange="handleUpload('kimono',this)">
+      </div>
+    </div>
+  </div>
+
+  <!-- 緊急聯絡 -->
+  <div id="b-emergency" style="display:none">
+    <div class="card" style="background:#FFF2E8;border-color:#F0D8C0">
+      <div style="font-size:15px;font-weight:500;margin-bottom:12px">🆘 緊急聯絡資訊</div>
+      <div id="emergency-list"></div>
+      <button class="submit" style="background:#C06840;margin-top:4px" onclick="showAddEmergency()">＋ 新增聯絡人</button>
+    </div>
+    <div class="card" style="background:#E8F2F8;border-color:#C8DCE8">
+      <div style="font-size:14px;font-weight:500;margin-bottom:8px">📞 日本緊急電話</div>
+      <div style="font-size:13px;line-height:2;color:#3D2A1A">
+        🚨 警察：<strong>110</strong><br>
+        🚒 火災/救護：<strong>119</strong><br>
+        🏥 急救諮詢：<strong>救急安心センター #7119</strong><br>
+        🌏 外國人諮詢：<strong>0570-013-904</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCHEDULE TAB ══ -->
+<div class="tab" id="t-schedule">
   <div class="ph"><h1>🌸 關西六日遊</h1><p>2026年春天 · 京都 × 大阪 × 神戶</p></div>
   <div class="cd">
     <div><div style="font-size:12px;opacity:.8">距離出發還有</div><div class="cd-num" id="cdnum">—</div><div style="font-size:12px;opacity:.8">天</div></div>
@@ -143,138 +308,56 @@ a{color:inherit;text-decoration:none}
   <div class="tl" id="timeline"></div>
 </div>
 
-<!-- ── BOOKINGS ── -->
-<div class="tab" id="t-bookings">
-  <div class="ph"><h1>🎫 預訂資料</h1><p>機票 · 住宿 · 票券</p></div>
-  <div class="tg">
-    <button class="tgb on" onclick="bTab('flight',this)">✈ 機票</button>
-    <button class="tgb" onclick="bTab('hotel',this)">🏨 住宿</button>
-    <button class="tgb" onclick="bTab('ticket',this)">🎟 票券</button>
-  </div>
-  <div id="b-flight">
-    <div class="bp" style="background:linear-gradient(135deg,#2D4A6A,#1A3050)">
-      <div style="font-size:11px;opacity:.6;margin-bottom:8px">BOARDING PASS</div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-        <div style="text-align:center"><div style="font-size:28px;font-weight:500;letter-spacing:2px">TPE</div><div style="font-size:11px;opacity:.7">桃園國際</div></div>
-        <div style="flex:1;text-align:center;font-size:18px;opacity:.6">✈ ——</div>
-        <div style="text-align:center"><div style="font-size:28px;font-weight:500;letter-spacing:2px">KIX</div><div style="font-size:11px;opacity:.7">關西國際</div></div>
-      </div>
-      <hr class="bp-sep">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-        <div><div style="font-size:10px;opacity:.6">日期</div><div style="font-size:13px">Day 1</div></div>
-        <div><div style="font-size:10px;opacity:.6">班次</div><div style="font-size:13px">待確認</div></div>
-        <div><div style="font-size:10px;opacity:.6">艙等</div><div style="font-size:13px">經濟艙</div></div>
-      </div>
-    </div>
-    <div class="bp" style="background:linear-gradient(135deg,#2A5A3A,#1A3A28)">
-      <div style="font-size:11px;opacity:.6;margin-bottom:8px">BOARDING PASS · RETURN</div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-        <div style="text-align:center"><div style="font-size:28px;font-weight:500;letter-spacing:2px">KIX</div><div style="font-size:11px;opacity:.7">關西國際</div></div>
-        <div style="flex:1;text-align:center;font-size:18px;opacity:.6">—— ✈</div>
-        <div style="text-align:center"><div style="font-size:28px;font-weight:500;letter-spacing:2px">TPE</div><div style="font-size:11px;opacity:.7">桃園國際</div></div>
-      </div>
-      <hr class="bp-sep">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-        <div><div style="font-size:10px;opacity:.6">日期</div><div style="font-size:13px">Day 6</div></div>
-        <div><div style="font-size:10px;opacity:.6">班次</div><div style="font-size:13px">待確認</div></div>
-        <div><div style="font-size:10px;opacity:.6">艙等</div><div style="font-size:13px">經濟艙</div></div>
-      </div>
-    </div>
-  </div>
-  <div id="b-hotel" style="display:none">
-    <div class="card" style="padding:0;overflow:hidden">
-      <div class="hotel-img" style="background:linear-gradient(135deg,#C8A88A,#A87A5A)">🌙</div>
-      <div style="padding:14px">
-        <div style="font-size:15px;font-weight:500">京都八條都酒店</div>
-        <div style="font-size:12px;color:#8B6445;margin-top:3px">📍 〒601-8412 京都市南區西九條院町17（京都站八條口）</div>
-        <div style="display:flex;gap:16px;margin-top:10px;font-size:12px">
-          <span><span style="color:#8B6445">入住 </span><strong>14:00</strong></span>
-          <span><span style="color:#8B6445">退房 </span><strong>11:00</strong></span>
-          <span><span style="color:#8B6445">夜數 </span><strong>1晚</strong></span>
-        </div>
-      </div>
-    </div>
-    <div class="card" style="padding:0;overflow:hidden">
-      <div class="hotel-img" style="background:linear-gradient(135deg,#8AA8C8,#5A7898)">🌃</div>
-      <div style="padding:14px">
-        <div style="font-size:15px;font-weight:500">艾思利德酒店 難波南III</div>
-        <div style="font-size:12px;color:#8B6445;margin-top:3px">📍 556-0003 大阪府大阪市浪速區惠美須西2-8-6</div>
-        <div style="display:flex;gap:16px;margin-top:10px;font-size:12px">
-          <span><span style="color:#8B6445">入住 </span><strong>15:00</strong></span>
-          <span><span style="color:#8B6445">退房 </span><strong>10:00</strong></span>
-          <span><span style="color:#8B6445">夜數 </span><strong>4晚</strong></span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="b-ticket" style="display:none">
-    <div class="card" style="cursor:pointer" onclick="showPin()">
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <div><div style="font-size:15px;font-weight:500">🚢 KKDay 一日遊</div><div style="font-size:12px;color:#8B6445;margin-top:3px">伊根舟屋·天橋立·美山町合掌村</div></div>
-        <span style="font-size:20px">🔒</span>
-      </div>
-      <div style="margin-top:10px;font-size:12px;color:#D4855A">點擊解鎖查看憑證 →</div>
-    </div>
-    <div class="card"><div style="font-size:15px;font-weight:500">🎡 道頓堀大観覧車</div><div style="font-size:12px;color:#8B6445;margin-top:3px">需現場購票</div><div style="margin-top:8px;font-size:12px;color:#6B9B8A">✓ 無需預約</div></div>
-    <div class="card"><div style="font-size:15px;font-weight:500">🗼 通天閣</div><div style="font-size:12px;color:#8B6445;margin-top:3px">需現場換取入場預約卷</div><div style="margin-top:8px;font-size:12px;color:#D4855A">⚠ 必須現場換券才能入場</div></div>
-    <div class="card"><div style="font-size:15px;font-weight:500">🌸 璃光和服清水寺店</div><div style="font-size:12px;color:#8B6445;margin-top:3px">清水寺店 · 預約09:00</div><div style="margin-top:8px;font-size:12px;color:#6B9B8A">✓ 已預約</div></div>
-  </div>
-</div>
-
-<!-- ── EXPENSE ── -->
-<div class="tab" id="t-expense">
-  <div class="ph"><h1>💴 旅遊記帳</h1><p>關西六日遊費用總覽</p></div>
-  <div class="stat-grid">
-    <div class="stat"><div class="stat-l">總支出 (JPY)</div><div class="stat-v" id="s-jpy">¥0</div></div>
-    <div class="stat"><div class="stat-l">約合台幣 (TWD)</div><div class="stat-v" id="s-twd">NT$0</div></div>
-    <div class="stat"><div class="stat-l">人均費用</div><div class="stat-v" id="s-pp">¥0</div></div>
-    <div class="stat"><div class="stat-l">筆數</div><div class="stat-v" id="s-cnt">0</div></div>
-  </div>
-  <div class="form-box" id="expForm" style="display:none">
-    <div style="font-size:15px;font-weight:500;margin-bottom:14px">新增支出</div>
-    <div style="margin-bottom:10px"><div class="fl">項目名稱</div><input class="fi" id="en" placeholder="如：章魚燒 x4"/></div>
-    <div class="row2" style="margin-bottom:10px">
-      <div style="flex:2"><div class="fl">金額</div><input class="fi" id="ea" type="number" inputmode="numeric" placeholder="0"/></div>
-      <div style="flex:1"><div class="fl">幣別</div><select class="fi" id="ec"><option value="JPY">JPY ¥</option><option value="TWD">TWD NT$</option></select></div>
-    </div>
-    <div style="margin-bottom:10px"><div class="fl">類別</div><select class="fi" id="ecat" style="width:100%"><option>🍜 餐飲</option><option>🎡 景點</option><option>🚃 交通</option><option>🛍 購物</option><option>🏨 住宿</option><option>🎟 票券</option></select></div>
-    <button class="submit" onclick="addExp()">記帳 ✓</button>
-  </div>
-  <div id="expList"></div>
-  <button class="fab" onclick="toggleForm()">＋</button>
-</div>
-
-<!-- ── JOURNAL ── -->
-<div class="tab" id="t-journal">
-  <div class="ph"><h1>📖 旅行日誌</h1><p>記錄每一個美好時刻</p></div>
-  <div class="jgrid">
-    <div class="jcard"><div class="jimg" style="background:linear-gradient(135deg,#C8A87A,#A88A5A)">⛩️</div><div class="jbody"><div style="font-size:13px;font-weight:500">祇園夜遊</div><div style="font-size:10px;color:#8B6445;margin-top:2px">Day 1 · 花見小路</div></div></div>
-    <div class="jcard"><div class="jimg" style="background:linear-gradient(135deg,#98C8A8,#5A9870)">🌿</div><div class="jbody"><div style="font-size:13px;font-weight:500">清水寺晨光</div><div style="font-size:10px;color:#8B6445;margin-top:2px">Day 2 · 東山區</div></div></div>
-    <div class="jcard"><div class="jimg" style="background:linear-gradient(135deg,#B8A8D8,#8878B8)">🏯</div><div class="jbody"><div style="font-size:13px;font-weight:500">合掌村雪景</div><div style="font-size:10px;color:#8B6445;margin-top:2px">Day 3 · 美山町</div></div></div>
-    <div class="jcard"><div class="jimg" style="background:linear-gradient(135deg,#F0C898,#C89858)">🎑</div><div class="jbody"><div style="font-size:13px;font-weight:500">道頓堀美食</div><div style="font-size:10px;color:#8B6445;margin-top:2px">Day 3 · 難波</div></div></div>
-    <div class="jcard" style="border-style:dashed;cursor:pointer"><div class="jimg" style="background:#F5EDE5">➕</div><div class="jbody"><div style="font-size:13px;font-weight:500;color:#D4855A">新增日誌</div><div style="font-size:10px;color:#8B6445;margin-top:2px">記錄新時刻</div></div></div>
-  </div>
-</div>
-
-<!-- ── PLANNING ── -->
+<!-- ══ PLANNING TAB ══ -->
 <div class="tab" id="t-planning">
-  <div class="ph"><h1>📋 旅遊準備</h1><p>待辦事項 · 行李清單</p></div>
+  <div class="ph"><h1>📋 旅遊準備</h1><p>待辦 · 行李 · 購物清單</p></div>
   <div class="tg">
-    <button class="tgb on" onclick="pTab('todo',this)">待辦清單</button>
-    <button class="tgb" onclick="pTab('luggage',this)">行李清單</button>
-    <button class="tgb" onclick="pTab('shopping',this)">購物清單</button>
+    <button class="tgb on" onclick="pTab('todo',this)">✅ 待辦清單</button>
+    <button class="tgb" onclick="pTab('luggage',this)">🧳 行李清單</button>
+    <button class="tgb" onclick="pTab('shopping',this)">🛍 購物清單</button>
   </div>
-  <div style="display:flex;justify-content:space-between;font-size:12px;color:#8B6445;margin-bottom:6px"><span>完成進度</span><span id="prog-txt">0/0</span></div>
-  <div class="pbar"><div class="pfill" id="prog-bar" style="width:0%"></div></div>
+  <div class="pbar-wrap">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:#8B6445;margin-bottom:5px"><span id="prog-name">待辦清單</span><span id="prog-txt">0/0</span></div>
+    <div class="pbar"><div class="pfill" id="prog-bar" style="width:0%"></div></div>
+  </div>
   <div id="p-todo"></div>
   <div id="p-luggage" style="display:none"></div>
   <div id="p-shopping" style="display:none"></div>
 </div>
 
-<!-- ── MEMBERS ── -->
-<div class="tab" id="t-members">
-  <div class="ph"><h1>👥 旅伴成員</h1><p>一起出發的好夥伴們</p></div>
-  <div class="mgrid" id="memberGrid"></div>
+<!-- ══ EXPENSE TAB ══ -->
+<div class="tab" id="t-expense">
+  <div class="ph"><h1>💴 旅遊記帳</h1><p>多幣別 · 人均分攤 · 每日明細</p></div>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-l">總支出 (JPY)</div><div class="stat-v" id="s-jpy">¥0</div></div>
+    <div class="stat"><div class="stat-l">約合台幣</div><div class="stat-v" id="s-twd">NT$0</div></div>
+    <div class="stat"><div class="stat-l">人均費用</div><div class="stat-v" id="s-pp">¥0</div></div>
+    <div class="stat"><div class="stat-l">匯率 JPY/TWD</div><div class="stat-v" id="s-rate">0.22</div></div>
+  </div>
+  <!-- 匯率調整 -->
+  <div style="background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:14px;display:flex;align-items:center;gap:10px">
+    <span style="font-size:13px;color:#8B6445;flex-shrink:0">調整匯率 JPY→TWD</span>
+    <input type="number" id="rateInput" value="0.22" step="0.001" class="fi" style="flex:1;padding:6px 10px;font-size:14px" oninput="updateRate(this.value)">
+  </div>
+
+  <div class="form-box card" id="expForm" style="display:none">
+    <div style="font-size:15px;font-weight:500;margin-bottom:4px">新增支出</div>
+    <div class="fl">項目名稱</div>
+    <input class="fi" id="en" placeholder="如：章魚燒 x4"/>
+    <div class="row2">
+      <div style="flex:2"><div class="fl">金額</div><input class="fi" id="ea" type="number" inputmode="decimal" placeholder="0"/></div>
+      <div style="flex:1"><div class="fl">幣別</div><select class="fi" id="ec"><option value="JPY">¥ JPY</option><option value="TWD">NT$ TWD</option><option value="USD">$ USD</option><option value="KRW">₩ KRW</option></select></div>
+    </div>
+    <div class="fl">類別</div>
+    <select class="fi" id="ecat"><option>🍜 餐飲</option><option>🎡 景點</option><option>🚃 交通</option><option>🛍 購物</option><option>🏨 住宿</option><option>🎟 票券</option></select>
+    <div class="fl">付款人</div>
+    <select class="fi" id="epayer"><option>小明</option><option>小花</option><option>小華</option><option>小豪</option></select>
+    <div class="fl">日期</div>
+    <select class="fi" id="eday"><option value="Day 1">Day 1 (4/1)</option><option value="Day 2">Day 2 (4/2)</option><option value="Day 3">Day 3 (4/3)</option><option value="Day 4">Day 4 (4/4)</option><option value="Day 5">Day 5 (4/5)</option><option value="Day 6">Day 6 (4/6)</option></select>
+    <button class="submit" onclick="addExp()">記帳 ✓</button>
+  </div>
+  <div id="expList"></div>
+  <button class="fab" id="fabBtn" onclick="toggleExpForm()">＋</button>
 </div>
 
 <!-- MODAL -->
@@ -290,7 +373,7 @@ a{color:inherit;text-decoration:none}
 <div class="pin-ov" id="pinOv">
   <div class="pin-box">
     <div style="font-size:18px;font-weight:500;color:#3D2A1A">🔒 安全驗證</div>
-    <div style="font-size:13px;color:#8B6445;margin-top:6px">請輸入 PIN 碼</div>
+    <div style="font-size:13px;color:#8B6445;margin-top:6px" id="pinHint">請輸入 PIN 碼</div>
     <div class="pin-dots"><div class="pdot" id="pd0"></div><div class="pdot" id="pd1"></div><div class="pdot" id="pd2"></div></div>
     <div class="pkpad">
       <button class="pk" onclick="pk('1')">1</button><button class="pk" onclick="pk('2')">2</button><button class="pk" onclick="pk('3')">3</button>
@@ -304,16 +387,14 @@ a{color:inherit;text-decoration:none}
 
 <!-- BOTTOM NAV -->
 <nav class="bnav">
-  <button class="on" onclick="sw('schedule',this)"><span>🗓</span>行程</button>
-  <button onclick="sw('bookings',this)"><span>🎫</span>預訂</button>
-  <button onclick="sw('expense',this)"><span>💴</span>記帳</button>
-  <button onclick="sw('journal',this)"><span>📖</span>日誌</button>
-  <button onclick="sw('planning',this)"><span>📋</span>準備</button>
-  <button onclick="sw('members',this)"><span>👥</span>成員</button>
+  <button class="on" onclick="sw('bookings',this)"><span class="ic">🎫</span>預訂</button>
+  <button onclick="sw('schedule',this)"><span class="ic">🗓</span>行程</button>
+  <button onclick="sw('planning',this)"><span class="ic">📋</span>準備</button>
+  <button onclick="sw('expense',this)"><span class="ic">💴</span>記帳</button>
 </nav>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────────────
+// ══ DATA ══════════════════════════════════════════════════════════════════
 const DAYS=[
   {label:'Day 1',date:'4/1',emoji:'✈',weather:{icon:'⛅',desc:'多雲轉晴',temp:'13°C',city:'大阪'},items:[
     {time:'抵達',name:'關西國際機場',type:'transport',note:'入境日本・辦理入境手續・換購交通票券（建議購買ICOCA或大阪周遊券）',addr:'大阪府泉佐野市Rinku往來北1番地',hours:'24小時',lat:34.4347,lng:135.2442},
@@ -327,7 +408,7 @@ const DAYS=[
     {time:'09:00',name:'璃光和服清水寺店',type:'sight',note:'✅ 已預約09:00・可選振袖、浴衣・隔天歸還',addr:'〒605-0074 京都府京都市東山區桝屋町351-16',hours:'09:00起（需預約）',lat:34.9999,lng:135.7784},
     {time:'10:30',name:'清水寺',type:'sight',note:'門票¥500・世界文化遺產・清水舞台・地主神社預計2026年3月後重新開放',addr:'京都府京都市東山区清水1丁目294',hours:'06:00-18:00（特別期間至21:30）',lat:34.9948,lng:135.7851},
     {time:'下午',name:'錦市場',type:'food',note:'「京都廚房」約400公尺長・醬菜、海鮮・⚠ 市場內禁止邊走邊吃',addr:'京都府京都市中京區錦小路通寺町通〜高倉通',hours:'各店約10:00-18:00',lat:35.0041,lng:135.7655},
-    {time:'傍晚',name:'京都車站',type:'transport',note:'搭乘JR至大阪・建議使用ICOCA IC卡',addr:'京都市下京区東塩小路高倉町8-3',hours:'',lat:34.9858,lng:135.7588},
+    {time:'傍晚',name:'京都車站→大阪',type:'transport',note:'搭乘JR至大阪・建議使用ICOCA IC卡',addr:'京都市下京区東塩小路高倉町8-3',hours:'',lat:34.9858,lng:135.7588},
     {time:'住宿',name:'艾思利德酒店 難波南III',type:'hotel',note:'入住：15:00 / 退房：10:00・難波站徒步約10分鐘',addr:'556-0003 大阪府大阪市浪速區惠美須西2-8-6',hours:'Check-in 15:00 / Check-out 10:00',lat:34.6603,lng:135.5006}
   ]},
   {label:'Day 3',date:'4/3',emoji:'⛵',weather:{icon:'⛅',desc:'多雲',temp:'14°C',city:'京都府'},items:[
@@ -361,13 +442,6 @@ const DAYS=[
   ]}
 ];
 
-const MEMBERS=[
-  {name:'小明',role:'行程規劃師',init:'明',color:'#D4855A'},
-  {name:'小花',role:'美食探索員',init:'花',color:'#6B9B8A'},
-  {name:'小華',role:'攝影官',init:'華',color:'#B87AAA'},
-  {name:'小豪',role:'司機兼領隊',init:'豪',color:'#7A9DC0'}
-];
-
 const TODOS=[
   {t:'預訂關西機場接送',d:false,w:'全體'},{t:'購買JR PASS / IC卡',d:true,w:'小明負責'},
   {t:'確認KKDay一日遊時間',d:false,w:'小花負責'},{t:'下載Google Maps離線地圖',d:false,w:'全體'},
@@ -385,21 +459,44 @@ const SHOPPING=[
   {t:'薬師堂Q10精華乳',d:true,w:'小華'},{t:'龍角散護喉糖',d:false,w:'全體'},
   {t:"nana's green tea伴手禮組",d:false,w:'小明'},{t:'日本酒（機場免稅）',d:false,w:'各自'}
 ];
+const LISTS={todo:TODOS,luggage:LUGGAGE,shopping:SHOPPING};
+const LIST_NAMES={todo:'待辦清單',luggage:'行李清單',shopping:'購物清單'};
 
 const TC={sight:'#3A8A3A',food:'#8A4A0A',transport:'#1A3A7A',hotel:'#5A1A7A',shopping:'#7A4A0A'};
 const TL={sight:'景點',food:'美食',transport:'交通',hotel:'住宿',shopping:'購物'};
 const TB={sight:'b-sight',food:'b-food',transport:'b-transport',hotel:'b-hotel',shopping:'b-shopping'};
+const CAT_BG={'🍜 餐飲':'#FDE8D0','🎡 景點':'#E8F2D8','🚃 交通':'#E0E8F8','🛍 購物':'#FEF0D0','🏨 住宿':'#F0E0F8','🎟 票券':'#E8F0F8'};
+const CAT_EM={'🍜 餐飲':'🍜','🎡 景點':'🎡','🚃 交通':'🚃','🛍 購物':'🛍','🏨 住宿':'🏨','🎟 票券':'🎟'};
 
-let curDay=0,expenses=[],formOpen=false,pinVal='',curPlan='todo';
-const LISTS={todo:TODOS,luggage:LUGGAGE,shopping:SHOPPING};
+let curDay=0,expenses=[],expFormOpen=false,curPlan='todo',curRate=0.22;
+let pinMode='unlock',pinCallback=null,pinVal='';
+let emergencyContacts=[
+  {name:'台灣外交部旅外緊急求助',phone:'+886-800-085-095'},
+  {name:'台灣駐大阪辦事處',phone:'+81-6-4301-7333'}
+];
+let curPIN='007';
 
-// ── INIT ──
+// ══ INIT ══════════════════════════════════════════════════════════════════
 function init(){
-  // countdown
   const diff=Math.ceil((new Date('2026-04-01')-new Date())/86400000);
   document.getElementById('cdnum').textContent=diff>0?diff:(diff===0?'今天出發！':'已出發');
+  buildDates();renderWeather();renderTimeline();
+  renderPlan('todo');renderPlan('luggage');renderPlan('shopping');
+  renderEmergency();renderExp();
+}
 
-  // dates
+// ══ NAV ═══════════════════════════════════════════════════════════════════
+function sw(id,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('t-'+id).classList.add('on');
+  document.querySelectorAll('.bnav button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  // hide FAB when not on expense
+  document.getElementById('fabBtn').style.display=id==='expense'?'flex':'none';
+}
+
+// ══ SCHEDULE ══════════════════════════════════════════════════════════════
+function buildDates(){
   const ds=document.getElementById('dateScroll');
   DAYS.forEach((d,i)=>{
     const el=document.createElement('div');
@@ -408,118 +505,148 @@ function init(){
     el.onclick=()=>selDay(i);
     ds.appendChild(el);
   });
-
-  renderWeather();renderTimeline();
-  renderMembers();
-  renderPlan('todo');renderPlan('luggage');renderPlan('shopping');
 }
-
 function selDay(i){
   curDay=i;
   document.querySelectorAll('.dp').forEach((p,j)=>p.classList.toggle('on',j===i));
   renderWeather();renderTimeline();
 }
-
 function renderWeather(){
   const w=DAYS[curDay].weather;
   document.getElementById('weatherArea').innerHTML=`
     <div class="wc">
       <span style="font-size:28px">${w.icon}</span>
-      <div><div style="font-size:22px;font-weight:500;color:#2A5F7A">${w.temp}</div><div style="font-size:12px;color:#4A7A8A">${w.city} · ${w.desc}</div></div>
+      <div><div style="font-size:20px;font-weight:500;color:#2A5F7A">${w.temp}</div><div style="font-size:12px;color:#4A7A8A">${w.city} · ${w.desc}</div></div>
       <div style="margin-left:auto;font-size:12px;color:#4A7A8A;text-align:right"><div>☔ 建議帶傘</div><div>🧥 薄外套</div></div>
     </div>`;
 }
-
 function renderTimeline(){
-  const tl=document.getElementById('timeline');
-  tl.innerHTML='';
+  const tl=document.getElementById('timeline');tl.innerHTML='';
   DAYS[curDay].items.forEach(item=>{
-    const div=document.createElement('div');
-    div.className='ti';
+    const div=document.createElement('div');div.className='ti';
     div.innerHTML=`
       <div class="ti-time">${item.time}</div>
-      <div class="ti-dot" style="color:${TC[item.type]||'#D4855A'};box-shadow:0 0 0 2px ${TC[item.type]||'#D4855A'};background:#fff"></div>
+      <div class="ti-dot" style="box-shadow:0 0 0 2px ${TC[item.type]||'#D4855A'};background:#fff"></div>
       <div class="ti-card">
         <span class="badge ${TB[item.type]}">${TL[item.type]||item.type}</span>
         <div style="font-size:14px;font-weight:500;color:#3D2A1A;margin-top:4px">${item.name}</div>
         <div style="font-size:12px;color:#8B6445;margin-top:3px">${item.note.slice(0,50)}${item.note.length>50?'…':''}</div>
+        <button class="nav-btn" onclick="event.stopPropagation();navigate(${item.lat},${item.lng})">🧭 導航</button>
       </div>`;
-    div.onclick=()=>openModal(item);
+    div.onclick=()=>openDetail(item);
     tl.appendChild(div);
   });
 }
-
-function openModal(item){
+function navigate(lat,lng){
+  window.open(`https://maps.google.com/?daddr=${lat},${lng}&dirflg=d`,'_blank');
+}
+function openDetail(item){
   document.getElementById('modalBody').innerHTML=`
     <div style="font-size:18px;font-weight:500;color:#3D2A1A;margin-bottom:4px">${item.name}</div>
-    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">📍 ${item.addr}</div>
-    ${item.hours?`<div style="font-size:13px;color:#5D3A1A;margin-bottom:8px">🕐 ${item.hours}</div>`:''}
-    <div style="background:#FFF2E8;border-radius:10px;padding:12px;font-size:13px;color:#5D3A1A;line-height:1.7;margin-bottom:10px">${item.note}</div>
-    <a class="map-btn" href="https://maps.google.com/?q=${item.lat},${item.lng}" target="_blank">🗺 在 Google Maps 開啟</a>`;
+    <div style="font-size:13px;color:#8B6445;margin-bottom:10px">📍 ${item.addr}</div>
+    ${item.hours?`<div style="font-size:13px;color:#5D3A1A;margin-bottom:10px">🕐 ${item.hours}</div>`:''}
+    <div style="background:#FFF2E8;border-radius:10px;padding:12px;font-size:13px;color:#5D3A1A;line-height:1.7;margin-bottom:12px">${item.note}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="https://maps.google.com/?q=${item.lat},${item.lng}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#F0E8E0;border-radius:8px;font-size:13px;color:#D4855A;font-weight:500">🗺 Google Maps</a>
+      <button onclick="navigate(${item.lat},${item.lng})" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#E8F0F8;border-radius:8px;font-size:13px;color:#1A3A6A;font-weight:500;border:none">🧭 開始導航</button>
+    </div>`;
   document.getElementById('modal').classList.add('on');
 }
-function closeModal(){document.getElementById('modal').classList.remove('on');}
 
-// ── NAV ──
-function sw(id,btn){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  document.getElementById('t-'+id).classList.add('on');
-  document.querySelectorAll('.bnav button').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-}
-
-// ── BOOKINGS ──
+// ══ BOOKINGS ══════════════════════════════════════════════════════════════
 function bTab(id,btn){
-  ['flight','hotel','ticket'].forEach(x=>document.getElementById('b-'+x).style.display='none');
+  ['flight','hotel','ticket','emergency'].forEach(x=>{
+    const el=document.getElementById('b-'+x);if(el)el.style.display='none';
+  });
   document.getElementById('b-'+id).style.display='block';
   document.querySelectorAll('#t-bookings .tgb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
 }
 
-// ── EXPENSE ──
-function toggleForm(){formOpen=!formOpen;document.getElementById('expForm').style.display=formOpen?'block':'none';}
-function addExp(){
-  const n=document.getElementById('en').value.trim();
-  const a=parseFloat(document.getElementById('ea').value)||0;
-  if(!n||!a)return;
-  expenses.push({n,a,c:document.getElementById('ec').value,cat:document.getElementById('ecat').value});
-  document.getElementById('en').value='';document.getElementById('ea').value='';
-  toggleForm();renderExp();
+// ticket toggle
+function openTicket(id){
+  pinMode='ticket';pinCallback=()=>showTicketBody(id);
+  if(id==='kkday'){openPin('解鎖 KKDay 憑證');}else{showTicketBody(id);}
 }
-function renderExp(){
-  const catBg={'🍜 餐飲':'#FDE8D0','🎡 景點':'#E8F2D8','🚃 交通':'#E0E8F8','🛍 購物':'#FEF0D0','🏨 住宿':'#F0E0F8','🎟 票券':'#E8F0F8'};
-  const catEm={'🍜 餐飲':'🍜','🎡 景點':'🎡','🚃 交通':'🚃','🛍 購物':'🛍','🏨 住宿':'🏨','🎟 票券':'🎟'};
-  const totJPY=expenses.reduce((s,e)=>s+(e.c==='JPY'?e.a:e.a/0.22),0);
-  document.getElementById('s-jpy').textContent='¥'+Math.round(totJPY).toLocaleString();
-  document.getElementById('s-twd').textContent='NT$'+Math.round(totJPY*0.22).toLocaleString();
-  document.getElementById('s-pp').textContent='¥'+Math.round(totJPY/4).toLocaleString();
-  document.getElementById('s-cnt').textContent=expenses.length;
-  document.getElementById('expList').innerHTML=expenses.map(e=>`
-    <div class="exp-item">
-      <div class="exp-icon" style="background:${catBg[e.cat]||'#F5EDE5'}">${catEm[e.cat]||'💴'}</div>
-      <div style="flex:1"><div style="font-size:14px">${e.n}</div><div style="font-size:11px;color:#8B6445">${e.cat}</div></div>
-      <div style="font-size:15px;font-weight:500;color:#D4855A">${e.c==='JPY'?'¥':'NT$'}${e.a.toLocaleString()}</div>
-    </div>`).join('');
+function openTicketDirect(id){showTicketBody(id);}
+function showTicketBody(id){
+  const body=document.getElementById('tk-'+id+'-body');
+  const lock=document.getElementById('tk-'+id+'-lock');
+  if(body){body.style.display=body.style.display==='none'?'block':'none';}
+  if(lock){lock.textContent=body.style.display!=='none'?'🔓':'🔒';}
 }
 
-// ── PLANNING ──
-function pTab(id,btn){
-  ['todo','luggage','shopping'].forEach(x=>{document.getElementById('p-'+x).style.display='none';});
-  document.getElementById('p-'+id).style.display='block';
-  document.querySelectorAll('#t-planning .tgb').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');curPlan=id;updateProg(id);
+// file upload
+function triggerUpload(id){document.getElementById('fu-'+id).click();}
+function handleUpload(id,input){
+  const file=input.files[0];if(!file)return;
+  const container=document.getElementById('files-'+id);
+  const isImg=file.type.startsWith('image/');
+  const item=document.createElement('div');
+  item.className='uploaded-file';
+  if(isImg){
+    const reader=new FileReader();
+    reader.onload=e=>{
+      item.innerHTML=`<img src="${e.target.result}" style="width:48px;height:48px;object-fit:cover;border-radius:6px"><div style="flex:1"><div style="font-weight:500">${file.name}</div><div style="font-size:11px;color:#8B6445">${(file.size/1024).toFixed(0)} KB</div></div>`;
+    };reader.readAsDataURL(file);
+  } else {
+    item.innerHTML=`<span style="font-size:24px">📄</span><div style="flex:1"><div style="font-weight:500">${file.name}</div><div style="font-size:11px;color:#8B6445">${(file.size/1024).toFixed(0)} KB · PDF</div></div>`;
+  }
+  container.appendChild(item);
+  input.value='';
 }
-function renderPlan(id){
-  const items=LISTS[id];
-  document.getElementById('p-'+id).innerHTML=items.map((item,i)=>`
-    <div class="todo-item${item.d?' done':''}" onclick="toggleTodo('${id}',${i})">
-      <div class="chk${item.d?' on':''}">${item.d?'✓':''}</div>
-      <div style="flex:1">
-        <div style="font-size:14px;${item.d?'text-decoration:line-through':''}">${item.t}</div>
-        ${item.w?`<div style="font-size:11px;color:#8B6445">👤 ${item.w}</div>`:''}
+
+// emergency
+function renderEmergency(){
+  document.getElementById('emergency-list').innerHTML=emergencyContacts.map((c,i)=>`
+    <div class="emergency-item">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:14px;font-weight:500">${c.name}</div>
+          <div style="font-size:15px;color:#C06840;margin-top:3px;font-weight:500">📞 ${c.phone}</div>
+        </div>
+        <button onclick="deleteEmergency(${i})" style="background:none;border:none;font-size:18px;color:#C08080">🗑</button>
       </div>
     </div>`).join('');
+}
+function showAddEmergency(){
+  document.getElementById('modalBody').innerHTML=`
+    <div style="font-size:18px;font-weight:500;color:#3D2A1A;margin-bottom:16px">🆘 新增緊急聯絡人</div>
+    <div class="fl">姓名 / 單位</div>
+    <input class="fi" id="ec-name" placeholder="如：飯店前台">
+    <div class="fl">電話號碼</div>
+    <input class="fi" id="ec-phone" placeholder="如：+81-6-xxxx-xxxx" type="tel">
+    <button class="submit" onclick="saveEmergency()">儲存</button>`;
+  document.getElementById('modal').classList.add('on');
+}
+function saveEmergency(){
+  const n=document.getElementById('ec-name').value.trim();
+  const p=document.getElementById('ec-phone').value.trim();
+  if(!n||!p)return;
+  emergencyContacts.push({name:n,phone:p});
+  renderEmergency();closeModal();
+}
+function deleteEmergency(i){emergencyContacts.splice(i,1);renderEmergency();}
+
+// ══ PLANNING ══════════════════════════════════════════════════════════════
+function pTab(id,btn){
+  ['todo','luggage','shopping'].forEach(x=>document.getElementById('p-'+x).style.display='none');
+  document.getElementById('p-'+id).style.display='block';
+  document.querySelectorAll('#t-planning .tgb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');curPlan=id;
+  document.getElementById('prog-name').textContent=LIST_NAMES[id];
   updateProg(id);
+}
+function renderPlan(id){
+  document.getElementById('p-'+id).innerHTML=LISTS[id].map((item,i)=>`
+    <div class="todo-item${item.d?' ':''}${item.d?'':''}">
+      <div class="chk${item.d?' on':''}" onclick="toggleTodo('${id}',${i})">${item.d?'✓':''}</div>
+      <div style="flex:1;${item.d?'opacity:.5':''}">
+        <div style="font-size:14px;${item.d?'text-decoration:line-through':''}">${item.t}</div>
+        ${item.w?`<div style="font-size:11px;color:#8B6445;margin-top:2px">👤 ${item.w}</div>`:''}
+      </div>
+    </div>`).join('');
+  if(id===curPlan)updateProg(id);
 }
 function toggleTodo(id,i){LISTS[id][i].d=!LISTS[id][i].d;renderPlan(id);}
 function updateProg(id){
@@ -528,48 +655,90 @@ function updateProg(id){
   document.getElementById('prog-bar').style.width=total>0?`${(done/total)*100}%`:'0%';
 }
 
-// ── MEMBERS ──
-function renderMembers(){
-  document.getElementById('memberGrid').innerHTML=MEMBERS.map(m=>`
-    <div class="mcard">
-      <div class="mav" style="background:${m.color}">${m.init}</div>
-      <div style="font-size:14px;font-weight:500">${m.name}</div>
-      <div style="font-size:12px;color:#8B6445">${m.role}</div>
-    </div>`).join('')+`
-    <div class="mcard" style="border-style:dashed;cursor:pointer">
-      <div class="mav" style="background:#F5EDE5;color:#D4855A">＋</div>
-      <div style="font-size:14px;font-weight:500;color:#D4855A">新增成員</div>
-    </div>`;
+// ══ EXPENSE ═══════════════════════════════════════════════════════════════
+function updateRate(v){curRate=parseFloat(v)||0.22;document.getElementById('s-rate').textContent=curRate.toFixed(3);renderExp();}
+function toJPY(amt,cur){
+  if(cur==='JPY')return amt;
+  if(cur==='TWD')return amt/curRate;
+  if(cur==='USD')return amt*149;
+  if(cur==='KRW')return amt*0.11;
+  return amt;
+}
+function toggleExpForm(){
+  expFormOpen=!expFormOpen;
+  document.getElementById('expForm').style.display=expFormOpen?'block':'none';
+  document.getElementById('fabBtn').textContent=expFormOpen?'✕':'＋';
+}
+function addExp(){
+  const n=document.getElementById('en').value.trim();
+  const a=parseFloat(document.getElementById('ea').value)||0;
+  if(!n||!a)return;
+  expenses.push({n,a,c:document.getElementById('ec').value,cat:document.getElementById('ecat').value,payer:document.getElementById('epayer').value,day:document.getElementById('eday').value});
+  document.getElementById('en').value='';document.getElementById('ea').value='';
+  toggleExpForm();renderExp();
+}
+function renderExp(){
+  const totJPY=expenses.reduce((s,e)=>s+toJPY(e.a,e.c),0);
+  document.getElementById('s-jpy').textContent='¥'+Math.round(totJPY).toLocaleString();
+  document.getElementById('s-twd').textContent='NT$'+Math.round(totJPY*curRate).toLocaleString();
+  document.getElementById('s-pp').textContent='¥'+Math.round(totJPY/4).toLocaleString();
+
+  // group by day
+  const byDay={};
+  expenses.forEach(e=>{if(!byDay[e.day])byDay[e.day]=[];byDay[e.day].push(e);});
+  const days=['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6'];
+  let html='';
+  days.forEach(day=>{
+    if(!byDay[day])return;
+    const dayTot=byDay[day].reduce((s,e)=>s+toJPY(e.a,e.c),0);
+    html+=`<div class="day-label-row">${day} · ¥${Math.round(dayTot).toLocaleString()}</div>`;
+    byDay[day].forEach(e=>{
+      const sym=e.c==='JPY'?'¥':e.c==='TWD'?'NT$':e.c==='USD'?'$':'₩';
+      html+=`<div class="exp-item">
+        <div class="exp-icon" style="background:${CAT_BG[e.cat]||'#F5EDE5'}">${CAT_EM[e.cat]||'💴'}</div>
+        <div style="flex:1">
+          <div style="font-size:14px">${e.n}</div>
+          <div style="font-size:11px;color:#8B6445">${e.cat} · 付款：${e.payer}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:15px;font-weight:500;color:#D4855A">${sym}${e.a.toLocaleString()}</div>
+          <div style="font-size:11px;color:#B0A090">≈¥${Math.round(toJPY(e.a,e.c)).toLocaleString()}</div>
+        </div>
+      </div>`;
+    });
+  });
+  document.getElementById('expList').innerHTML=html||'<div style="text-align:center;padding:30px;color:#B0A090;font-size:13px">點右下 ＋ 開始記帳</div>';
 }
 
-// ── PIN ──
-function showPin(){pinVal='';updDots();document.getElementById('pinOv').classList.add('on');}
-function closePinOv(){document.getElementById('pinOv').classList.remove('on');}
+// ══ MODAL ═════════════════════════════════════════════════════════════════
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+
+// ══ PIN ═══════════════════════════════════════════════════════════════════
+function openPin(hint){
+  pinVal='';updDots();
+  document.getElementById('pinHint').textContent=hint||'請輸入 PIN 碼';
+  document.getElementById('pinOv').classList.add('on');
+}
+function closePinOv(){document.getElementById('pinOv').classList.remove('on');pinVal='';}
 function updDots(){[0,1,2].forEach(i=>{const d=document.getElementById('pd'+i);d.className='pdot'+(i<pinVal.length?' on':'');});}
 function pk(k){
   if(k==='del'){pinVal=pinVal.slice(0,-1);updDots();return;}
   if(pinVal.length>=3)return;
   pinVal+=k;updDots();
   if(pinVal.length===3){
-    if(pinVal==='007'){
+    if(pinVal===curPIN){
       closePinOv();
-      document.getElementById('modalBody').innerHTML=`
-        <div style="font-size:18px;font-weight:500;color:#3D2A1A;margin-bottom:12px">🎟 KKDay 一日遊憑證</div>
-        <div style="background:#E8F2D8;border-radius:10px;padding:12px;font-size:13px;color:#2A5A1A;line-height:1.8">
-          ✓ 行程：伊根舟屋觀光船 + 天橋立 + 美山町合掌村<br>
-          ✓ 語言：繁體中文導遊<br>
-          ✓ 集合：大阪難波（詳細地點確認後補充）<br>
-          ✓ 預計出發時間：07:00-08:00
-        </div>`;
-      document.getElementById('modal').classList.add('on');
+      if(pinCallback){pinCallback();pinCallback=null;}
     } else {
       [0,1,2].forEach(i=>document.getElementById('pd'+i).className='pdot err');
-      setTimeout(()=>{pinVal='';updDots();},600);
+      setTimeout(()=>{pinVal='';updDots();},700);
     }
   }
 }
 
 init();
+// hide FAB on non-expense tabs initially
+document.getElementById('fabBtn').style.display='none';
 </script>
 </body>
 </html>
