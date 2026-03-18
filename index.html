@@ -67,7 +67,7 @@ input,select,textarea{font-family:inherit}
 .eva-city{font-size:11px;color:#666;margin-top:2px}
 .eva-arrow{flex:1;text-align:center;position:relative;height:30px;display:flex;align-items:center;justify-content:center}
 .eva-arrow::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:#ccc}
-.eva-plane{font-size:20px;background:#fff;padding:0 4px;position:relative;z-index:1;transform:rotate(45deg)}
+.eva-plane{font-size:20px;background:#fff;padding:0 4px;position:relative;z-index:1;transform:rotate(-45deg)}
 .eva-divider{border:none;border-top:1px dashed #ddd;margin:14px 0}
 .eva-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .eva-field-label{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.06em}
@@ -642,7 +642,12 @@ function handleHotelPhoto(id,input){
 
 // NAVIGATE
 function openGoogleMapsNav(lat,lng){
-  window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`,'_blank');
+  const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if(isIOS){
+    window.open('https://maps.apple.com/?daddr='+lat+','+lng+'&dirflg=d','_blank');
+  } else {
+    window.open('https://www.google.com/maps/search/?api=1&query='+lat+','+lng,'_blank');
+  }
 }
 
 // ADDRESS FULLSCREEN
