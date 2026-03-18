@@ -5,51 +5,39 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="theme-color" content="#007B5E"/>
 <title>🌸 關西六日遊 2026</title>
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--eva:#007B5E;--eva2:#00A878;--shadow:4px 4px 0px #E0D5C5;--accent:#D4855A}
-body{padding-top:26px;font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px;-webkit-font-smoothing:antialiased}
 button{cursor:pointer;font-family:inherit;transition:transform .15s}
 button:active{transform:scale(.95)}
 a{color:inherit;text-decoration:none}
 input,select,textarea{font-family:inherit}
-/* NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;background:#FFFDF8;border-top:1.5px solid #E8DDD0;display:flex;z-index:100}
 .bnav button{flex:1;padding:8px 2px 12px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#A09080}
 .bnav button.on{color:var(--eva)}
 .bnav button .ic{font-size:20px}
-/* TABS */
 .tab{display:none;padding:16px}
 .tab.on{display:block}
-/* PAGE HEADER */
 .ph{background:linear-gradient(135deg,#F7E8D8,#EAD9C8);border-radius:16px;padding:18px;margin-bottom:16px;position:relative;overflow:hidden}
 .ph::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(212,133,90,.1)}
 .ph h1{font-size:22px;font-weight:500;color:#5D3A1A}
 .ph p{font-size:13px;color:#8B6445;margin-top:4px}
-/* CARD */
 .card{background:#fff;border-radius:14px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:12px;padding:14px}
-/* SUB TAB */
 .tg{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}
 .tg::-webkit-scrollbar{display:none}
 .tgb{flex-shrink:0;padding:7px 14px;border:1.5px solid #E8D5C0;border-radius:20px;font-size:12px;color:#8B6445;background:transparent;white-space:nowrap}
 .tgb.on{background:var(--eva);border-color:var(--eva);color:#fff}
-/* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(80,50,30,.5);z-index:200;align-items:flex-end}
 .overlay.on{display:flex}
 .sheet{background:#FFFDF8;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:90vh;overflow-y:auto}
 .handle{width:40px;height:4px;background:#E0D0C0;border-radius:2px;margin:0 auto 16px}
 .close-btn{width:100%;padding:12px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:14px}
-/* FORM */
 .fl{font-size:12px;color:#8B6445;margin-bottom:4px;margin-top:10px}
 .fi{width:100%;padding:10px 12px;border:1.5px solid #E8D5C0;border-radius:10px;font-size:14px;color:#3D2A1A;background:#FFF8F4;outline:none}
 .fi:focus{border-color:var(--eva)}
 .submit{width:100%;padding:12px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:12px}
 .row2{display:flex;gap:8px}
-/* PIN */
 .pin-ov{display:none;position:fixed;inset:0;background:rgba(80,50,30,.75);z-index:400;align-items:center;justify-content:center}
 .pin-ov.on{display:flex}
 .pin-box{background:#FFFDF8;border-radius:20px;padding:28px 24px;width:290px;text-align:center}
@@ -58,11 +46,9 @@ input,select,textarea{font-family:inherit}
 .pdot.on{background:var(--eva)}.pdot.err{background:#E24B4A}
 .pkpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .pk{padding:15px;background:#F5EDE5;border:none;border-radius:10px;font-size:20px;color:#3D2A1A}
-/* ADDRESS FULL */
 .addr-full{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:center;justify-content:center;padding:24px}
 .addr-full.on{display:flex}
 .addr-card{background:#fff;border-radius:20px;padding:30px 24px;width:100%;max-width:360px;text-align:center}
-/* EVA BOARDING PASS */
 .eva-bp{border-radius:14px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,100,70,.2)}
 .eva-bp-head{background:var(--eva);padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
 .eva-bp-body{background:#fff;padding:18px}
@@ -77,18 +63,15 @@ input,select,textarea{font-family:inherit}
 .eva-field-label{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.06em}
 .eva-field-val{font-size:13px;font-weight:600;color:#1A1A1A;margin-top:3px}
 .eva-stub{background:#F5F5F5;border-top:1px dashed #ddd;padding:12px 18px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-/* HOTEL */
 .hotel-card{background:#fff;border-radius:16px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
 .hotel-photo{height:120px;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative;overflow:hidden;cursor:pointer}
 .hotel-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 .hotel-photo-label{position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.45);color:#fff;font-size:11px;padding:3px 8px;border-radius:8px}
-/* TICKET */
 .ticket-item{background:#fff;border-radius:12px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
 .ticket-hdr{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
 .upload-area{border:2px dashed #E8D5C0;border-radius:12px;padding:16px;text-align:center;cursor:pointer;background:#FFFDF8;transition:all .2s;margin-bottom:8px}
-.upload-area:hover{border-color:var(--eva);background:#F0FFF8}
+.upload-area:hover{border-color:var(--eva)}
 .ufile{background:#F5EDE5;border-radius:10px;padding:9px 12px;display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:13px}
-/* SCHEDULE */
 .cd{background:#1A3A2A;border-radius:14px;padding:16px 20px;color:#fff;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .cd-num{font-size:36px;font-weight:500;color:#7ADFC0}
 .ds{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px;scrollbar-width:none}
@@ -108,8 +91,11 @@ input,select,textarea{font-family:inherit}
 .b-sight{background:#E8F2D8;color:#3A6A1A}.b-food{background:#FDE8D0;color:#8A3A0A}
 .b-transport{background:#E0F0E8;color:#0A4A2A}.b-hotel{background:#F0E0F8;color:#5A1A7A}.b-shopping{background:#FEF0D0;color:#7A4A0A}
 .hours-row{font-size:11px;color:#6B9B8A;margin-top:3px}
-.nav-sm{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;font-size:11px;border:none;margin-top:6px;margin-right:4px}
-/* PLANNING */
+.nav-sm{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;font-size:11px;border:none;margin-top:6px;margin-right:4px;cursor:pointer}
+.attach-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;font-size:11px;border:1.5px dashed #E8D5C0;background:#FFFDF8;color:#8B6445;margin-top:6px;cursor:pointer}
+.attach-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.attach-thumb{width:44px;height:44px;object-fit:cover;border-radius:7px;cursor:pointer}
+.attach-pdf{width:44px;height:44px;background:#F0E8E0;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer}
 .pbar{height:6px;background:#F0E8E0;border-radius:3px;margin-bottom:14px}
 .pfill{height:100%;border-radius:3px;background:var(--eva);transition:width .3s}
 .todo-item{background:#fff;border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:8px;display:flex;align-items:flex-start;gap:10px}
@@ -122,35 +108,20 @@ input,select,textarea{font-family:inherit}
 .add-row input:focus{border-color:var(--eva);border-style:solid}
 .add-row button{padding:9px 14px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:13px}
 .del-btn{background:none;border:none;color:#C0A090;font-size:16px;padding:2px 4px;flex-shrink:0}
-/* EXPENSE */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .stat{background:#fff;border-radius:12px;padding:12px 14px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0}
 .stat-l{font-size:11px;color:#8B6445}.stat-v{font-size:18px;font-weight:500;color:#3D2A1A;margin-top:2px}
-.fab{position:fixed;bottom:90px;right:20px;width:52px;height:52px;background:var(--eva);border:none;border-radius:50%;font-size:24px;color:#fff;box-shadow:0 4px 12px rgba(0,120,90,.35);align-items:center;justify-content:center;z-index:50;display:none}
+.fab{position:fixed;bottom:90px;right:20px;width:52px;height:52px;background:var(--eva);border:none;border-radius:50%;font-size:24px;color:#fff;box-shadow:0 4px 12px rgba(0,120,90,.35);display:none;align-items:center;justify-content:center;z-index:50}
 .exp-row{background:#fff;border-radius:12px;padding:11px 13px;box-shadow:var(--shadow);border:1.5px solid #F0E8E0;margin-bottom:7px;display:flex;align-items:center;gap:10px}
 .exp-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .day-row{font-size:11px;font-weight:500;color:#8B6445;letter-spacing:.04em;margin:14px 0 6px;padding-left:2px}
 .em-item{background:#FFF2E8;border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1.5px solid #F0D8C0;display:flex;align-items:center;justify-content:space-between}
-/* ITEM ATTACHMENTS */
-.attach-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;font-size:11px;border:1.5px dashed #E8D5C0;background:#FFFDF8;color:#8B6445;margin-top:6px;cursor:pointer}
-.attach-btn:hover{border-color:#D4855A;color:#D4855A}
-.attach-thumb{width:44px;height:44px;object-fit:cover;border-radius:7px;cursor:pointer}
-.attach-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.attach-pdf{width:44px;height:44px;background:#F0E8E0;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer}
+#save-toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%);background:#1A3A2A;color:#fff;padding:7px 18px;border-radius:20px;font-size:12px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
 </style>
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
 <!-- ══ BOOKINGS ══ -->
-<!-- Sync status bar (shown on all tabs via fixed position) -->
-<div id="sync-bar" style="position:fixed;top:0;left:0;right:0;z-index:999;text-align:center;font-size:11px;padding:5px 12px;border-bottom:1px solid #ddd;background:#F5F5F5;color:#999;transition:all .3s">
-  🔄 連線中…
-</div>
-<div style="height:26px"></div>
-
 <div class="tab on" id="t-bookings">
   <div class="ph"><h1>🎫 預訂資料</h1><p>機票 · 住宿 · 票券 · 緊急聯絡</p></div>
   <div class="tg">
@@ -160,14 +131,11 @@ input,select,textarea{font-family:inherit}
     <button class="tgb" onclick="bTab('coupon',this)">🏷 折價券</button>
     <button class="tgb" onclick="bTab('emergency',this)">🆘 緊急</button>
   </div>
-
-  <!-- 機票 -->
   <div id="b-flight">
-    <!-- 去程 EVA BR 182 -->
     <div class="eva-bp">
       <div class="eva-bp-head">
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="background:#fff;border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--eva);letter-spacing:.05em">EVA AIR</div>
+          <div style="background:#fff;border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--eva)">EVA AIR</div>
           <div style="color:#fff;font-size:12px;opacity:.85">長榮航空</div>
         </div>
         <div style="color:#fff;font-size:12px;font-weight:500;letter-spacing:.05em">BOARDING PASS</div>
@@ -190,17 +158,16 @@ input,select,textarea{font-family:inherit}
         </div>
       </div>
       <div class="eva-stub">
-        <div><div class="eva-field-label">Boarding Time</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
+        <div><div class="eva-field-label">Boarding</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
         <div><div class="eva-field-label">Gate</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
         <div><div class="eva-field-label">Seat</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
-        <div><div class="eva-field-label">Bag Allowance</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">23kg</div></div>
+        <div><div class="eva-field-label">Baggage</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">23kg</div></div>
       </div>
     </div>
-    <!-- 回程 EVA BR 147 -->
     <div class="eva-bp">
       <div class="eva-bp-head">
         <div style="display:flex;align-items:center;gap:10px">
-          <div style="background:#fff;border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--eva);letter-spacing:.05em">EVA AIR</div>
+          <div style="background:#fff;border-radius:6px;padding:4px 10px;font-size:13px;font-weight:700;color:var(--eva)">EVA AIR</div>
           <div style="color:#fff;font-size:12px;opacity:.85">長榮航空</div>
         </div>
         <div style="color:#fff;font-size:12px;font-weight:500;letter-spacing:.05em">BOARDING PASS</div>
@@ -226,31 +193,23 @@ input,select,textarea{font-family:inherit}
         <div><div class="eva-field-label">Check-in</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">17:35前</div></div>
         <div><div class="eva-field-label">Gate Closes</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">20:15</div></div>
         <div><div class="eva-field-label">Seat</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">待確認</div></div>
-        <div><div class="eva-field-label">Bag Allowance</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">23kg</div></div>
+        <div><div class="eva-field-label">Baggage</div><div style="font-size:13px;font-weight:600;color:#1A1A1A">23kg</div></div>
       </div>
     </div>
     <div style="background:#E8F5F0;border-radius:12px;padding:12px 14px;font-size:12px;color:#007B5E;border:1.5px solid #B0DDD0">
       ⚠️ 去程建議 05:00 前到高雄小港機場 · 回程建議 17:30 前抵達關西機場
     </div>
   </div>
-
-  <!-- 住宿 -->
   <div id="b-hotel" style="display:none"><div id="hotel-list"></div></div>
-
-  <!-- 票券 -->
   <div id="b-ticket" style="display:none">
     <div style="font-size:13px;color:#8B6445;margin-bottom:12px">🔒 所有票券均已上鎖，請輸入 PIN 碼查看</div>
     <div id="ticket-list"></div>
   </div>
-
-  <!-- 折價券 -->
   <div id="b-coupon" style="display:none">
-    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">🏷 折價券與優惠券（均已上鎖）</div>
+    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">🏷 折價券與優惠券</div>
     <div id="coupon-list"></div>
     <button class="submit" style="background:#6B9B8A" onclick="addCouponModal()">＋ 新增折價券</button>
   </div>
-
-  <!-- 緊急 -->
   <div id="b-emergency" style="display:none">
     <div class="card" style="background:#FFF2E8;border-color:#F0D8C0">
       <div style="font-size:15px;font-weight:500;margin-bottom:12px">🆘 緊急聯絡資訊</div>
@@ -259,10 +218,7 @@ input,select,textarea{font-family:inherit}
     </div>
     <div class="card" style="background:#E8F5F0;border-color:#B0DDD0">
       <div style="font-size:14px;font-weight:500;margin-bottom:10px">📞 日本緊急電話</div>
-      <div style="font-size:13px;line-height:2.2">
-        🚨 警察：<strong>110</strong><br>🚒 火災／救護：<strong>119</strong><br>
-        🏥 急救諮詢：<strong>#7119</strong><br>🌏 外國人諮詢：<strong>0570-013-904</strong>
-      </div>
+      <div style="font-size:13px;line-height:2.2">🚨 警察：<strong>110</strong><br>🚒 火災／救護：<strong>119</strong><br>🏥 急救諮詢：<strong>#7119</strong><br>🌏 外國人諮詢：<strong>0570-013-904</strong></div>
     </div>
   </div>
 </div>
@@ -281,7 +237,7 @@ input,select,textarea{font-family:inherit}
 
 <!-- ══ PLANNING ══ -->
 <div class="tab" id="t-planning">
-  <div class="ph"><h1>📋 旅遊準備</h1><p>清單可自由編輯・新增・刪除</p></div>
+  <div class="ph"><h1>📋 旅遊準備</h1><p>清單可自由編輯 · 資料自動儲存</p></div>
   <div class="tg">
     <button class="tgb on" onclick="pTab('todo',this)">✅ 待辦</button>
     <button class="tgb" onclick="pTab('luggage',this)">🧳 行李</button>
@@ -296,7 +252,7 @@ input,select,textarea{font-family:inherit}
 
 <!-- ══ EXPENSE ══ -->
 <div class="tab" id="t-expense">
-  <div class="ph"><h1>💴 旅遊記帳</h1><p>多幣別換算 · 人均分攤 · 每日明細</p></div>
+  <div class="ph"><h1>💴 旅遊記帳</h1><p>多幣別換算 · 人均分攤 · 資料自動儲存</p></div>
   <div class="stat-grid">
     <div class="stat"><div class="stat-l">總支出 (JPY)</div><div class="stat-v" id="s-jpy">¥0</div></div>
     <div class="stat"><div class="stat-l">約合台幣</div><div class="stat-v" id="s-twd">NT$0</div></div>
@@ -331,12 +287,9 @@ input,select,textarea{font-family:inherit}
   <button class="fab" id="fabBtn" onclick="toggleExpForm()">＋</button>
 </div>
 
-<!-- MODAL -->
 <div class="overlay" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="sheet"><div class="handle"></div><div id="modalBody"></div><button class="close-btn" onclick="closeModal()">關閉</button></div>
 </div>
-
-<!-- PIN -->
 <div class="pin-ov" id="pinOv">
   <div class="pin-box">
     <div style="font-size:18px;font-weight:500;color:#3D2A1A">🔒 安全驗證</div>
@@ -351,8 +304,6 @@ input,select,textarea{font-family:inherit}
     </div>
   </div>
 </div>
-
-<!-- ADDRESS FULLSCREEN -->
 <div class="addr-full" id="addrFull" onclick="if(event.target===this)closeAddr()">
   <div class="addr-card">
     <div style="font-size:13px;color:#007B5E;font-weight:500;margin-bottom:6px">📍 出示此畫面給計程車司機</div>
@@ -361,11 +312,11 @@ input,select,textarea{font-family:inherit}
     <div id="addrName" style="font-size:13px;color:#666;margin-bottom:20px"></div>
     <div style="display:flex;gap:8px">
       <button onclick="closeAddr()" style="flex:1;padding:12px;background:#F0F0F0;color:#3D2A1A;border:none;border-radius:10px;font-size:14px">關閉</button>
-      <button onclick="navigateFromAddr()" style="flex:1;padding:12px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:14px">🧭 導航</button>
+      <button onclick="navigateAddr()" style="flex:1;padding:12px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:14px">🧭 導航</button>
     </div>
   </div>
 </div>
-
+<div id="save-toast"></div>
 <nav class="bnav">
   <button class="on" onclick="sw('bookings',this)"><span class="ic">🎫</span>預訂</button>
   <button onclick="sw('schedule',this)"><span class="ic">🗓</span>行程</button>
@@ -374,195 +325,108 @@ input,select,textarea{font-family:inherit}
 </nav>
 
 <script>
-// ════ HOTELS ════
+// ══════════════════════════════════════════════════════════
+// 💾 LOCAL STORAGE  — 所有互動資料自動儲存在瀏覽器
+//    每位使用者的裝置各自儲存（勾選、記帳、附件等）
+//    清除瀏覽器資料才會消失
+// ══════════════════════════════════════════════════════════
+const LS='kansai2026_v2';
+function lsSave(k,v){try{const s=JSON.parse(localStorage.getItem(LS)||'{}');s[k]=v;localStorage.setItem(LS,JSON.stringify(s));}catch(e){}}
+function lsLoad(k,fb){try{const s=JSON.parse(localStorage.getItem(LS)||'{}');return k in s?s[k]:fb;}catch(e){return fb;}}
+function showSaved(){const t=document.getElementById('save-toast');t.textContent='💾 已儲存';t.style.opacity='1';clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity='0',1400);}
+
+// ══════════════════════════════════════════════════════════
+// 🏨 HOTELS
+// ══════════════════════════════════════════════════════════
 const HOTELS=[
-  {id:'kyoto',emoji:'🌙',grad:'#C8A88A,#A87A5A',
-   name:'京都八條都酒店',nameEN:'Kyoto Hachijo Miyako Hotel',
-   addrJP:'〒601-8412 京都府京都市南区西九条院町17',
-   addrNote:'（京都駅八条口 徒歩1分）',
-   checkin:'14:00',checkout:'11:00',nights:'1晚',period:'5/14 Thu → 5/15 Fri',
-   lat:34.9849,lng:135.7541},
-  {id:'osaka',emoji:'🌃',grad:'#8AA8C8,#5A7898',
-   name:'艾思利德酒店 難波南III',nameEN:'ESLEAD HOTEL Namba Minami III',
-   addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',
-   addrNote:'',
-   checkin:'15:00',checkout:'10:00',nights:'4晚',period:'5/15 Fri → 5/19 Tue',
-   lat:34.6603,lng:135.5006}
+  {id:'kyoto',emoji:'🌙',grad:'#C8A88A,#A87A5A',name:'京都八條都酒店',nameEN:'Kyoto Hachijo Miyako Hotel',
+   addrJP:'〒601-8412 京都府京都市南区西九条院町17',addrNote:'（京都駅八条口 徒歩1分）',
+   checkin:'14:00',checkout:'11:00',nights:'1晚',period:'5/14 Thu → 5/15 Fri',lat:34.9849,lng:135.7541},
+  {id:'osaka',emoji:'🌃',grad:'#8AA8C8,#5A7898',name:'艾思利德酒店 難波南III',nameEN:'ESLEAD HOTEL Namba Minami III',
+   addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',addrNote:'',
+   checkin:'15:00',checkout:'10:00',nights:'4晚',period:'5/15 Fri → 5/19 Tue',lat:34.6603,lng:135.5006}
 ];
 
-// ════ TICKETS (all locked) ════
+// ══════════════════════════════════════════════════════════
+// 🎟 TICKETS
+// ══════════════════════════════════════════════════════════
 const TICKETS=[
-  {id:'haruka1',emoji:'🚄',name:'JR HARUKA 特急券',sub:'關西機場 → 京都站 · Day 1',
-   detail:'関西空港駅 → 京都駅\n外国人向け割引きっぷ ¥3,690\n所要時間：約75分'},
-  {id:'haruka2',emoji:'🚄',name:'JR HARUKA 特急券',sub:'京都站 → 天王寺 · Day 2',
-   detail:'京都駅 → 天王寺駅\n所要時間：約30分'},
-  {id:'kimono',emoji:'🌸',name:'璃光和服 清水寺店',sub:'✅ 已預約09:00 · Day 2',
-   detail:'〒605-0074 京都府京都市東山区桝屋町351-16\n09:00予約済み · ヘアスタイリング含む\n翌日10:00までに返却'},
-  {id:'kkday',emoji:'🚢',name:'KKDAY 一日遊',sub:'伊根·天橋立·美山町 · Day 3',
-   detail:'集合：大阪難波 06:50（出発前に集合場所を確認）\n行程：伊根舟屋 → 天橋立 → 美山町合掌村\n繁体字中国語ガイド'},
-  {id:'yakiniku',emoji:'🥩',name:'燒肉力丸 梅田お初天神',sub:'可預約 · Day 4',
-   detail:'大阪府大阪市北区曽根崎2丁目8番9号 八幸ビルB1F\n11:30〜24:00 · 要予約推奨'},
-  {id:'osakapass',emoji:'🎡',name:'大阪周遊卷',sub:'Day 4 使用',
-   detail:'使用日：Day 4 (5/17)\n✓ 梅田スカイビル 空中庭園 09:30-15:00 無料\n✓ 通天閣 入場割引\n※ 使用当日のみ有効・携帯必須'},
-  {id:'charter',emoji:'🚐',name:'阪神旅遊包車',sub:'神戶一日 · Day 5',
-   detail:'Day 5 (5/18) 全日チャーター\nルート：難波出発 → 神戸どうぶつ王国 → 南京町 → 神戸港観光船 → umie → 難波帰着'},
-  {id:'kobeZoo',emoji:'🐼',name:'神戶動物王國',sub:'⚠ 週四公休 · Day 5',
-   detail:'兵庫県神戸市中央区港島南町7丁目1番9号\n平日 10:00–17:00 / 土日祝 10:00–17:30\n⚠ 毎週木曜定休（GW・夏休み等は営業）'},
-  {id:'kobeShip',emoji:'⛴',name:'神戶觀光船',sub:'Day 5',
-   detail:'兵庫県神戸市中央区波止場町4番3号\n事前予約推奨 · 所要時間：約60〜90分'}
+  {id:'haruka1',emoji:'🚄',name:'JR HARUKA 特急券',sub:'關西機場 → 京都站 · Day 1',detail:'関西空港駅 → 京都駅\n外国人向け割引きっぷ ¥3,690\n所要時間：約75分'},
+  {id:'haruka2',emoji:'🚄',name:'JR HARUKA 特急券',sub:'京都站 → 天王寺 · Day 2',detail:'京都駅 → 天王寺駅\n所要時間：約30分'},
+  {id:'kimono',emoji:'🌸',name:'璃光和服 清水寺店',sub:'✅ 已預約09:00 · Day 2',detail:'〒605-0074 京都府京都市東山区桝屋町351-16\n09:00予約済み · ヘアスタイリング含む\n翌日10:00までに返却'},
+  {id:'kkday',emoji:'🚢',name:'KKDAY 一日遊',sub:'伊根·天橋立·美山町 · Day 3',detail:'集合：大阪難波 06:50\n行程：伊根舟屋 → 天橋立 → 美山町合掌村\n繁体字中国語ガイド'},
+  {id:'yakiniku',emoji:'🥩',name:'燒肉力丸 梅田お初天神',sub:'可預約 · Day 4',detail:'大阪府大阪市北区曽根崎2丁目8番9号 八幸ビルB1F\n11:30〜24:00'},
+  {id:'osakapass',emoji:'🎡',name:'大阪周遊卷',sub:'Day 4 使用',detail:'使用日：Day 4 (5/17)\n✓ 梅田スカイビル 09:30-15:00 無料\n✓ 通天閣 入場割引\n※ 携帯必須・当日のみ有効'},
+  {id:'charter',emoji:'🚐',name:'阪神旅遊包車',sub:'神戶一日 · Day 5',detail:'Day 5 (5/18) 全日チャーター\n難波出発 → 神戸どうぶつ王国 → 南京町 → 神戸港観光船 → umie → 難波帰着'},
+  {id:'kobeZoo',emoji:'🐼',name:'神戶動物王國',sub:'⚠ 週四公休 · Day 5',detail:'兵庫県神戸市中央区港島南町7丁目1番9号\n平日10:00–17:00 / 土日祝10:00–17:30\n⚠ 毎週木曜定休'},
+  {id:'kobeShip',emoji:'⛴',name:'神戶觀光船',sub:'Day 5',detail:'兵庫県神戸市中央区波止場町4番3号\n事前予約推奨 · 約60〜90分'}
 ];
 
-// ╔══════════════════════════════════════════════════════════════════╗
-// ║  🗓 行程資料庫 — 直接在這裡編輯每日景點                          ║
-// ║  est:false = 確認時間（黑色）  est:true = 預估時間（紫色）       ║
-// ║  type: sight/food/transport/hotel/shopping                       ║
-// ║  lat/lng: Google Maps 搜尋景點後從網址取得座標                   ║
-// ╚══════════════════════════════════════════════════════════════════╝
-// ════ SCHEDULE ════
+// ══════════════════════════════════════════════════════════
+// 🗓 SCHEDULE DATA
+// est:false=確認時間  est:true=預估時間
+// ══════════════════════════════════════════════════════════
 const DAYS=[
   {label:'Day 1',date:'5/14',dow:'Thu',emoji:'✈',weather:{icon:'⛅',desc:'多雲轉晴',temp:'22°C',city:'大阪'},items:[
-    {time:'07:05',est:false,name:'高雄小港機場 出發',type:'transport',hours:'BR182 高雄→大阪',
-     note:'長榮航空 BR 182 · 建議05:00前到機場・T1出境',
-     addrJP:'高雄市前鎮區中山三路2號 高雄國際機場',lat:22.5771,lng:120.3497},
-    {time:'11:10',est:false,name:'關西國際機場 抵達',type:'transport',hours:'24小時',
-     note:'入境・辦理入境手續・換購ICOCA・領取行李約30-45分鐘',
-     addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
-    {time:'12:20',est:true,name:'搭乘 JR HARUKA',type:'transport',hours:'每30分一班',
-     note:'關西機場→京都站 · 約75分 · 外國人特惠票¥3,690（需護照）',
-     addrJP:'大阪府泉佐野市臨空町11番5号 関西空港駅',lat:34.4340,lng:135.2438},
-    {time:'13:50',est:true,name:'京都車站 抵達',type:'transport',hours:'5:30–24:00',
-     note:'寄放行李至Coin Locker・再前往祇園（市巴士206號約20分）',
-     addrJP:'京都府京都市下京区東塩小路高倉町8番3号',lat:34.9858,lng:135.7588},
-    {time:'14:30',est:true,name:'祇園・花見小路',type:'sight',hours:'全年開放（各店不一）',
-     note:'漫步石板小路・舞妓文化街道・傍晚燈籠亮起最美',
-     addrJP:'京都府京都市東山区祇園町南側',lat:35.0037,lng:135.7758},
-    {time:'17:10',est:false,name:'In the Moon 酒館',type:'food',hours:'17:00–24:00（雨天不營業）',
-     note:'🔴 雨天不營業・無法預約・鴨川景觀屋頂吧・17:00前排隊',
-     addrJP:'京都府京都市東山区中之町200 カモガワビル屋上',lat:35.0051,lng:135.7706},
-    {time:'19:30',est:true,name:'四條河原町',type:'shopping',hours:'各店至22:00',
-     note:'京都最繁華商業區・阪急、大丸百貨・藥妝店・宵夜美食',
-     addrJP:'京都府京都市中京区河原町通四条上ル',lat:35.0036,lng:135.7701},
-    {time:'21:00',est:true,name:'京都八條都酒店 入住',type:'hotel',hours:'Check-in 14:00',
-     note:'京都站八條口步行約1分鐘',
-     addrJP:'〒601-8412 京都府京都市南区西九条院町17',lat:34.9849,lng:135.7541}
+    {time:'07:05',est:false,name:'高雄小港機場 出發',type:'transport',hours:'BR182 高雄→大阪',note:'長榮航空 BR 182 · 建議05:00前到機場',addrJP:'高雄市前鎮區中山三路2號 高雄國際機場',lat:22.5771,lng:120.3497},
+    {time:'11:10',est:false,name:'關西國際機場 抵達',type:'transport',hours:'24小時',note:'入境・辦理入境手續・換購ICOCA',addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
+    {time:'12:20',est:true,name:'搭乘 JR HARUKA',type:'transport',hours:'每30分一班',note:'關西機場→京都站 · 約75分 · 外國人特惠票¥3,690',addrJP:'大阪府泉佐野市臨空町11番5号 関西空港駅',lat:34.4340,lng:135.2438},
+    {time:'13:50',est:true,name:'京都車站 抵達',type:'transport',hours:'5:30–24:00',note:'寄放行李至Coin Locker・搭市巴士206號前往祇園',addrJP:'京都府京都市下京区東塩小路高倉町8番3号',lat:34.9858,lng:135.7588},
+    {time:'14:30',est:true,name:'祇園・花見小路',type:'sight',hours:'全年開放（各店不一）',note:'漫步石板小路・舞妓文化街道・傍晚燈籠亮起最美',addrJP:'京都府京都市東山区祇園町南側',lat:35.0037,lng:135.7758},
+    {time:'17:10',est:false,name:'In the Moon 酒館',type:'food',hours:'17:00–24:00（雨天不營業）',note:'🔴 雨天不營業・無法預約・鴨川景觀屋頂吧・17:00前排隊',addrJP:'京都府京都市東山区中之町200 カモガワビル屋上',lat:35.0051,lng:135.7706},
+    {time:'19:30',est:true,name:'四條河原町',type:'shopping',hours:'各店至22:00',note:'京都最繁華商業區・阪急、大丸百貨・藥妝店',addrJP:'京都府京都市中京区河原町通四条上ル',lat:35.0036,lng:135.7701},
+    {time:'21:00',est:true,name:'京都八條都酒店 入住',type:'hotel',hours:'Check-in 14:00',note:'京都站八條口步行約1分鐘',addrJP:'〒601-8412 京都府京都市南区西九条院町17',lat:34.9849,lng:135.7541}
   ]},
   {label:'Day 2',date:'5/15',dow:'Fri',emoji:'👘',weather:{icon:'☀',desc:'晴時多雲',temp:'24°C',city:'京都'},items:[
-    {time:'08:30',est:true,name:'搭計程車前往和服店',type:'transport',hours:'—',
-     note:'從京都站搭計程車約10-15分 · 計程車費約¥1,200-1,500 · 出示日文地址',
-     addrJP:'京都府京都市下京区東塩小路高倉町8番3号 京都駅',lat:34.9858,lng:135.7588},
-    {time:'09:00',est:false,name:'璃光和服 清水寺店',type:'sight',hours:'09:00–18:00',
-     note:'✅ 已預約09:00・含頭髮造型・隔天10:00前歸還',
-     addrJP:'〒605-0074 京都府京都市東山区桝屋町351-16',lat:34.9999,lng:135.7784},
-    {time:'10:30',est:true,name:'清水寺',type:'sight',hours:'06:00–18:00（特別期間至21:30）',
-     note:'門票¥500・世界文化遺產・清水舞台・穿和服遊覽最美',
-     addrJP:'京都府京都市東山区清水1丁目294',lat:34.9948,lng:135.7851},
-    {time:'13:00',est:true,name:'錦市場',type:'food',hours:'各店10:00–18:00',
-     note:'「京都廚房」約400公尺・醬菜、海鮮・⚠ 禁止邊走邊吃',
-     addrJP:'京都府京都市中京区錦小路通寺町西入',lat:35.0041,lng:135.7655},
-    {time:'15:00',est:true,name:'京都車站→大阪',type:'transport',hours:'JR新快速 約27分',
-     note:'搭JR新快速至大阪・ICOCA約¥560',
-     addrJP:'京都府京都市下京区東塩小路高倉町8番3号',lat:34.9858,lng:135.7588},
-    {time:'16:00',est:true,name:'艾思利德酒店 難波南III 入住',type:'hotel',hours:'Check-in 15:00',
-     note:'放置行李・難波站徒步約10分鐘',
-     addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
-    {time:'17:00',est:true,name:'自由活動・難波周邊',type:'shopping',hours:'各店至22:00',
-     note:'休息後自由探索難波周邊・藥妝、超市採購・晚餐自理',
-     addrJP:'大阪府大阪市中央区難波',lat:34.6687,lng:135.5013}
+    {time:'08:30',est:true,name:'搭計程車前往和服店',type:'transport',hours:'—',note:'從京都站搭計程車約10-15分 · 計程車費約¥1,200-1,500',addrJP:'京都府京都市下京区東塩小路高倉町8番3号 京都駅',lat:34.9858,lng:135.7588},
+    {time:'09:00',est:false,name:'璃光和服 清水寺店',type:'sight',hours:'09:00–18:00',note:'✅ 已預約09:00・含頭髮造型・隔天10:00前歸還',addrJP:'〒605-0074 京都府京都市東山区桝屋町351-16',lat:34.9999,lng:135.7784},
+    {time:'10:30',est:true,name:'清水寺',type:'sight',hours:'06:00–18:00（特別期間至21:30）',note:'門票¥500・世界文化遺產・清水舞台',addrJP:'京都府京都市東山区清水1丁目294',lat:34.9948,lng:135.7851},
+    {time:'13:00',est:true,name:'錦市場',type:'food',hours:'各店10:00–18:00',note:'「京都廚房」約400公尺・⚠ 禁止邊走邊吃',addrJP:'京都府京都市中京区錦小路通寺町西入',lat:35.0041,lng:135.7655},
+    {time:'15:00',est:true,name:'京都車站→大阪',type:'transport',hours:'JR新快速 約27分',note:'搭JR新快速至大阪・ICOCA約¥560',addrJP:'京都府京都市下京区東塩小路高倉町8番3号',lat:34.9858,lng:135.7588},
+    {time:'16:00',est:true,name:'艾思利德酒店 難波南III 入住',type:'hotel',hours:'Check-in 15:00',note:'放置行李・難波站徒步約10分鐘',addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
+    {time:'17:00',est:true,name:'自由活動・難波周邊',type:'shopping',hours:'各店至22:00',note:'休息後自由探索難波周邊・藥妝、超市採購',addrJP:'大阪府大阪市中央区難波',lat:34.6687,lng:135.5013}
   ]},
   {label:'Day 3',date:'5/16',dow:'Sat',emoji:'⛵',weather:{icon:'⛅',desc:'多雲',temp:'21°C',city:'京都府'},items:[
-    {time:'06:50',est:false,name:'KKDAY 集合出發',type:'transport',hours:'全天約10小時',
-     note:'✅ 集合：大阪難波（出發前確認確切地點）・請提前10分鐘抵達',
-     addrJP:'大阪府大阪市中央区難波',lat:34.6687,lng:135.5013},
-    {time:'09:00',est:true,name:'伊根舟屋（觀光船）',type:'sight',hours:'觀光船09:00–16:00',
-     note:'日本唯一海上船屋群・觀光船約30分鐘繞行',
-     addrJP:'京都府与謝郡伊根町平田',lat:35.6833,lng:135.3069},
-    {time:'11:30',est:true,name:'天橋立',type:'sight',hours:'纜車08:30–17:00',
-     note:'日本三景之一・「股覗」體驗・文珠山展望台',
-     addrJP:'京都府宮津市天橋立',lat:35.5611,lng:135.1894},
-    {time:'14:30',est:true,name:'美山町合掌村',type:'sight',hours:'全年開放',
-     note:'日本三大合掌村之一・茅草屋頂民家・5月有鯉魚旗',
-     addrJP:'京都府南丹市美山町北',lat:35.3472,lng:135.5086},
-    {time:'19:00',est:true,name:'返回難波・心齋橋',type:'shopping',hours:'各店至22:00',
-     note:'一日遊結束返回難波・心齋橋逛街購物',
-     addrJP:'大阪府大阪市中央区心斎橋筋1丁目',lat:34.6722,lng:135.5006},
-    {time:'20:00',est:true,name:'道頓堀大観覧車',type:'sight',hours:'11:00–23:00',
-     note:'道頓堀摩天輪・夜景絕美・票價約¥800',
-     addrJP:'大阪府大阪市中央区宗右衛門町7番13号',lat:34.6687,lng:135.5010},
-    {time:'20:30',est:true,name:'道頓堀宵夜',type:'food',hours:'各店不一（部分24H）',
-     note:'章魚燒・串炸・金龍拉麵24H',
-     addrJP:'大阪府大阪市中央区道頓堀1丁目',lat:34.6690,lng:135.5012}
+    {time:'06:50',est:false,name:'KKDAY 集合出發',type:'transport',hours:'全天約10小時',note:'✅ 集合：大阪難波（出發前確認確切地點）・提前10分鐘抵達',addrJP:'大阪府大阪市中央区難波',lat:34.6687,lng:135.5013},
+    {time:'09:00',est:true,name:'伊根舟屋（觀光船）',type:'sight',hours:'觀光船09:00–16:00',note:'日本唯一海上船屋群・觀光船約30分鐘繞行',addrJP:'京都府与謝郡伊根町平田',lat:35.6833,lng:135.3069},
+    {time:'11:30',est:true,name:'天橋立',type:'sight',hours:'纜車08:30–17:00',note:'日本三景之一・「股覗」體驗・文珠山展望台',addrJP:'京都府宮津市天橋立',lat:35.5611,lng:135.1894},
+    {time:'14:30',est:true,name:'美山町合掌村',type:'sight',hours:'全年開放',note:'日本三大合掌村之一・5月有鯉魚旗',addrJP:'京都府南丹市美山町北',lat:35.3472,lng:135.5086},
+    {time:'19:00',est:true,name:'返回難波・心齋橋',type:'shopping',hours:'各店至22:00',note:'一日遊結束返回難波・心齋橋逛街',addrJP:'大阪府大阪市中央区心斎橋筋1丁目',lat:34.6722,lng:135.5006},
+    {time:'20:00',est:true,name:'道頓堀大観覧車',type:'sight',hours:'11:00–23:00',note:'道頓堀摩天輪・夜景絕美・票價約¥800',addrJP:'大阪府大阪市中央区宗右衛門町7番13号',lat:34.6687,lng:135.5010},
+    {time:'20:30',est:true,name:'道頓堀宵夜',type:'food',hours:'各店不一（部分24H）',note:'章魚燒・串炸・金龍拉麵24H',addrJP:'大阪府大阪市中央区道頓堀1丁目',lat:34.6690,lng:135.5012}
   ]},
   {label:'Day 4',date:'5/17',dow:'Sun',emoji:'🦁',weather:{icon:'☀',desc:'晴天',temp:'26°C',city:'大阪'},items:[
-    {time:'09:40',est:false,name:'露天神社（お初天神）',type:'sight',hours:'06:00–24:00',
-     note:'「曾根崎心中」舞台・縁結び・免費參拜',
-     addrJP:'大阪府大阪市北区曽根崎2丁目5番4号',lat:34.7000,lng:135.4986},
-    {time:'10:50',est:false,name:'燒肉力丸 梅田お初天神店',type:'food',hours:'11:30–24:00',
-     note:'可預約・平價和牛・推薦牛舌套餐・B1F',
-     addrJP:'大阪府大阪市北区曽根崎2丁目8番9号 八幸ビルB1F',lat:34.6999,lng:135.4988},
-    {time:'12:30',est:true,name:'扭蛋之森 梅田茶屋町店',type:'shopping',hours:'11:00–21:00',
-     note:'約2400台扭蛋機・NU茶屋町3F',
-     addrJP:'大阪府大阪市北区茶屋町15番34号 NU茶屋町3F',lat:34.7030,lng:135.4958},
-    {time:'14:10',est:false,name:'梅田藍天大廈 空中庭園展望台',type:'sight',hours:'09:30–22:30',
-     note:'⭐ 大阪周遊券09:30-15:00免費・15:00後9折',
-     addrJP:'大阪府大阪市北区大淀中1丁目1番88号 梅田スカイビル',lat:34.7056,lng:135.4906},
-    {time:'16:30',est:true,name:'通天閣',type:'sight',hours:'展望台09:00–21:45',
-     note:'⚠ 必須現場換取入場預約券・TOWER SLIDER¥1,000',
-     addrJP:'大阪府大阪市浪速区恵美須東1丁目18番6号',lat:34.6527,lng:135.5064},
-    {time:'18:00',est:true,name:'新世界本通商店街',type:'shopping',hours:'10:00–22:00',
-     note:'復古庶民氣氛・串炸名店',
-     addrJP:'大阪府大阪市浪速区恵美須東2丁目4番5号',lat:34.6526,lng:135.5060}
+    {time:'09:40',est:false,name:'露天神社（お初天神）',type:'sight',hours:'06:00–24:00',note:'「曾根崎心中」舞台・縁結び・免費參拜',addrJP:'大阪府大阪市北区曽根崎2丁目5番4号',lat:34.7000,lng:135.4986},
+    {time:'10:50',est:false,name:'燒肉力丸 梅田お初天神店',type:'food',hours:'11:30–24:00',note:'可預約・平價和牛・推薦牛舌套餐・B1F',addrJP:'大阪府大阪市北区曽根崎2丁目8番9号 八幸ビルB1F',lat:34.6999,lng:135.4988},
+    {time:'12:30',est:true,name:'扭蛋之森 梅田茶屋町店',type:'shopping',hours:'11:00–21:00',note:'約2400台扭蛋機・NU茶屋町3F',addrJP:'大阪府大阪市北区茶屋町15番34号 NU茶屋町3F',lat:34.7030,lng:135.4958},
+    {time:'14:10',est:false,name:'梅田藍天大廈 空中庭園展望台',type:'sight',hours:'09:30–22:30',note:'⭐ 大阪周遊券09:30-15:00免費・15:00後9折',addrJP:'大阪府大阪市北区大淀中1丁目1番88号 梅田スカイビル',lat:34.7056,lng:135.4906},
+    {time:'16:30',est:true,name:'通天閣',type:'sight',hours:'展望台09:00–21:45',note:'⚠ 必須現場換取入場預約券・TOWER SLIDER¥1,000',addrJP:'大阪府大阪市浪速区恵美須東1丁目18番6号',lat:34.6527,lng:135.5064},
+    {time:'18:00',est:true,name:'新世界本通商店街',type:'shopping',hours:'10:00–22:00',note:'復古庶民氣氛・串炸名店',addrJP:'大阪府大阪市浪速区恵美須東2丁目4番5号',lat:34.6526,lng:135.5060}
   ]},
   {label:'Day 5',date:'5/18',dow:'Mon',emoji:'🐼',weather:{icon:'⛅',desc:'多雲',temp:'23°C',city:'大阪/神戶'},items:[
-    {time:'07:50',est:false,name:'難波八阪神社',type:'sight',hours:'境內全年 / 社務所09:00–17:00',
-     note:'12公尺超巨大獅子殿・距飯店徒步約8分鐘',
-     addrJP:'大阪府大阪市浪速区元町2丁目9番19号',lat:34.6608,lng:135.4984},
-    {time:'09:40',est:false,name:'飯店出發→神戶（包車）',type:'transport',hours:'阪神旅遊包車',
-     note:'包車從難波出發前往神戶・全程含司機',
-     addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
-    {time:'10:30',est:true,name:'神戶動物王國',type:'sight',hours:'平日10:00–17:00（週四公休）',
-     note:'⚠ 週四公休・150種動物零距離互動',
-     addrJP:'兵庫県神戸市中央区港島南町7丁目1番9号',lat:34.6382,lng:135.2136},
-    {time:'13:00',est:true,name:'南京町（神戶中華街）',type:'food',hours:'各店10:00–21:00',
-     note:'日本三大中華街・老祥記豬肉包必吃',
-     addrJP:'兵庫県神戸市中央区元町通2丁目（南京町広場）',lat:34.6897,lng:135.1843},
-    {time:'14:30',est:true,name:'神戶觀光船',type:'transport',hours:'依班次（建議提前預約）',
-     note:'神戶港灣遊覽・眺望六甲山・約60-90分鐘',
-     addrJP:'兵庫県神戸市中央区波止場町4番3号',lat:34.6851,lng:135.1896},
-    {time:'16:30',est:true,name:'神戶臨海樂園 umie',type:'shopping',hours:'10:00–21:00（餐廳至23:00）',
-     note:'神戶港邊大型購物中心・MOSAIC廣場',
-     addrJP:'兵庫県神戸市中央区東川崎町1丁目7番2号',lat:34.6875,lng:135.1825},
-    {time:'19:00',est:true,name:'包車返回難波',type:'transport',hours:'—',
-     note:'搭乘阪神旅遊包車返回難波飯店',
-     addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006}
+    {time:'07:50',est:false,name:'難波八阪神社',type:'sight',hours:'境內全年 / 社務所09:00–17:00',note:'12公尺超巨大獅子殿・距飯店徒步約8分鐘',addrJP:'大阪府大阪市浪速区元町2丁目9番19号',lat:34.6608,lng:135.4984},
+    {time:'09:40',est:false,name:'飯店出發→神戶（包車）',type:'transport',hours:'阪神旅遊包車',note:'包車從難波出發前往神戶・全程含司機',addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
+    {time:'10:30',est:true,name:'神戶動物王國',type:'sight',hours:'平日10:00–17:00（週四公休）',note:'⚠ 週四公休・150種動物零距離互動',addrJP:'兵庫県神戸市中央区港島南町7丁目1番9号',lat:34.6382,lng:135.2136},
+    {time:'13:00',est:true,name:'南京町（神戶中華街）',type:'food',hours:'各店10:00–21:00',note:'日本三大中華街・老祥記豬肉包必吃',addrJP:'兵庫県神戸市中央区元町通2丁目（南京町広場）',lat:34.6897,lng:135.1843},
+    {time:'14:30',est:true,name:'神戶觀光船',type:'transport',hours:'依班次（建議提前預約）',note:'神戶港灣遊覽・眺望六甲山・約60-90分鐘',addrJP:'兵庫県神戸市中央区波止場町4番3号',lat:34.6851,lng:135.1896},
+    {time:'16:30',est:true,name:'神戶臨海樂園 umie',type:'shopping',hours:'10:00–21:00（餐廳至23:00）',note:'神戶港邊大型購物中心・MOSAIC廣場',addrJP:'兵庫県神戸市中央区東川崎町1丁目7番2号',lat:34.6875,lng:135.1825},
+    {time:'19:00',est:true,name:'包車返回難波',type:'transport',hours:'—',note:'搭乘阪神旅遊包車返回難波飯店',addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006}
   ]},
   {label:'Day 6',date:'5/19',dow:'Tue',emoji:'🛍',weather:{icon:'☀',desc:'晴天',temp:'25°C',city:'大阪'},items:[
-    {time:'08:00',est:true,name:'飯店退房',type:'hotel',hours:'退房 10:00前',
-     note:'⚠ 10:00前退房・行李可寄放至下午',
-     addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
-    {time:'08:30',est:false,name:'黑門市場',type:'food',hours:'09:00–18:00',
-     note:'「大阪廚房」・海鮮螃蟹・和牛握壽司',
-     addrJP:'〒542-0073 大阪府大阪市中央区日本橋2丁目4番1号',lat:34.6623,lng:135.5085},
-    {time:'11:00',est:true,name:'臨空城Outlet',type:'shopping',hours:'10:00–20:00',
-     note:'關西機場旁Outlet・退稅購物・南海電鐵至臨空城站',
-     addrJP:'〒598-8508 大阪府泉佐野市りんくう往来南3番28号',lat:34.4309,lng:135.2797},
-    {time:'14:00',est:true,name:'前往關西機場',type:'transport',hours:'24小時',
-     note:'臨空城步行至機場約15分',
-     addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
-    {time:'16:00',est:false,name:'關西機場 Check-in',type:'transport',hours:'24小時',
-     note:'BR 147 · 20:35起飛 · 提前3小時到・免稅店・辦理退稅・確認行李23kg',
-     addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
-    {time:'20:35',est:false,name:'大阪關西機場 起飛',type:'transport',hours:'BR147 大阪→高雄',
-     note:'長榮航空 BR 147 · 20:35起飛 · 22:55抵達高雄小港',
-     addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442}
+    {time:'08:00',est:true,name:'飯店退房',type:'hotel',hours:'退房 10:00前',note:'⚠ 10:00前退房・行李可寄放至下午',addrJP:'〒556-0003 大阪府大阪市浪速区恵美須西2丁目8番6号',lat:34.6603,lng:135.5006},
+    {time:'08:30',est:false,name:'黑門市場',type:'food',hours:'09:00–18:00',note:'「大阪廚房」・海鮮螃蟹・和牛握壽司',addrJP:'〒542-0073 大阪府大阪市中央区日本橋2丁目4番1号',lat:34.6623,lng:135.5085},
+    {time:'11:00',est:true,name:'臨空城Outlet',type:'shopping',hours:'10:00–20:00',note:'關西機場旁Outlet・退稅購物',addrJP:'〒598-8508 大阪府泉佐野市りんくう往来南3番28号',lat:34.4309,lng:135.2797},
+    {time:'14:00',est:true,name:'前往關西機場',type:'transport',hours:'24小時',note:'臨空城步行至機場約15分',addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
+    {time:'16:00',est:false,name:'關西機場 Check-in',type:'transport',hours:'24小時',note:'BR 147 · 20:35起飛 · 提前3小時到・免稅店・辦理退稅',addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442},
+    {time:'20:35',est:false,name:'大阪關西機場 起飛',type:'transport',hours:'BR147 大阪→高雄',note:'長榮航空 BR 147 · 20:35起飛 · 22:55抵達高雄小港',addrJP:'大阪府泉佐野市泉州空港北1番地',lat:34.4347,lng:135.2442}
   ]}
 ];
 
-// ╔══════════════════════════════════════════════════════════════════╗
-// ║  📝 準備清單資料庫 — 直接在這裡編輯                              ║
-// ║  格式：{t:'項目名稱', d:false(未完成)/true(已完成), w:'負責人'}   ║
-// ║  新增：在陣列末尾加一行，刪除：移除該行即可                      ║
-// ╚══════════════════════════════════════════════════════════════════╝
-const LISTS={
+// ══════════════════════════════════════════════════════════
+// 📝 PLANNING LISTS — 可在這裡直接修改預設資料
+//    格式：{t:'項目名稱', d:false(未完成)/true(已完成), w:'負責人'}
+// ══════════════════════════════════════════════════════════
+const DEFAULT_LISTS={
   todo:[
     {t:'確認KKDay集合地點',d:false,w:'小花'},{t:'購買ICOCA IC卡',d:true,w:'小明'},
     {t:'換日幣',d:true,w:'各自'},{t:'申請海外旅遊保險',d:false,w:'各自'},
@@ -583,205 +447,41 @@ const LISTS={
     {t:'神戶牛肉相關伴手禮',d:false,w:'全體'},{t:'宇治抹茶甜點',d:false,w:'小花'}
   ]
 };
-const LIST_NAMES={todo:'待辦清單',luggage:'行李清單',shopping:'購物清單'};
 
 const TC={sight:'#3A8A3A',food:'#8A4A0A',transport:'#007B5E',hotel:'#5A1A7A',shopping:'#7A4A0A'};
 const TL={sight:'景點',food:'美食',transport:'交通',hotel:'住宿',shopping:'購物'};
 const TB={sight:'b-sight',food:'b-food',transport:'b-transport',hotel:'b-hotel',shopping:'b-shopping'};
 const CAT_BG={'🍜 餐飲':'#FDE8D0','🎡 景點':'#E8F2D8','🚃 交通':'#E0F0E8','🛍 購物':'#FEF0D0','🏨 住宿':'#F0E0F8','🎟 票券':'#E8F0F8'};
 const CAT_EM={'🍜 餐飲':'🍜','🎡 景點':'🎡','🚃 交通':'🚃','🛍 購物':'🛍','🏨 住宿':'🏨','🎟 票券':'🎟'};
+const LIST_NAMES={todo:'待辦清單',luggage:'行李清單',shopping:'購物清單'};
 
+// Runtime vars (loaded from localStorage or defaults)
+let LISTS={todo:[],luggage:[],shopping:[]};
 let curDay=0,expenses=[],expFormOpen=false,curPlan='todo',curRate=0.22;
 let pinVal='',pinCallback=null,curPIN='007';
 let openTk={},openCp={},coupons=[];
+let itemFiles={};
 let addrNavLat=0,addrNavLng=0;
 let emergencyContacts=[
   {name:'台灣外交部旅外緊急求助',phone:'+886-800-085-095'},
   {name:'台灣駐大阪辦事處',phone:'+81-6-4301-7333'}
 ];
 
-// ╔══════════════════════════════════════════════════════════════════╗
-// ║  🔥 FIREBASE 設定區 — 把你的 Firebase 設定貼在這裡               ║
-// ║  步驟：firebase.google.com → 專案設定 → 你的應用程式 → firebaseConfig ║
-// ╚══════════════════════════════════════════════════════════════════╝
-const firebaseConfig = {
-  apiKey:            "AIzaSyCVDxjXElB5jwRm8zgRhxcbVpTKKw1QERc",
-  authDomain:        "kansai-trip-2026-eaa17.firebaseapp.com",
-  databaseURL:       "https://kansai-trip-2026-eaa17-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId:         "kansai-trip-2026-eaa17",
-  storageBucket:     "kansai-trip-2026-eaa17.firebasestorage.app",
-  messagingSenderId: "725465245760",
-  appId:             "1:725465245760:web:16f7ccf3849b1a778c57a5"
-};
-
-// ── Firebase 初始化 ──
-let db = null, storage = null, fbReady = false;
-try {
-  firebase.initializeApp(firebaseConfig);
-  db = firebase.database();
-  storage = firebase.storage();
-  fbReady = true;
-  console.log('Firebase connected');
-} catch(e) {
-  console.warn('Firebase not configured yet:', e.message);
-}
-
-// ── 同步狀態 UI ──
-function showSyncStatus(msg, ok){
-  let el = document.getElementById('sync-status');
-  if(!el){
-    el = document.createElement('div');
-    el.id = 'sync-status';
-    el.style.cssText = 'position:fixed;top:12px;right:12px;z-index:999;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;transition:opacity .5s';
-    document.body.appendChild(el);
-  }
-  el.textContent = msg;
-  el.style.background = ok ? '#007B5E' : '#D4855A';
-  el.style.color = '#fff';
-  el.style.opacity = '1';
-  setTimeout(()=>{ el.style.opacity='0'; }, 2500);
-}
-
-// ════ REALTIME SYNC HELPERS ════
-// Save any key-value to Firebase, fallback to localStorage
-function fbSet(path, value){
-  if(fbReady && db){
-    db.ref(path).set(value)
-      .then(()=>showSyncStatus('✓ 已同步', true))
-      .catch(e=>showSyncStatus('⚠ 同步失敗', false));
-  }
-}
-function fbOn(path, cb){
-  if(fbReady && db){ db.ref(path).on('value', snap=>cb(snap.val())); }
-}
-
-// ════ ITEM ATTACHMENTS (Firebase Storage + Realtime DB) ════
-const itemFiles = {}; // local cache
-
-function getItemKey(dayIdx, itemIdx){ return dayIdx+'-'+itemIdx; }
-
-function addItemFile(dayIdx, itemIdx, file){
-  if(!file) return;
-  const key = getItemKey(dayIdx, itemIdx);
-  const isPdf = file.type === 'application/pdf';
-  showSyncStatus('⏳ 上傳中...', true);
-
-  if(fbReady && storage){
-    // Upload to Firebase Storage
-    const ref = storage.ref('attachments/'+key+'/'+Date.now()+'_'+file.name);
-    ref.put(file).then(snap => snap.ref.getDownloadURL()).then(url => {
-      const entry = {name: file.name, url, isPdf, ts: Date.now()};
-      if(!itemFiles[key]) itemFiles[key] = [];
-      itemFiles[key].push(entry);
-      fbSet('attachments/'+key+'/'+Date.now(), entry);
-      refreshTimelineAttach(dayIdx, itemIdx);
-      showSyncStatus('✓ 附件已上傳', true);
-    }).catch(e => {
-      showSyncStatus('⚠ 上傳失敗', false);
-      console.error(e);
-      // fallback to base64
-      _addFileBase64(key, dayIdx, itemIdx, file, isPdf);
-    });
-  } else {
-    // Fallback: base64 local only
-    _addFileBase64(key, dayIdx, itemIdx, file, isPdf);
-  }
-}
-
-function _addFileBase64(key, dayIdx, itemIdx, file, isPdf){
-  if(isPdf){
-    if(!itemFiles[key]) itemFiles[key] = [];
-    itemFiles[key].push({name:file.name, url:null, dataUrl:null, isPdf:true});
-    refreshTimelineAttach(dayIdx, itemIdx);
-  } else {
-    const r = new FileReader();
-    r.onload = e => {
-      if(!itemFiles[key]) itemFiles[key] = [];
-      itemFiles[key].push({name:file.name, url:null, dataUrl:e.target.result, isPdf:false});
-      refreshTimelineAttach(dayIdx, itemIdx);
-    };
-    r.readAsDataURL(file);
-  }
-}
-
-function refreshTimelineAttach(dayIdx, itemIdx){
-  const key = getItemKey(dayIdx, itemIdx);
-  const files = itemFiles[key] || [];
-  const listEl = document.getElementById('attach-list-'+key);
-  if(!listEl) return;
-  const countEl = document.getElementById('attach-count-'+key);
-  if(countEl) countEl.textContent = files.length > 0 ? ' '+files.length+'個' : '';
-  listEl.innerHTML = files.map((f,fi) => {
-    const imgSrc = f.url || f.dataUrl;
-    return f.isPdf
-      ? `<div class="attach-pdf" title="${f.name}" onclick="viewAttach('${key}',${fi})">📄</div>`
-      : `<img class="attach-thumb" src="${imgSrc}" title="${f.name}" onclick="viewAttach('${key}',${fi})">`;
-  }).join('');
-}
-
-function triggerItemUpload(dayIdx, itemIdx){
-  document.getElementById('fu-item-'+getItemKey(dayIdx,itemIdx)).click();
-}
-
-function viewAttach(key, fi){
-  const f = (itemFiles[key]||[])[fi];
-  if(!f) return;
-  const imgSrc = f.url || f.dataUrl;
-  if(f.isPdf){
-    document.getElementById('modalBody').innerHTML =
-      '<div style="font-size:16px;font-weight:500;color:#3D2A1A;margin-bottom:8px">📄 '+f.name+'</div>'+
-      (f.url ? '<a href="'+f.url+'" target="_blank" style="display:inline-block;padding:10px 20px;background:#007B5E;color:#fff;border-radius:10px;font-size:14px">開啟 PDF</a>' : '<div style="font-size:13px;color:#8B6445">本地 PDF（僅你可見）</div>');
-    document.getElementById('modal').classList.add('on');
-  } else {
-    document.getElementById('modalBody').innerHTML =
-      '<div style="font-size:14px;font-weight:500;color:#3D2A1A;margin-bottom:10px">🖼 '+f.name+'</div>'+
-      '<img src="'+imgSrc+'" style="width:100%;border-radius:10px;max-height:60vh;object-fit:contain">';
-    document.getElementById('modal').classList.add('on');
-  }
-}
-
-// ════ FIREBASE REALTIME LISTENERS ════
-function setupFirebaseListeners(){
-  if(!fbReady || !db) return;
-
-  // Sync attachments from all devices
-  db.ref('attachments').on('value', snap => {
-    const data = snap.val() || {};
-    Object.keys(data).forEach(key => {
-      const entries = Object.values(data[key]);
-      itemFiles[key] = entries;
-      // key format: dayIdx-itemIdx
-      const [d,i] = key.split('-').map(Number);
-      if(d === curDay) refreshTimelineAttach(d, i);
-    });
-  });
-
-  // Sync todo/luggage/shopping lists
-  db.ref('lists').on('value', snap => {
-    const data = snap.val();
-    if(!data) return;
-    ['todo','luggage','shopping'].forEach(id => {
-      if(data[id]) {
-        LISTS[id] = data[id];
-        renderPlan(id);
-      }
-    });
-  });
-
-  // Sync expenses
-  db.ref('expenses').on('value', snap => {
-    const data = snap.val();
-    if(data && Array.isArray(data)){
-      expenses = data;
-      renderExp();
-    }
-  });
-
-  showSyncStatus('✓ 已連線同步', true);
-}
-
 // ════ INIT ════
 function init(){
+  // Load from localStorage, fallback to defaults
+  ['todo','luggage','shopping'].forEach(id=>{
+    LISTS[id]=lsLoad('list_'+id, JSON.parse(JSON.stringify(DEFAULT_LISTS[id])));
+  });
+  expenses  = lsLoad('expenses', []);
+  itemFiles = lsLoad('itemFiles', {});
+  coupons   = lsLoad('coupons', []);
+  curRate   = lsLoad('rate', 0.22);
+  const savedEC = lsLoad('emergencyContacts', null);
+  if(savedEC) emergencyContacts = savedEC;
+
+  document.getElementById('rateInput').value = curRate;
+
   const diff=Math.ceil((new Date('2026-05-14')-new Date())/86400000);
   document.getElementById('cdnum').textContent=diff>0?diff:(diff===0?'今天出發！':Math.abs(diff)+'天前');
   buildDates();renderWeather();renderTimeline();
@@ -799,6 +499,21 @@ function sw(id,btn){
   document.getElementById('fabBtn').style.display=(id==='expense')?'flex':'none';
 }
 
+// ════ NAVIGATE (Google Maps) ════
+function openNav(lat,lng){
+  window.open('https://maps.google.com/maps?daddr='+lat+','+lng,'_blank');
+}
+
+// ════ ADDRESS FULLSCREEN ════
+function showAddr(addr,name,lat,lng){
+  document.getElementById('addrText').textContent=addr;
+  document.getElementById('addrName').textContent=name||'';
+  addrNavLat=lat||0;addrNavLng=lng||0;
+  document.getElementById('addrFull').classList.add('on');
+}
+function closeAddr(){document.getElementById('addrFull').classList.remove('on');}
+function navigateAddr(){if(addrNavLat&&addrNavLng)openNav(addrNavLat,addrNavLng);}
+
 // ════ BOOKINGS ════
 function bTab(id,btn){
   ['flight','hotel','ticket','coupon','emergency'].forEach(x=>{const el=document.getElementById('b-'+x);if(el)el.style.display='none';});
@@ -807,13 +522,13 @@ function bTab(id,btn){
   btn.classList.add('on');
 }
 
-// HOTELS
+// Hotels
 function buildHotels(){
   document.getElementById('hotel-list').innerHTML=HOTELS.map(h=>`
     <div class="hotel-card">
       <div class="hotel-photo" onclick="triggerHotelPhoto('${h.id}')">
-        <img id="img-${h.id}" src="" style="display:none">
-        <span id="ph-${h.id}-ph" style="font-size:40px">${h.emoji}</span>
+        <img id="img-${h.id}" src="${lsLoad('hotelPhoto_'+h.id,'')}" style="${lsLoad('hotelPhoto_'+h.id,'')?'display:block':'display:none'}">
+        <span id="ph-${h.id}-ph" style="${lsLoad('hotelPhoto_'+h.id,'')?'display:none':''}font-size:40px">${h.emoji}</span>
         <div class="hotel-photo-label">📷 點擊上傳照片</div>
         <input type="file" id="fu-hotel-${h.id}" accept="image/*" style="display:none" onchange="handleHotelPhoto('${h.id}',this)">
       </div>
@@ -826,8 +541,8 @@ function buildHotels(){
           <div style="display:flex;gap:8px;margin-top:10px">
             <button onclick="showAddr('${h.addrJP.replace(/'/g,"\\'")}','${h.name.replace(/'/g,"\\'")}',${h.lat},${h.lng})"
               style="flex:1;padding:7px 0;background:#D4855A;color:#fff;border:none;border-radius:8px;font-size:12px">🔍 放大出示</button>
-            <button onclick="openGoogleMapsNav(${h.lat},${h.lng})"
-              style="flex:1;padding:7px 0;background:#007B5E;color:#fff;border:none;border-radius:8px;font-size:12px">🧭 導航</button>
+            <button onclick="openNav(${h.lat},${h.lng})"
+              style="flex:1;padding:7px 0;background:var(--eva);color:#fff;border:none;border-radius:8px;font-size:12px">🧭 導航</button>
           </div>
         </div>
         <div style="display:flex;gap:16px;margin-top:10px;font-size:12px">
@@ -842,50 +557,22 @@ function buildHotels(){
 function triggerHotelPhoto(id){document.getElementById('fu-hotel-'+id).click();}
 function handleHotelPhoto(id,input){
   const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
+  const r=new FileReader();
+  r.onload=e=>{
     const img=document.getElementById('img-'+id);
     img.src=e.target.result;img.style.display='block';
     document.getElementById('ph-'+id+'-ph').style.display='none';
-  };reader.readAsDataURL(file);input.value='';
+    lsSave('hotelPhoto_'+id, e.target.result);showSaved();
+  };r.readAsDataURL(file);input.value='';
 }
 
-// NAVIGATE
-function openGoogleMapsNav(lat,lng){
-  // Force Google Maps app on all platforms
-  const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if(isIOS){
-    // Try Google Maps app first, fallback to web
-    window.open('comgooglemaps://?daddr='+lat+','+lng+'&directionsmode=driving','_blank');
-    setTimeout(function(){
-      window.open('https://maps.google.com/maps?daddr='+lat+','+lng,'_blank');
-    },500);
-  } else {
-    window.open('https://maps.google.com/maps?daddr='+lat+','+lng,'_blank');
-  }
-}
-
-// ADDRESS FULLSCREEN
-function showAddr(addr,name,lat,lng){
-  document.getElementById('addrText').textContent=addr;
-  document.getElementById('addrName').textContent=name||'';
-  addrNavLat=lat||0;addrNavLng=lng||0;
-  document.getElementById('addrFull').classList.add('on');
-}
-function closeAddr(){document.getElementById('addrFull').classList.remove('on');}
-function navigateFromAddr(){
-  if(addrNavLat&&addrNavLng)openGoogleMapsNav(addrNavLat,addrNavLng);
-}
-
-// TICKETS (all locked)
+// Tickets
 function buildTickets(){
   document.getElementById('ticket-list').innerHTML=TICKETS.map(tk=>`
     <div class="ticket-item">
       <div class="ticket-hdr" onclick="toggleTk('${tk.id}')">
-        <div>
-          <div style="font-size:15px;font-weight:500">${tk.emoji} ${tk.name}</div>
-          <div style="font-size:12px;color:#8B6445;margin-top:2px">${tk.sub}</div>
-        </div>
+        <div><div style="font-size:15px;font-weight:500">${tk.emoji} ${tk.name}</div>
+        <div style="font-size:12px;color:#8B6445;margin-top:2px">${tk.sub}</div></div>
         <span id="tk-ic-${tk.id}" style="font-size:20px">🔒</span>
       </div>
       <div id="tk-bd-${tk.id}" style="display:none;padding:0 14px 14px">
@@ -893,24 +580,23 @@ function buildTickets(){
         <div class="upload-area" onclick="triggerTkUpload('${tk.id}')">
           <div style="font-size:22px;margin-bottom:4px">📎</div>
           <div style="font-size:13px;color:#8B6445">上傳 PDF 或圖片憑證</div>
-          <div style="font-size:11px;color:#B0A090;margin-top:2px">PDF · JPG · PNG</div>
         </div>
         <div id="files-${tk.id}"></div>
         <input type="file" id="fu-${tk.id}" accept=".pdf,image/*" style="display:none" onchange="handleTkUpload('${tk.id}',this)">
       </div>
     </div>`).join('');
+  // Restore ticket files from localStorage
+  TICKETS.forEach(tk=>{
+    const saved=lsLoad('tkFiles_'+tk.id,[]);
+    saved.forEach(f=>renderTkFile(tk.id,f));
+  });
 }
 function toggleTk(id){
-  if(!openTk[id]){
-    pinCallback=()=>{openTk[id]=true;showTkBody(id);};
-    openPin('請輸入 PIN 碼解鎖票券');
-  } else {
-    openTk[id]=false;showTkBody(id);
-  }
+  if(!openTk[id]){pinCallback=()=>{openTk[id]=true;showTkBody(id);};openPin('請輸入 PIN 碼解鎖票券');}
+  else{openTk[id]=false;showTkBody(id);}
 }
 function showTkBody(id){
-  const body=document.getElementById('tk-bd-'+id);
-  const ic=document.getElementById('tk-ic-'+id);
+  const body=document.getElementById('tk-bd-'+id),ic=document.getElementById('tk-ic-'+id);
   if(!body)return;
   body.style.display=openTk[id]?'block':'none';
   ic.textContent=openTk[id]?'🔓':'🔒';
@@ -918,29 +604,35 @@ function showTkBody(id){
 function triggerTkUpload(id){document.getElementById('fu-'+id).click();}
 function handleTkUpload(id,input){
   const file=input.files[0];if(!file)return;
-  const c=document.getElementById('files-'+id);
-  const el=document.createElement('div');el.className='ufile';
   const isImg=file.type.startsWith('image/');
-  if(isImg){
-    const r=new FileReader();
-    r.onload=e=>{el.innerHTML=`<img src="${e.target.result}" style="width:46px;height:46px;object-fit:cover;border-radius:7px"><div style="flex:1"><div style="font-weight:500;font-size:13px">${file.name}</div><div style="font-size:11px;color:#8B6445">${(file.size/1024).toFixed(0)} KB</div></div>`;};
-    r.readAsDataURL(file);
-  } else {
-    el.innerHTML=`<span style="font-size:22px">📄</span><div style="flex:1"><div style="font-weight:500;font-size:13px">${file.name}</div><div style="font-size:11px;color:#8B6445">${(file.size/1024).toFixed(0)} KB</div></div>`;
-  }
-  c.appendChild(el);input.value='';
+  const r=new FileReader();
+  r.onload=e=>{
+    const f={name:file.name,dataUrl:e.target.result,isPdf:!isImg};
+    renderTkFile(id,f);
+    const saved=lsLoad('tkFiles_'+id,[]);saved.push(f);
+    lsSave('tkFiles_'+id,saved);showSaved();
+  };r.readAsDataURL(file);input.value='';
+}
+function renderTkFile(id,f){
+  const c=document.getElementById('files-'+id);if(!c)return;
+  const el=document.createElement('div');el.className='ufile';
+  el.innerHTML=f.isPdf
+    ?`<span style="font-size:22px">📄</span><div style="flex:1;font-size:13px">${f.name}</div>`
+    :`<img src="${f.dataUrl}" style="width:46px;height:46px;object-fit:cover;border-radius:7px"><div style="flex:1;font-size:13px">${f.name}</div>`;
+  c.appendChild(el);
 }
 
-// COUPONS
+// Coupons
 function renderCoupons(){
   const list=document.getElementById('coupon-list');
-  if(coupons.length===0){list.innerHTML='<div style="text-align:center;padding:24px;color:#B0A090;font-size:13px">尚未新增折價券</div>';return;}
+  if(!coupons.length){list.innerHTML='<div style="text-align:center;padding:24px;color:#B0A090;font-size:13px">尚未新增折價券</div>';return;}
   list.innerHTML='';
   coupons.forEach((cp,i)=>{
     const div=document.createElement('div');div.className='ticket-item';
     div.innerHTML=`
       <div class="ticket-hdr" onclick="toggleCp(${i})">
-        <div><div style="font-size:15px;font-weight:500">🏷 ${cp.name}</div><div style="font-size:12px;color:#8B6445;margin-top:2px">${cp.note||'點擊解鎖查看'}</div></div>
+        <div><div style="font-size:15px;font-weight:500">🏷 ${cp.name}</div>
+        <div style="font-size:12px;color:#8B6445;margin-top:2px">${cp.note||'點擊解鎖查看'}</div></div>
         <div style="display:flex;align-items:center;gap:8px">
           <button onclick="event.stopPropagation();deleteCoupon(${i})" style="background:none;border:none;color:#C08080;font-size:16px">🗑</button>
           <span id="cp-ic-${i}" style="font-size:20px">🔒</span>
@@ -955,14 +647,15 @@ function renderCoupons(){
         <input type="file" id="fu-cp-${i}" accept=".pdf,image/*" style="display:none" onchange="handleCpUpload(${i},this)">
       </div>`;
     list.appendChild(div);
+    const saved=lsLoad('cpFiles_'+i,[]);saved.forEach(f=>renderCpFile(i,f));
   });
 }
 function toggleCp(i){
   if(!openCp[i]){
-    pinCallback=()=>{openCp[i]=true;const b=document.getElementById('cp-bd-'+i);const ic=document.getElementById('cp-ic-'+i);if(b)b.style.display='block';if(ic)ic.textContent='🔓';};
+    pinCallback=()=>{openCp[i]=true;const b=document.getElementById('cp-bd-'+i),ic=document.getElementById('cp-ic-'+i);if(b)b.style.display='block';if(ic)ic.textContent='🔓';};
     openPin('請輸入 PIN 碼解鎖折價券');
   } else {
-    openCp[i]=false;const b=document.getElementById('cp-bd-'+i);const ic=document.getElementById('cp-ic-'+i);
+    openCp[i]=false;const b=document.getElementById('cp-bd-'+i),ic=document.getElementById('cp-ic-'+i);
     if(b)b.style.display='none';if(ic)ic.textContent='🔒';
   }
 }
@@ -977,21 +670,29 @@ function addCouponModal(){
 function saveCoupon(){
   const n=document.getElementById('cp-name').value.trim();if(!n)return;
   coupons.push({name:n,note:document.getElementById('cp-note').value.trim()});
-  closeModal();renderCoupons();
+  lsSave('coupons',coupons);showSaved();closeModal();renderCoupons();
 }
-function deleteCoupon(i){coupons.splice(i,1);openCp={};renderCoupons();}
+function deleteCoupon(i){coupons.splice(i,1);openCp={};lsSave('coupons',coupons);showSaved();renderCoupons();}
 function triggerCpUpload(i){document.getElementById('fu-cp-'+i).click();}
 function handleCpUpload(i,input){
   const file=input.files[0];if(!file)return;
-  const c=document.getElementById('cp-files-'+i);
+  const r=new FileReader();
+  r.onload=e=>{
+    const f={name:file.name,dataUrl:e.target.result,isPdf:!file.type.startsWith('image/')};
+    renderCpFile(i,f);
+    const saved=lsLoad('cpFiles_'+i,[]);saved.push(f);lsSave('cpFiles_'+i,saved);showSaved();
+  };r.readAsDataURL(file);input.value='';
+}
+function renderCpFile(i,f){
+  const c=document.getElementById('cp-files-'+i);if(!c)return;
   const el=document.createElement('div');el.className='ufile';
-  const isImg=file.type.startsWith('image/');
-  if(isImg){const r=new FileReader();r.onload=e=>{el.innerHTML=`<img src="${e.target.result}" style="width:46px;height:46px;object-fit:cover;border-radius:7px"><div style="flex:1;font-size:13px">${file.name}</div>`;};r.readAsDataURL(file);}
-  else{el.innerHTML=`<span style="font-size:22px">📄</span><div style="flex:1;font-size:13px">${file.name}</div>`;}
-  c.appendChild(el);input.value='';
+  el.innerHTML=f.isPdf
+    ?`<span style="font-size:22px">📄</span><div style="flex:1;font-size:13px">${f.name}</div>`
+    :`<img src="${f.dataUrl}" style="width:46px;height:46px;object-fit:cover;border-radius:7px"><div style="flex:1;font-size:13px">${f.name}</div>`;
+  c.appendChild(el);
 }
 
-// EMERGENCY
+// Emergency
 function renderEmergency(){
   document.getElementById('emergency-list').innerHTML=emergencyContacts.map((c,i)=>`
     <div class="em-item">
@@ -1012,9 +713,10 @@ function showAddEmergency(){
 function saveEmergency(){
   const n=document.getElementById('ec-name').value.trim(),p=document.getElementById('ec-phone').value.trim();
   if(!n||!p)return;
-  emergencyContacts.push({name:n,phone:p});renderEmergency();closeModal();
+  emergencyContacts.push({name:n,phone:p});lsSave('emergencyContacts',emergencyContacts);showSaved();
+  renderEmergency();closeModal();
 }
-function delEmergency(i){emergencyContacts.splice(i,1);renderEmergency();}
+function delEmergency(i){emergencyContacts.splice(i,1);lsSave('emergencyContacts',emergencyContacts);renderEmergency();}
 
 // ════ SCHEDULE ════
 function buildDates(){
@@ -1035,17 +737,18 @@ function renderWeather(){
   document.getElementById('weatherArea').innerHTML=`
     <div class="wc">
       <span style="font-size:26px">${w.icon}</span>
-      <div><div style="font-size:20px;font-weight:500;color:#007B5E">${w.temp}</div><div style="font-size:12px;color:#3A7A5A">${w.city} · ${w.desc}</div></div>
+      <div><div style="font-size:20px;font-weight:500;color:#007B5E">${w.temp}</div>
+      <div style="font-size:12px;color:#3A7A5A">${w.city} · ${w.desc}</div></div>
       <div style="margin-left:auto;font-size:11px;color:#3A7A5A;text-align:right"><div>☔ 建議帶傘</div><div>🧥 薄外套</div></div>
     </div>`;
 }
 function renderTimeline(){
   const tl=document.getElementById('timeline');tl.innerHTML='';
   DAYS[curDay].items.forEach((item,idx)=>{
-    const key=getItemKey(curDay,idx);
+    const key=curDay+'-'+idx;
     const div=document.createElement('div');div.className='ti';
-    const addrSafe=item.addrJP.replace(/'/g,"\\'");
-    const nameSafe=item.name.replace(/'/g,"\\'");
+    const addrS=item.addrJP.replace(/'/g,"\\'");
+    const nameS=item.name.replace(/'/g,"\\'");
     div.innerHTML=`
       <div class="ti-time${item.est?' est':''}">${item.time}${item.est?'<br><span style="font-size:9px;background:#F0E0F8;color:#7A3A9A;padding:1px 5px;border-radius:5px">預估</span>':''}</div>
       <div class="ti-dot" style="box-shadow:0 0 0 2px ${TC[item.type]||'#D4855A'};background:#fff"></div>
@@ -1055,17 +758,50 @@ function renderTimeline(){
         <div class="hours-row">🕐 ${item.hours}</div>
         <div style="font-size:12px;color:#8B6445;margin-top:3px">${item.note.slice(0,55)}${item.note.length>55?'…':''}</div>
         <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px">
-          <button class="nav-sm" style="background:#E0F0E8;color:#007B5E" onclick="event.stopPropagation();openGoogleMapsNav(${item.lat},${item.lng})">🧭 導航</button>
-          <button class="nav-sm" style="background:#F5EDE5;color:#5D3A1A" onclick="event.stopPropagation();showAddr('${addrSafe}','${nameSafe}',${item.lat},${item.lng})">📍 地址</button>
+          <button class="nav-sm" style="background:#E0F0E8;color:#007B5E" onclick="event.stopPropagation();openNav(${item.lat},${item.lng})">🧭 導航</button>
+          <button class="nav-sm" style="background:#F5EDE5;color:#5D3A1A" onclick="event.stopPropagation();showAddr('${addrS}','${nameS}',${item.lat},${item.lng})">📍 地址</button>
           <button class="nav-sm" style="background:#F0E8E0;color:#D4855A" onclick="event.stopPropagation();openDetail(${idx})">📋 詳情</button>
-          <label class="attach-btn" onclick="event.stopPropagation();triggerItemUpload(${curDay},${idx})">📎 附件<span id="attach-count-${key}" style="margin-left:3px;color:#D4855A;font-weight:500"></span></label>
+          <label class="attach-btn" onclick="event.stopPropagation();document.getElementById('fu-item-${key}').click()">📎<span id="ac-${key}" style="margin-left:2px;color:#D4855A;font-weight:500"></span></label>
         </div>
-        <div class="attach-list" id="attach-list-${key}"></div>
-        <input type="file" id="fu-item-${key}" accept="image/*,.pdf" style="display:none"
-          onchange="addItemFile(${curDay},${idx},this.files[0]);this.value=''">
+        <div class="attach-list" id="al-${key}"></div>
+        <input type="file" id="fu-item-${key}" accept="image/*,.pdf" style="display:none" onchange="addItemFile(${curDay},${idx},this.files[0]);this.value=''">
       </div>`;
     tl.appendChild(div);
+    // Restore saved attachments
+    (itemFiles[key]||[]).forEach(f=>renderItemThumb(key,f));
+    updateAttachCount(key);
   });
+}
+function addItemFile(di,ii,file){
+  if(!file)return;
+  const key=di+'-'+ii;
+  if(!itemFiles[key])itemFiles[key]=[];
+  const r=new FileReader();
+  r.onload=e=>{
+    const f={name:file.name,dataUrl:e.target.result,isPdf:!file.type.startsWith('image/')};
+    itemFiles[key].push(f);
+    renderItemThumb(key,f);
+    updateAttachCount(key);
+    lsSave('itemFiles',itemFiles);showSaved();
+  };r.readAsDataURL(file);
+}
+function renderItemThumb(key,f){
+  const al=document.getElementById('al-'+key);if(!al)return;
+  const el=document.createElement(f.isPdf?'div':'img');
+  if(f.isPdf){el.className='attach-pdf';el.textContent='📄';el.title=f.name;}
+  else{el.className='attach-thumb';el.src=f.dataUrl;el.title=f.name;}
+  el.onclick=()=>viewAttachFull(f);
+  al.appendChild(el);
+}
+function updateAttachCount(key){
+  const cnt=document.getElementById('ac-'+key);
+  if(cnt){const n=(itemFiles[key]||[]).length;cnt.textContent=n?n:'';}
+}
+function viewAttachFull(f){
+  document.getElementById('modalBody').innerHTML=f.isPdf
+    ?`<div style="font-size:16px;font-weight:500;color:#3D2A1A;margin-bottom:8px">📄 ${f.name}</div><div style="font-size:13px;color:#8B6445">PDF 已儲存（手機不支援預覽，請下載後開啟）</div>`
+    :`<div style="font-size:14px;font-weight:500;color:#3D2A1A;margin-bottom:10px">🖼 ${f.name}</div><img src="${f.dataUrl}" style="width:100%;border-radius:10px;max-height:60vh;object-fit:contain">`;
+  document.getElementById('modal').classList.add('on');
 }
 function openDetail(idx){
   const item=DAYS[curDay].items[idx];
@@ -1081,13 +817,11 @@ function openDetail(idx){
       <div style="font-size:11px;font-weight:500;color:#8B6445;margin-bottom:6px">📍 日文地址（計程車出示）</div>
       <div style="font-size:15px;color:#2A1A0A;line-height:1.7;margin-bottom:10px">${item.addrJP}</div>
       <button onclick="showAddr('${item.addrJP.replace(/'/g,"\\'")}','${item.name.replace(/'/g,"\\'")}',${item.lat},${item.lng})"
-        style="padding:7px 14px;background:#D4855A;color:#fff;border:none;border-radius:8px;font-size:12px;margin-right:8px">🔍 放大出示</button>
+        style="padding:7px 14px;background:#D4855A;color:#fff;border:none;border-radius:8px;font-size:12px">🔍 放大出示</button>
     </div>
     <div style="display:flex;gap:8px">
-      <button onclick="openGoogleMapsNav(${item.lat},${item.lng})"
-        style="flex:1;padding:10px;background:#007B5E;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:500">🧭 開始導航</button>
-      <a href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}" target="_blank"
-        style="flex:1;padding:10px;background:#F0E8E0;color:#D4855A;border-radius:10px;font-size:13px;font-weight:500;text-align:center;display:flex;align-items:center;justify-content:center">🗺 Google Maps</a>
+      <button onclick="openNav(${item.lat},${item.lng})"
+        style="flex:1;padding:10px;background:#007B5E;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:500">🧭 Google Maps 導航</button>
     </div>`;
   document.getElementById('modal').classList.add('on');
 }
@@ -1101,8 +835,7 @@ function pTab(id,btn){
   document.getElementById('prog-name').textContent=LIST_NAMES[id];updateProg(id);
 }
 function renderPlan(id){
-  const el=document.getElementById('p-'+id);
-  el.innerHTML=LISTS[id].map((item,i)=>`
+  document.getElementById('p-'+id).innerHTML=LISTS[id].map((item,i)=>`
     <div class="todo-item">
       <div class="chk${item.d?' on':''}" onclick="toggleTodo('${id}',${i})">${item.d?'✓':''}</div>
       <div style="flex:1">
@@ -1112,18 +845,16 @@ function renderPlan(id){
       </div>
       <button class="del-btn" onclick="deleteTodo('${id}',${i})">✕</button>
     </div>`).join('')+
-  `<div class="add-row">
-    <input id="new-${id}" placeholder="新增項目…" onkeydown="if(event.key==='Enter')addTodo('${id}')">
-    <button onclick="addTodo('${id}')">＋</button>
-  </div>`;
+  `<div class="add-row"><input id="new-${id}" placeholder="新增項目…" onkeydown="if(event.key==='Enter')addTodo('${id}')"><button onclick="addTodo('${id}')">＋</button></div>`;
   if(id===curPlan)updateProg(id);
 }
-function toggleTodo(id,i){LISTS[id][i].d=!LISTS[id][i].d;renderPlan(id);}
-function editTodo(id,i,val){LISTS[id][i].t=val;updateProg(id);}
-function deleteTodo(id,i){LISTS[id].splice(i,1);renderPlan(id);}
+function toggleTodo(id,i){LISTS[id][i].d=!LISTS[id][i].d;renderPlan(id);lsSave('list_'+id,LISTS[id]);showSaved();}
+function editTodo(id,i,val){LISTS[id][i].t=val;updateProg(id);lsSave('list_'+id,LISTS[id]);showSaved();}
+function deleteTodo(id,i){LISTS[id].splice(i,1);renderPlan(id);lsSave('list_'+id,LISTS[id]);showSaved();}
 function addTodo(id){
-  const inp=document.getElementById('new-'+id);const val=inp.value.trim();if(!val)return;
+  const inp=document.getElementById('new-'+id),val=inp.value.trim();if(!val)return;
   LISTS[id].push({t:val,d:false,w:''});inp.value='';renderPlan(id);
+  lsSave('list_'+id,LISTS[id]);showSaved();
 }
 function updateProg(id){
   const items=LISTS[id],done=items.filter(x=>x.d).length,total=items.length;
@@ -1132,7 +863,7 @@ function updateProg(id){
 }
 
 // ════ EXPENSE ════
-function updateRate(v){curRate=parseFloat(v)||0.22;renderExp();}
+function updateRate(v){curRate=parseFloat(v)||0.22;renderExp();lsSave('rate',curRate);showSaved();}
 function toJPY(a,c){if(c==='JPY')return a;if(c==='TWD')return a/curRate;if(c==='USD')return a*149;if(c==='KRW')return a*0.11;return a;}
 function toggleExpForm(){
   expFormOpen=!expFormOpen;
@@ -1144,9 +875,9 @@ function addExp(){
   if(!n||!a)return;
   expenses.push({n,a,c:document.getElementById('ec').value,cat:document.getElementById('ecat').value,payer:document.getElementById('epayer').value,day:document.getElementById('eday').value});
   document.getElementById('en').value='';document.getElementById('ea').value='';
-  toggleExpForm();renderExp();
+  toggleExpForm();renderExp();lsSave('expenses',expenses);showSaved();
 }
-function deleteExp(i){expenses.splice(i,1);renderExp();}
+function deleteExp(i){expenses.splice(i,1);renderExp();lsSave('expenses',expenses);showSaved();}
 function renderExp(){
   const totJPY=expenses.reduce((s,e)=>s+toJPY(e.a,e.c),0);
   document.getElementById('s-jpy').textContent='¥'+Math.round(totJPY).toLocaleString();
@@ -1191,248 +922,7 @@ function pk(k){
   }
 }
 
-// ════════════════════════════════════════════════════════════════
-// 🔥 FIREBASE CONFIG
-// 👉 步驟：將你的 Firebase 設定貼到下方 firebaseConfig 物件中
-
-
-// ════ Firebase 初始化 ════
-let db = null;
-let fbReady = false;
-
-function initFirebase(){
-  try {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.database();
-    fbReady = true;
-    console.log('✅ Firebase connected');
-    showSyncStatus('connected');
-    loadAllFromFirebase();
-    setupRealtimeListeners();
-  } catch(e){
-    console.warn('⚠️ Firebase not configured, running offline:', e.message);
-    showSyncStatus('offline');
-  }
-}
-
-function showSyncStatus(status){
-  const bar = document.getElementById('sync-bar');
-  if(!bar) return;
-  if(status === 'connected'){
-    bar.innerHTML = '🔥 已連線・資料即時同步中';
-    bar.style.background = '#E8F5F0';
-    bar.style.color = '#007B5E';
-    bar.style.borderColor = '#B0DDD0';
-  } else if(status === 'saving'){
-    bar.innerHTML = '💾 同步中…';
-    bar.style.background = '#FFF8E8';
-    bar.style.color = '#8B6445';
-    bar.style.borderColor = '#E8D5C0';
-  } else {
-    bar.innerHTML = '📴 離線模式（未設定 Firebase）';
-    bar.style.background = '#F5F5F5';
-    bar.style.color = '#999';
-    bar.style.borderColor = '#ddd';
-  }
-}
-
-// ════ SAVE helpers ════
-function fbSave(path, data){
-  if(!fbReady) return;
-  showSyncStatus('saving');
-  db.ref(path).set(data)
-    .then(()=> showSyncStatus('connected'))
-    .catch(e=> console.error('Save error:', e));
-}
-function fbPush(path, data){
-  if(!fbReady) return;
-  showSyncStatus('saving');
-  db.ref(path).push(data)
-    .then(()=> showSyncStatus('connected'))
-    .catch(e=> console.error('Push error:', e));
-}
-
-// ════ LOAD all data from Firebase on first open ════
-function loadAllFromFirebase(){
-  // Lists (todo/luggage/shopping)
-  ['todo','luggage','shopping'].forEach(id => {
-    db.ref('lists/'+id).once('value', snap => {
-      const val = snap.val();
-      if(val && Array.isArray(val)){
-        LISTS[id] = val;
-        renderPlan(id);
-      }
-    });
-  });
-
-  // Expenses
-  db.ref('expenses').once('value', snap => {
-    const val = snap.val();
-    if(val && Array.isArray(val)){
-      expenses = val;
-      renderExp();
-    }
-  });
-
-  // Item attachments (images stored as base64)
-  db.ref('itemFiles').once('value', snap => {
-    const val = snap.val();
-    if(val){
-      Object.assign(itemFiles, val);
-      // Refresh visible timeline
-      DAYS[curDay].items.forEach((_,idx) => refreshTimelineAttach(curDay, idx));
-    }
-  });
-
-  // Coupons
-  db.ref('coupons').once('value', snap => {
-    const val = snap.val();
-    if(val && Array.isArray(val)){
-      coupons = val;
-      renderCoupons();
-    }
-  });
-}
-
-// ════ REALTIME listeners — push updates to all users ════
-function setupRealtimeListeners(){
-  // Lists
-  ['todo','luggage','shopping'].forEach(id => {
-    db.ref('lists/'+id).on('value', snap => {
-      const val = snap.val();
-      if(val && Array.isArray(val)){
-        LISTS[id] = val;
-        renderPlan(id);
-      }
-    });
-  });
-
-  // Expenses
-  db.ref('expenses').on('value', snap => {
-    const val = snap.val();
-    expenses = val && Array.isArray(val) ? val : [];
-    renderExp();
-  });
-
-  // itemFiles
-  db.ref('itemFiles').on('value', snap => {
-    const val = snap.val();
-    if(val){ Object.assign(itemFiles, val); }
-    DAYS[curDay].items.forEach((_,idx) => refreshTimelineAttach(curDay, idx));
-  });
-
-  // Coupons
-  db.ref('coupons').on('value', snap => {
-    const val = snap.val();
-    coupons = val && Array.isArray(val) ? val : [];
-    renderCoupons();
-  });
-}
-
-// ════ Override key functions to also save to Firebase ════
-
-// --- Planning ---
-const _origToggleTodo = toggleTodo;
-toggleTodo = function(id, i){
-  LISTS[id][i].d = !LISTS[id][i].d;
-  renderPlan(id);
-  fbSave('lists/'+id, LISTS[id]);
-};
-const _origEditTodo = editTodo;
-editTodo = function(id, i, val){
-  LISTS[id][i].t = val;
-  updateProg(id);
-  fbSave('lists/'+id, LISTS[id]);
-};
-const _origDeleteTodo = deleteTodo;
-deleteTodo = function(id, i){
-  LISTS[id].splice(i,1);
-  renderPlan(id);
-  fbSave('lists/'+id, LISTS[id]);
-};
-const _origAddTodo = addTodo;
-addTodo = function(id){
-  const inp = document.getElementById('new-'+id);
-  const val = inp.value.trim();
-  if(!val) return;
-  LISTS[id].push({t:val, d:false, w:''});
-  inp.value = '';
-  renderPlan(id);
-  fbSave('lists/'+id, LISTS[id]);
-};
-
-// --- Expenses ---
-const _origAddExp = addExp;
-addExp = function(){
-  const n = document.getElementById('en').value.trim();
-  const a = parseFloat(document.getElementById('ea').value) || 0;
-  if(!n || !a) return;
-  expenses.push({
-    n, a,
-    c:     document.getElementById('ec').value,
-    cat:   document.getElementById('ecat').value,
-    payer: document.getElementById('epayer').value,
-    day:   document.getElementById('eday').value
-  });
-  document.getElementById('en').value = '';
-  document.getElementById('ea').value = '';
-  toggleExpForm();
-  renderExp();
-  fbSave('expenses', expenses);
-};
-const _origDeleteExp = deleteExp;
-deleteExp = function(i){
-  expenses.splice(i, 1);
-  renderExp();
-  fbSave('expenses', expenses);
-};
-
-// --- Item attachments ---
-const _origAddItemFile = addItemFile;
-addItemFile = function(dayIdx, itemIdx, file){
-  const key = getItemKey(dayIdx, itemIdx);
-  if(!itemFiles[key]) itemFiles[key] = [];
-  const isPdf = file.type === 'application/pdf';
-  const MAX_SIZE = 800 * 1024; // 800KB limit for Firebase free tier
-  if(!isPdf && file.size > MAX_SIZE){
-    alert('圖片過大，請選擇 800KB 以下的圖片');
-    return;
-  }
-  if(isPdf){
-    itemFiles[key].push({name: file.name, dataUrl: null, isPdf: true, size: file.size});
-    refreshTimelineAttach(dayIdx, itemIdx);
-    fbSave('itemFiles/'+key, itemFiles[key]);
-  } else {
-    const r = new FileReader();
-    r.onload = e => {
-      itemFiles[key].push({name: file.name, dataUrl: e.target.result, isPdf: false, size: file.size});
-      refreshTimelineAttach(dayIdx, itemIdx);
-      fbSave('itemFiles/'+key, itemFiles[key]);
-    };
-    r.readAsDataURL(file);
-  }
-};
-
-// --- Coupons ---
-const _origSaveCoupon = saveCoupon;
-saveCoupon = function(){
-  const n = document.getElementById('cp-name').value.trim();
-  if(!n) return;
-  coupons.push({name: n, note: document.getElementById('cp-note').value.trim()});
-  closeModal();
-  renderCoupons();
-  fbSave('coupons', coupons);
-};
-const _origDeleteCoupon = deleteCoupon;
-deleteCoupon = function(i){
-  coupons.splice(i,1);
-  openCp = {};
-  renderCoupons();
-  fbSave('coupons', coupons);
-};
-
 init();
-initFirebase();
 </script>
 </body>
 </html>
