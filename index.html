@@ -38,14 +38,7 @@ input,select,textarea{font-family:inherit}
 .fi:focus{border-color:var(--eva)}
 .submit{width:100%;padding:12px;background:var(--eva);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:500;margin-top:12px}
 .row2{display:flex;gap:8px}
-.pin-ov{display:none;position:fixed;inset:0;background:rgba(80,50,30,.75);z-index:400;align-items:center;justify-content:center}
-.pin-ov.on{display:flex}
-.pin-box{background:#FFFDF8;border-radius:20px;padding:28px 24px;width:290px;text-align:center}
-.pin-dots{display:flex;gap:12px;justify-content:center;margin:16px 0 20px}
-.pdot{width:16px;height:16px;border-radius:50%;background:#E8D5C0;transition:background .15s}
-.pdot.on{background:var(--eva)}.pdot.err{background:#E24B4A}
-.pkpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.pk{padding:15px;background:#F5EDE5;border:none;border-radius:10px;font-size:20px;color:#3D2A1A}
+
 .addr-full{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;align-items:center;justify-content:center;padding:24px}
 .addr-full.on{display:flex}
 .addr-card{background:#fff;border-radius:20px;padding:30px 24px;width:100%;max-width:360px;text-align:center}
@@ -202,11 +195,11 @@ input,select,textarea{font-family:inherit}
   </div>
   <div id="b-hotel" style="display:none"><div id="hotel-list"></div></div>
   <div id="b-ticket" style="display:none">
-    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">🔒 所有票券均已上鎖，請輸入 PIN 碼查看</div>
+    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">點擊展開查看票券與憑證</div>
     <div id="ticket-list"></div>
   </div>
   <div id="b-coupon" style="display:none">
-    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">🏷 折價券與優惠券</div>
+    <div style="font-size:13px;color:#8B6445;margin-bottom:12px">🏷 折價券與優惠券（點擊展開）</div>
     <div id="coupon-list"></div>
     <button class="submit" style="background:#6B9B8A" onclick="addCouponModal()">＋ 新增折價券</button>
   </div>
@@ -289,20 +282,6 @@ input,select,textarea{font-family:inherit}
 
 <div class="overlay" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="sheet"><div class="handle"></div><div id="modalBody"></div><button class="close-btn" onclick="closeModal()">關閉</button></div>
-</div>
-<div class="pin-ov" id="pinOv">
-  <div class="pin-box">
-    <div style="font-size:18px;font-weight:500;color:#3D2A1A">🔒 安全驗證</div>
-    <div style="font-size:13px;color:#8B6445;margin-top:6px" id="pinHint">請輸入 PIN 碼</div>
-    <div class="pin-dots"><div class="pdot" id="pd0"></div><div class="pdot" id="pd1"></div><div class="pdot" id="pd2"></div></div>
-    <div class="pkpad">
-      <button class="pk" onclick="pk('1')">1</button><button class="pk" onclick="pk('2')">2</button><button class="pk" onclick="pk('3')">3</button>
-      <button class="pk" onclick="pk('4')">4</button><button class="pk" onclick="pk('5')">5</button><button class="pk" onclick="pk('6')">6</button>
-      <button class="pk" onclick="pk('7')">7</button><button class="pk" onclick="pk('8')">8</button><button class="pk" onclick="pk('9')">9</button>
-      <button class="pk" onclick="pk('del')" style="font-size:14px">⌫</button><button class="pk" onclick="pk('0')">0</button>
-      <button class="pk" onclick="closePinOv()" style="font-size:12px;color:#8B6445">取消</button>
-    </div>
-  </div>
 </div>
 <div class="addr-full" id="addrFull" onclick="if(event.target===this)closeAddr()">
   <div class="addr-card">
@@ -493,7 +472,7 @@ const LIST_NAMES={todo:'待辦清單',luggage:'行李清單',shopping:'購物清
 // Runtime vars (loaded from localStorage or defaults)
 let LISTS={todo:[],luggage:[],shopping:[]};
 let curDay=0,expenses=[],expFormOpen=false,curPlan='todo',curRate=0.22;
-let pinVal='',pinCallback=null,curPIN='5691';
+
 let openTk={},openCp={},coupons=[];
 let itemFiles={};
 let addrNavLat=0,addrNavLng=0;
@@ -615,7 +594,7 @@ function buildTickets(){
       <div class="ticket-hdr" onclick="toggleTk('${tk.id}')">
         <div><div style="font-size:15px;font-weight:500">${tk.emoji} ${tk.name}</div>
         <div style="font-size:12px;color:#8B6445;margin-top:2px">${tk.sub}</div></div>
-        <span id="tk-ic-${tk.id}" style="font-size:20px">🔒</span>
+        <span id="tk-ic-${tk.id}" style="font-size:20px">＋</span>
       </div>
       <div id="tk-bd-${tk.id}" style="display:none;padding:0 14px 14px">
         <div style="background:#F5EDE5;border-radius:10px;padding:11px 12px;font-size:13px;color:#5D3A1A;line-height:1.9;margin-bottom:10px;white-space:pre-line">${tk.detail}</div>
@@ -654,16 +633,15 @@ function loadTkRepoImgs(id){
   container.appendChild(wrap);
 }
 function toggleTk(id){
-  if(!openTk[id]){
-    pinCallback=()=>{openTk[id]=true;showTkBody(id);loadTkRepoImgs(id);};
-    openPin('請輸入 PIN 碼解鎖票券');
-  } else {openTk[id]=false;showTkBody(id);}
+  openTk[id]=!openTk[id];
+  showTkBody(id);
+  if(openTk[id]) loadTkRepoImgs(id);
 }
 function showTkBody(id){
   const body=document.getElementById('tk-bd-'+id),ic=document.getElementById('tk-ic-'+id);
   if(!body)return;
   body.style.display=openTk[id]?'block':'none';
-  ic.textContent=openTk[id]?'🔓':'🔒';
+  ic.textContent=openTk[id]?'－':'＋';
 }
 function triggerTkUpload(id){document.getElementById('fu-'+id).click();}
 function handleTkUpload(id,input){
@@ -699,7 +677,7 @@ function renderCoupons(){
         <div style="font-size:12px;color:#8B6445;margin-top:2px">${cp.note||'點擊解鎖查看'}</div></div>
         <div style="display:flex;align-items:center;gap:8px">
           <button onclick="event.stopPropagation();deleteCoupon(${i})" style="background:none;border:none;color:#C08080;font-size:16px">🗑</button>
-          <span id="cp-ic-${i}" style="font-size:20px">🔒</span>
+          <span id="cp-ic-${i}" style="font-size:20px">＋</span>
         </div>
       </div>
       <div id="cp-bd-${i}" style="display:none;padding:0 14px 14px">
@@ -715,13 +693,10 @@ function renderCoupons(){
   });
 }
 function toggleCp(i){
-  if(!openCp[i]){
-    pinCallback=()=>{openCp[i]=true;const b=document.getElementById('cp-bd-'+i),ic=document.getElementById('cp-ic-'+i);if(b)b.style.display='block';if(ic)ic.textContent='🔓';};
-    openPin('請輸入 PIN 碼解鎖折價券');
-  } else {
-    openCp[i]=false;const b=document.getElementById('cp-bd-'+i),ic=document.getElementById('cp-ic-'+i);
-    if(b)b.style.display='none';if(ic)ic.textContent='🔒';
-  }
+  openCp[i]=!openCp[i];
+  const b=document.getElementById('cp-bd-'+i),ic=document.getElementById('cp-ic-'+i);
+  if(b)b.style.display=openCp[i]?'block':'none';
+  if(ic)ic.textContent=openCp[i]?'－':'＋';
 }
 function addCouponModal(){
   document.getElementById('modalBody').innerHTML=`
@@ -842,10 +817,8 @@ function renderTimeline(){
         el.className='attach-thumb';
         el.src=src;
         el.title='景點圖片';
-        el.style.cssText='opacity:0.4;filter:blur(4px);cursor:pointer';
-        el.dataset.locked='1';
-        el.dataset.src=src;
-        el.onclick=()=>{ if(el.dataset.locked){pinCallback=()=>{el.style.opacity='1';el.style.filter='';el.dataset.locked='';};openPin('請輸入 PIN 碼查看景點附件');}else{viewImgFull(src,'景點圖片');} };
+        el.style.cssText='cursor:pointer';
+        el.onclick=()=>viewImgFull(src,'景點圖片');
         if(al)al.appendChild(el);
       });
     }
@@ -997,19 +970,7 @@ function renderExp(){
 }
 
 // ════ MODAL & PIN ════
-function closeModal(){document.getElementById('modal').classList.remove('on');}
-function openPin(hint){pinVal='';updDots();document.getElementById('pinHint').textContent=hint||'請輸入 PIN 碼';document.getElementById('pinOv').classList.add('on');}
-function closePinOv(){document.getElementById('pinOv').classList.remove('on');pinVal='';}
-function updDots(){[0,1,2].forEach(i=>{document.getElementById('pd'+i).className='pdot'+(i<pinVal.length?' on':'');});}
-function pk(k){
-  if(k==='del'){pinVal=pinVal.slice(0,-1);updDots();return;}
-  if(pinVal.length>=3)return;
-  pinVal+=k;updDots();
-  if(pinVal.length===3){
-    if(pinVal===curPIN){closePinOv();if(pinCallback){pinCallback();pinCallback=null;}}
-    else{[0,1,2].forEach(i=>document.getElementById('pd'+i).className='pdot err');setTimeout(()=>{pinVal='';updDots();},700);}
-  }
-}
+function closeModal(){document.getElementById('modal').classList.remove('on');});}
 
 init();
 </script>
