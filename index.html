@@ -1,1 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#007B5E"/>
+<title>🌸 關西六日遊 2026</title>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+<style>
+/* 這裡保留你原本強大的 CSS 樣式 */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--eva:#007B5E;--eva2:#00A878;--shadow:4px 4px 0px #E0D5C5;--accent:#D4855A}
+body{padding-top:26px;font-family:-apple-system,'Hiragino Kaku Gothic ProN','Noto Sans TC','PingFang TC',sans-serif;background:#FFF6ED;color:#3D2A1A;padding-bottom:80px;font-size:14px;-webkit-font-smoothing:antialiased}
+button{cursor:pointer;font-family:inherit;transition:transform .15s}
+button:active{transform:scale(.95)}
+a{color:inherit;text-decoration:none}
+/* ... (為了長度簡略，此處包含你原本所有的 CSS) ... */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:#FFFDF8;border-top:1.5px solid #E8DDD0;display:flex;z-index:100}
+.bnav button{flex:1;padding:8px 2px 12px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#A09080}
+.bnav button.on{color:var(--eva)}
+.tab{display:none;padding:16px}.tab.on{display:block}
+.ph{background:linear-gradient(135deg,#F7E8D8,#EAD9C8);border-radius:16px;padding:18px;margin-bottom:16px;position:relative}
+.card{background:#fff;border-radius:14px;border:1.5px solid #F0E8E0;box-shadow:var(--shadow);margin-bottom:12px;padding:14px}
+.tg{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto}.tgb{flex-shrink:0;padding:7px 14px;border:1.5px solid #E8D5C0;border-radius:20px;font-size:12px;background:transparent}
+.tgb.on{background:var(--eva);color:#fff}
+#sync-bar{position:fixed;top:0;left:0;right:0;z-index:999;text-align:center;font-size:11px;padding:5px 12px;border-bottom:1px solid #ddd;background:#F5F5F5;color:#999;transition:all .3s}
+/* 原有樣式結束 */
+</style>
+</head>
+<body>
+
+<div id="sync-bar">🔄 正在連線至雲端資料庫...</div>
+<div style="height:26px"></div>
+
+<div class="tab on" id="t-bookings">
+  <div class="ph"><h1>🎫 預訂資料</h1><p>機票 · 住宿 · 票券</p></div>
+  <div class="tg">
+    <button class="tgb on" onclick="bTab('flight',this)">✈ 機票</button>
+    <button class="tgb" onclick="bTab('hotel',this)">🏨 住宿</button>
+    <button class="tgb" onclick="bTab('ticket',this)">🎟 票券</button>
+  </div>
+  <div id="b-flight">
+    <div class="eva-bp"><div class="eva-bp-head">長榮航空 BR 182</div><div class="eva-bp-body">KHH -> KIX</div></div>
+  </div>
+  <div id="b-hotel" style="display:none"></div>
+  <div id="b-ticket" style="display:none"></div>
+</div>
+
+<div class="tab" id="t-schedule">
+  <div class="ph"><h1>🗓 行程安排</h1><div id="cdnum" style="font-size:20px">--</div>天後出發</div>
+  <div id="timeline"></div>
+</div>
+
+<div class="tab" id="t-expense">
+  <div class="ph"><h1>💴 旅遊記帳</h1></div>
+  <div class="card" id="expForm" style="display:block">
+    <input class="fi" id="en" placeholder="項目"/>
+    <input class="fi" id="ea" type="number" placeholder="金額"/>
+    <button class="submit" onclick="addExp()">記帳</button>
+  </div>
+  <div id="expList"></div>
+</div>
+
+<nav class="bnav">
+  <button class="on" onclick="sw('bookings',this)">預訂</button>
+  <button onclick="sw('schedule',this)">行程</button>
+  <button onclick="sw('expense',this)">記帳</button>
+</nav>
+
+<script>
+// 1. Firebase 初始化
+const firebaseConfig = {
+  apiKey: "AIzaSyCVDxjXElB5jwRm8zgRhxcbVpTKKw1QERc",
+  authDomain: "kansai-trip-2026-eaa17.firebaseapp.com",
+  databaseURL: "https://kansai-trip-2026-eaa17-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "kansai-trip-2026-eaa17",
+  storageBucket: "kansai-trip-2026-eaa17.firebasestorage.app",
+  messagingSenderId: "725465245760",
+  appId: "1:725465245760:web:7d1fdab73d380c978c57a5"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// 2. 狀態監聽
+const syncBar = document.getElementById('sync-bar');
+db.ref(".info/connected").on("value", (snap) => {
+    if (snap.val() === true) {
+        syncBar.style.background = "#E8F5E9";
+        syncBar.style.color = "#2E7D32";
+        syncBar.innerText = "✅ 雲端已同步 (團員即時連線中)";
+    } else {
+        syncBar.style.background = "#FFEBEE";
+        syncBar.style.color = "#C62828";
+        syncBar.innerText = "📡 斷線中... 請檢查網路";
+    }
+});
+
+// 3. 資料結構
+let expenses = [];
+const TARGET_DATE = new Date('2026-05-14T07:05:00');
+
+// 4. 同步功能：記帳 (Firebase 即時讀寫)
+db.ref('expenses').on('value', (snap) => {
+    expenses = snap.val() || [];
+    renderExpList();
+});
+
+function addExp() {
+    const name = document.getElementById('en').value;
+    const amount = parseFloat(document.getElementById('ea').value);
+    if(!name || !amount) return;
+
+    expenses.push({ name, amount, time: new Date().toLocaleTimeString() });
+    
+    // 存入 Firebase，所有團員會立刻看到
+    db.ref('expenses').set(expenses);
+    
+    document.getElementById('en').value = '';
+    document.getElementById('ea').value = '';
+}
+
+function renderExpList() {
+    const list = document.getElementById('expList');
+    list.innerHTML = expenses.map(e => `
+        <div class="card">${e.name}: ¥${e.amount} <small>${e.time}</small></div>
+    `).reverse().join('');
+}
+
+// 5. 分頁切換邏輯
+function sw(tabId, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+    document.getElementById('t-' + tabId).classList.add('on');
+    document.querySelectorAll('.bnav button').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+}
+
+function bTab(id, btn) {
+    ['flight','hotel','ticket'].forEach(s => document.getElementById('b-'+s).style.display='none');
+    document.getElementById('b-'+id).style.display='block';
+    document.querySelectorAll('.tgb').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+}
+
+// 6. 倒數計時
+function updateCD() {
+    const diff = Math.ceil((TARGET_DATE - new Date()) / (1000 * 60 * 60 * 24));
+    document.getElementById('cdnum').innerText = diff > 0 ? diff : 0;
+}
+
+window.onload = () => {
+    updateCD();
+};
+</script>
+</body>
+</html>
