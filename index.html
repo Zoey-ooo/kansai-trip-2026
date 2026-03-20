@@ -173,7 +173,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 
 /* ── HOTEL ── */
 .htl{margin:.25rem 1rem .85rem;background:var(--bg-card);border-radius:13px;overflow:hidden;box-shadow:var(--sh-sm)}
-.htl-img{height:175px;background:linear-gradient(135deg,var(--deep) 0%,var(--deep2) 100%);display:flex;align-items:center;justify-content:center;position:relative}
+.htl-img{height:220px;background:linear-gradient(135deg,var(--deep) 0%,var(--deep2) 100%);display:flex;align-items:center;justify-content:center;position:relative}
 .htl-ph{display:flex;flex-direction:column;align-items:center;gap:.35rem;color:rgba(255,255,255,.5)}
 .htl-ph small{font-size:.56rem;letter-spacing:.1em}
 .htl-up{position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,.9);border:none;border-radius:6px;font-size:.58rem;padding:.22rem .5rem;cursor:pointer;color:var(--ink);font-family:'Noto Sans JP',sans-serif}
@@ -622,6 +622,21 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
           <div class="htl-dt"><label>CHECK-IN</label><span>5/14 (木)</span></div>
           <div class="htl-dt"><label>CHECK-OUT</label><span>5/15 (金)</span></div>
         </div>
+        <!-- Check-in/out time row -->
+        <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:.6rem">
+          <div style="flex:1;padding:.45rem .5rem;text-align:center;border-right:1px solid var(--border)">
+            <div style="font-size:.48rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.15rem">CHECK-IN TIME</div>
+            <div style="font-family:'Space Mono',monospace;font-size:.88rem;font-weight:700;color:var(--deep)">14:00</div>
+          </div>
+          <div style="flex:1;padding:.45rem .5rem;text-align:center">
+            <div style="font-size:.48rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.15rem">CHECK-OUT TIME</div>
+            <div style="font-family:'Space Mono',monospace;font-size:.88rem;font-weight:700;color:var(--deep)">11:00</div>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div style="background:var(--bg-soft);border-radius:8px;padding:.45rem .65rem;margin-bottom:.6rem;font-size:.7rem;color:var(--ink2);line-height:1.55;border-left:2px solid #d8dc90">
+          📋 Hotel.com 預定，住宿費已付清
+        </div>
         <!-- Address card inline -->
         <div class="htl-addr-card">
           <div class="htl-addr-label">📍 地址・住所</div>
@@ -646,6 +661,21 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
         <div class="htl-dts">
           <div class="htl-dt"><label>CHECK-IN</label><span>5/15 (金)</span></div>
           <div class="htl-dt"><label>CHECK-OUT</label><span>5/19 (火)</span></div>
+        </div>
+        <!-- Check-in/out time row -->
+        <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:.6rem">
+          <div style="flex:1;padding:.45rem .5rem;text-align:center;border-right:1px solid var(--border)">
+            <div style="font-size:.48rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.15rem">CHECK-IN TIME</div>
+            <div style="font-family:'Space Mono',monospace;font-size:.88rem;font-weight:700;color:var(--deep)">15:00</div>
+          </div>
+          <div style="flex:1;padding:.45rem .5rem;text-align:center">
+            <div style="font-size:.48rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.15rem">CHECK-OUT TIME</div>
+            <div style="font-family:'Space Mono',monospace;font-size:.88rem;font-weight:700;color:var(--deep)">10:00</div>
+          </div>
+        </div>
+        <!-- 備註 -->
+        <div style="background:rgba(236,115,87,.08);border-radius:8px;padding:.45rem .65rem;margin-bottom:.6rem;font-size:.7rem;color:var(--ink2);line-height:1.55;border-left:2px solid var(--coral)">
+          💳 官網預定，<strong>住宿費現場支付</strong>
         </div>
         <!-- Address card inline -->
         <div class="htl-addr-card">
