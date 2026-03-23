@@ -241,17 +241,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 .emi-call{background:var(--coral);color:#fff;border:none;border-radius:8px;padding:.4rem .68rem;font-size:.67rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;text-decoration:none;display:block;white-space:nowrap}
 .em-add{background:var(--deep);color:#fff;border:none;border-radius:10px;padding:.62rem 1rem;font-size:.74rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;width:100%;margin-top:.42rem}
 
-/* ── BUDGET ── */
-.bh{background:linear-gradient(128deg,var(--deep) 0%,var(--deep2) 100%);border-radius:13px;padding:1rem;margin-bottom:.72rem;color:#fff}
-.bh-lb{font-size:.55rem;letter-spacing:.22em;opacity:.62;font-family:'Space Mono',monospace}
-.bh-tot{font-family:'Space Mono',monospace;font-size:1.82rem;font-weight:700;margin:.12rem 0}
-.bh-ct{font-size:.6rem;opacity:.52}
-.bh-bars{margin-top:.82rem;display:flex;flex-direction:column;gap:.48rem}
-.bh-br{display:flex;align-items:center;gap:.48rem}
-.bh-bl{font-size:.57rem;width:48px;flex-shrink:0;opacity:.75}
-.bh-bt{flex:1;height:3px;background:rgba(255,255,255,.16);border-radius:2px}
-.bh-bf{height:100%;border-radius:2px}
-.bh-ba{font-family:'Space Mono',monospace;font-size:.57rem;width:48px;text-align:right;opacity:.82}
+
+/* shared form inputs — used by shop modal & emergency */
 .ef{background:var(--bg-card);border-radius:12px;padding:.82rem;box-shadow:var(--sh-sm);margin-bottom:.68rem}
 .ef h4{font-family:'Shippori Mincho',serif;font-size:.83rem;margin-bottom:.58rem;color:var(--deep)}
 .fr{display:flex;gap:.36rem;margin-bottom:.4rem}
@@ -259,14 +250,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 .fi:focus{border-color:var(--coral);background:#fff}
 .fsel{border:1px solid var(--border);border-radius:7px;padding:.43rem .6rem;font-size:.72rem;font-family:'Noto Sans JP',sans-serif;background:var(--bg-soft);color:var(--ink);outline:none}
 .fsub{background:var(--coral);color:#fff;border:none;border-radius:7px;padding:.48rem;font-size:.74rem;cursor:pointer;font-family:'Noto Sans JP',sans-serif;width:100%}
-.exl{display:flex;flex-direction:column;gap:.36rem}
-.exi{background:var(--bg-card);border-radius:9px;padding:.58rem .78rem;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--sh-sm)}
-.exl2{display:flex;align-items:center;gap:.58rem}
-.exd{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.exn{font-size:.77rem}
-.exdt{font-size:.57rem;color:var(--ink3);font-family:'Space Mono',monospace}
-.exa{font-family:'Space Mono',monospace;font-size:.83rem;font-weight:700;color:var(--deep)}
-.exdel{background:none;border:none;color:var(--coral);cursor:pointer;font-size:.78rem;padding:.12rem .2rem}
 
 /* ── PREP ── */
 .pw{padding:.52rem 1rem}
@@ -357,6 +340,37 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 .note-table-hd>div{background:var(--deep);color:var(--bg-warm);font-weight:700;font-size:.6rem;letter-spacing:.06em}
 .note-table-row>div:not(:last-child){border-right:1px solid var(--border)}
 
+/* ── SHOP CARDS ── */
+.shop-add-btn{width:100%;padding:.65rem;border:none;border-radius:11px;background:var(--coral);color:#fff;font-family:'Shippori Mincho',serif;font-size:.88rem;font-weight:700;cursor:pointer;margin-bottom:.8rem;box-shadow:var(--sh-sm);letter-spacing:.06em}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.shop-card{background:var(--bg-card);border-radius:12px;overflow:hidden;box-shadow:var(--sh-sm);border:1px solid var(--border);transition:opacity .2s}
+.shop-done{opacity:.55}
+.shop-img{height:90px;overflow:hidden;cursor:pointer;background:var(--bg-soft)}
+.shop-img img{width:100%;height:100%;object-fit:cover}
+.shop-img-empty{display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:var(--bg-soft)}
+.shop-card-body{padding:.55rem .6rem}
+.shop-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.28rem}
+.shop-cat-badge{font-size:.52rem;padding:.1rem .38rem;border-radius:20px;color:#fff;font-family:'Space Mono',monospace;letter-spacing:.04em}
+.shop-card-actions{display:flex;gap:.2rem}
+.shop-edit-btn,.shop-del-btn{background:none;border:none;cursor:pointer;font-size:.72rem;padding:.1rem .18rem;line-height:1}
+.shop-del-btn{color:var(--coral)}
+.shop-card-name{font-family:'Shippori Mincho',serif;font-size:.85rem;font-weight:700;color:var(--deep);cursor:pointer;margin-bottom:.32rem;line-height:1.3}
+.shop-name-done{text-decoration:line-through;opacity:.5}
+.shop-card-meta{display:flex;gap:.3rem;flex-wrap:wrap;margin-bottom:.28rem}
+.shop-meta-chip{font-size:.6rem;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:.1rem .42rem;color:var(--ink2);font-family:'Space Mono',monospace}
+.shop-buyer-chip{background:rgba(117,79,68,.08);border-color:var(--border2);color:var(--deep)}
+.shop-note{font-size:.63rem;color:var(--ink3);line-height:1.48;border-top:1px solid var(--border);padding-top:.25rem;margin-top:.1rem}
+.shop-done-badge{font-size:.58rem;color:#1e5c30;background:rgba(45,92,58,.12);border-radius:4px;padding:.1rem .38rem;display:inline-block;margin-top:.22rem;font-family:'Space Mono',monospace}
+.shop-cat-btn{font-size:.65rem;padding:.3rem .65rem;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s}
+.shop-cat-btn.active{background:var(--deep);color:var(--bg-warm);border-color:var(--deep)}
+
+/* ── PACT ── */
+.pact-item{display:flex;gap:.75rem;align-items:flex-start;background:var(--bg-card);border-radius:13px;padding:.85rem 1rem;box-shadow:var(--sh-sm);border:1px solid var(--border)}
+.pact-num{width:26px;height:26px;border-radius:50%;background:var(--deep);color:var(--bg-warm);font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.08rem}
+.pact-body{flex:1}
+.pact-title{font-family:'Shippori Mincho',serif;font-size:.9rem;font-weight:700;color:var(--deep);margin-bottom:.3rem}
+.pact-text{font-size:.78rem;color:var(--ink2);line-height:1.65}
+
 /* ── TAXI CARDS ── */
 .taxi-tag-card{border-radius:9px;padding:.55rem .65rem;border:1px solid var(--border);display:flex;flex-direction:column;gap:.18rem}
 .taxi-ok  {background:rgba(45,92,58,.08);border-color:rgba(45,92,58,.25)}
@@ -403,6 +417,73 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- SHOP ITEM MODAL -->
+<div class="ao" id="shopModal" onclick="closeShopModal(event)">
+  <div class="as" style="max-height:90vh;overflow-y:auto">
+    <div class="as-h"></div>
+    <div style="font-family:'Shippori Mincho',serif;font-size:1rem;font-weight:700;color:var(--deep);margin-bottom:1rem" id="shopModalTitle">新增商品</div>
+
+    <!-- 圖片上傳區 -->
+    <div style="margin-bottom:.75rem">
+      <div style="font-size:.58rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.3rem">商品圖片</div>
+      <div id="shopImgPreview" style="display:none;width:100%;height:120px;border-radius:9px;overflow:hidden;margin-bottom:.4rem;position:relative">
+        <img id="shopImgEl" style="width:100%;height:100%;object-fit:cover">
+        <button onclick="clearShopImg()" style="position:absolute;top:6px;right:6px;background:rgba(46,30,24,.65);border:none;border-radius:50%;width:22px;height:22px;color:#fff;font-size:.72rem;cursor:pointer">✕</button>
+      </div>
+      <div class="upz" id="shopImgZone" onclick="document.getElementById('shopModalImg').click()" style="padding:.8rem;margin-bottom:0">
+        <input type="file" id="shopModalImg" accept="image/*" style="display:none" onchange="previewShopImg(this)">
+        <div style="font-size:1.3rem">🖼️</div>
+        <p style="font-size:.7rem">點擊上傳圖片</p>
+      </div>
+    </div>
+
+    <!-- 商品名稱 -->
+    <div style="margin-bottom:.6rem">
+      <div style="font-size:.58rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.28rem">商品名稱 <span style="color:var(--coral)">*</span></div>
+      <input type="text" id="shopItemName" class="fi" placeholder="例：胃藥、保濕乳液…" style="width:100%">
+    </div>
+
+    <!-- 分類 -->
+    <div style="margin-bottom:.6rem">
+      <div style="font-size:.58rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.28rem">分類</div>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap" id="shopCatBtns">
+        <button class="shop-cat-btn active" data-cat="藥妝">💊 藥妝</button>
+        <button class="shop-cat-btn" data-cat="保養">🧴 保養</button>
+        <button class="shop-cat-btn" data-cat="零食">🍬 零食</button>
+        <button class="shop-cat-btn" data-cat="伴手禮">🎁 伴手禮</button>
+        <button class="shop-cat-btn" data-cat="電器">🔌 電器</button>
+        <button class="shop-cat-btn" data-cat="服飾">👗 服飾</button>
+        <button class="shop-cat-btn" data-cat="其他">📦 其他</button>
+      </div>
+    </div>
+
+    <!-- 數量 + 購買人 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.6rem">
+      <div>
+        <div style="font-size:.58rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.28rem">購買數量</div>
+        <div style="display:flex;align-items:center;gap:.3rem">
+          <button onclick="adjQty(-1)" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border2);background:var(--bg);color:var(--deep);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">−</button>
+          <input type="number" id="shopItemQty" value="1" min="1" class="fi" style="text-align:center;padding:.42rem .3rem;font-family:'Space Mono',monospace;font-weight:700">
+          <button onclick="adjQty(1)" style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border2);background:var(--bg);color:var(--deep);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">＋</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.58rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.28rem">購買人</div>
+        <input type="text" id="shopItemBuyer" class="fi" placeholder="誰來買？" style="width:100%">
+      </div>
+    </div>
+
+    <!-- 備註 -->
+    <div style="margin-bottom:.9rem">
+      <div style="font-size:.58rem;color:var(--ink3);letter-spacing:.12em;margin-bottom:.28rem">備註</div>
+      <textarea id="shopItemNote" class="fi" placeholder="品牌、規格、購買地點…" style="width:100%;min-height:60px;resize:none;line-height:1.55"></textarea>
+    </div>
+
+    <button class="frm-sub" onclick="saveShopItem()" style="margin-bottom:.5rem">儲存</button>
+    <button class="as-cl" onclick="closeShopModalDirect()">取消</button>
+  </div>
+</div>
+
 <!-- ADDR OVERLAY (for schedule page) -->
 <div class="ao" id="addrOverlay" onclick="closeAddrCard(event)">
   <div class="as">
@@ -432,7 +513,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 </header>
 
 <!-- ════════ SCHEDULE ════════ -->
-<div class="page active" id="page-schedule">
+<div class="page" id="page-schedule">
   <div class="date-bar" id="dateBar"></div>
   <div class="tl" id="timeline"></div>
 </div>
@@ -725,18 +806,74 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
   </div>
 </div>
 
-<!-- ════════ INFO ════════ -->
-<div class="page" id="page-info">
+<!-- ════════ INFO (公告) ════════ -->
+<div class="page active" id="page-info">
   <div class="itabs">
-    <button class="itb active" onclick="switchInfoTab('notes',this)">📌 注意事項</button>
+    <button class="itb active" onclick="switchInfoTab('pact',this)">🕊️ 旅遊公約</button>
+    <button class="itb" onclick="switchInfoTab('notes',this)">📌 注意事項</button>
     <button class="itb" onclick="switchInfoTab('emergency',this)">🆘 緊急聯絡</button>
     <button class="itb" onclick="switchInfoTab('maps',this)">🚌 乘車資訊</button>
     <button class="itb" onclick="switchInfoTab('coupons',this)">🎟 優惠卷</button>
-    <button class="itb" onclick="switchInfoTab('budget',this)">💴 記帳</button>
+  </div>
+
+  <!-- PACT TAB -->
+  <div class="ipanel active" id="panel-pact">
+    <div style="display:flex;flex-direction:column;gap:.6rem">
+
+      <!-- Header -->
+      <div style="background:linear-gradient(135deg,var(--deep) 0%,var(--deep2) 100%);border-radius:14px;padding:1.3rem 1.1rem 1.2rem;text-align:center;position:relative;overflow:hidden;box-shadow:var(--sh-md)">
+        <div style="position:absolute;top:-18px;right:-18px;width:80px;height:80px;border-radius:50%;background:rgba(253,214,146,.08)"></div>
+        <div style="position:absolute;bottom:-12px;left:-12px;width:55px;height:55px;border-radius:50%;background:rgba(253,214,146,.06)"></div>
+        <div style="font-size:1.8rem;margin-bottom:.4rem">🕊️</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:1.15rem;font-weight:700;color:#fff;letter-spacing:.12em;margin-bottom:.18rem">旅伴小公約</div>
+        <div style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--bg-warm);letter-spacing:.22em">Happiness First</div>
+      </div>
+
+      <div class="pact-item">
+        <div class="pact-num">1</div>
+        <div class="pact-body">
+          <div class="pact-title">行程不是作業 💤</div>
+          <div class="pact-text">是參考，不是清單。累了就回飯店休息，<strong>睡飽吃好最重要。</strong></div>
+        </div>
+      </div>
+
+      <div class="pact-item">
+        <div class="pact-num">2</div>
+        <div class="pact-body">
+          <div class="pact-title">預約不能遲到 ⏰</div>
+          <div class="pact-text">訂好的餐廳與行程無法更改，這部分請大家<strong>務必準時集合。</strong></div>
+        </div>
+      </div>
+
+      <div class="pact-item">
+        <div class="pact-num">3</div>
+        <div class="pact-body">
+          <div class="pact-title">隨時開啟支線 🍦</div>
+          <div class="pact-text">路上看到喜歡的店、想吃的甜點，只要時間允許，<strong>我們就去！</strong></div>
+        </div>
+      </div>
+
+      <div class="pact-item">
+        <div class="pact-num">4</div>
+        <div class="pact-body">
+          <div class="pact-title">勇敢說出需求 📢</div>
+          <div class="pact-text">腳痠、餓了、想上廁所請直接說。<strong>不憋屈，先照顧好身體。</strong></div>
+        </div>
+      </div>
+
+      <div class="pact-item" style="border-color:var(--coral);background:rgba(236,115,87,.05)">
+        <div class="pact-num" style="background:var(--coral)">5</div>
+        <div class="pact-body">
+          <div class="pact-title" style="color:var(--coral2)">好心情最重要 ✨</div>
+          <div class="pact-text">迷路是冒險，下雨是風景。<strong>保持耐心，在一起玩最開心。</strong></div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- NOTES -->
-  <div class="ipanel active" id="panel-notes">
+  <div class="ipanel" id="panel-notes">
 
     <!-- 購物退稅 -->
     <div class="notes-card">
@@ -1354,6 +1491,8 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
     <div class="ig" id="cpnGrid"></div>
   </div>
 
+</div>
+
   <!-- EMERGENCY -->
   <div class="ipanel" id="panel-emergency">
 
@@ -1422,30 +1561,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
     </div>
   </div>
 
-  <!-- BUDGET -->
-  <div class="ipanel" id="panel-budget">
-    <div class="bh" id="budgetSummary"></div>
-    <div class="ef">
-      <h4>新增支出</h4>
-      <div class="fr">
-        <input type="text" class="fi" id="expName" placeholder="項目名稱">
-        <input type="number" class="fi" id="expAmt" placeholder="¥ 金額" style="max-width:95px">
-      </div>
-      <div class="fr">
-        <select class="fsel" id="expCat">
-          <option value="food">🍜 餐飲</option>
-          <option value="transport">🚃 交通</option>
-          <option value="sight">🏯 景點</option>
-          <option value="shop">🛍 購物</option>
-          <option value="hotel">🏨 住宿</option>
-          <option value="other">📦 其他</option>
-        </select>
-        <input type="date" class="fi" id="expDate">
-      </div>
-      <button class="fsub" onclick="addExpense()">記帳</button>
-    </div>
-    <div class="exl" id="expenseList"></div>
-  </div>
 </div>
 
 <!-- ════════ PREP ════════ -->
@@ -1465,11 +1580,15 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
     <div id="todoList"></div>
   </div>
   <div class="sp pw" id="pr-shop">
-    <div class="ir">
-      <input type="text" id="shopInput" placeholder="新增購物項目…" onkeypress="if(event.key==='Enter')addShop()">
-      <button onclick="addShop()">＋</button>
-    </div>
-    <div id="shopList"></div>
+
+    <!-- 新增商品按鈕 -->
+    <button class="shop-add-btn" onclick="openShopModal()">＋ 新增商品</button>
+
+    <!-- 商品卡片 grid -->
+    <div class="shop-grid" id="shopGrid"></div>
+
+    <div id="shopEmpty" style="text-align:center;color:var(--ink3);font-size:.75rem;padding:1.5rem 0">尚無購物項目，點擊「＋ 新增商品」開始新增</div>
+
   </div>
   <div class="sp pw" id="pr-pack">
     <div class="ph">
@@ -1481,12 +1600,12 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
   </div>
 </div>
 
-<!-- NAV: 資訊 > 預訂 > 行程 > 旅行準備 -->
+<!-- NAV: 公告 > 預訂 > 行程 > 旅行準備 -->
 <nav class="bot-nav">
-  <button class="nb" onclick="switchPage('info',this)"><div class="nb-ic">ℹ</div><div class="nb-lb">資訊</div></button>
+  <button class="nb active" onclick="switchPage('info',this)"><div class="nb-ic">📢</div><div class="nb-lb">公告</div></button>
   <button class="nb" onclick="switchPage('bookings',this)"><div class="nb-ic">✈</div><div class="nb-lb">預訂</div></button>
-  <button class="nb active" onclick="switchPage('schedule',this)"><div class="nb-ic">📅</div><div class="nb-lb">行程</div></button>
-  <button class="nb" onclick="switchPage('prep',this)"><div class="nb-ic">🎒</div><div class="nb-lb">旅行準備</div></button>
+  <button class="nb" onclick="switchPage('schedule',this)"><div class="nb-ic">📅</div><div class="nb-lb">行程</div></button>
+  <button class="nb" onclick="switchPage('prep',this)"><div class="nb-ic">🎒</div><div class="nb-lb">準備</div></button>
 </nav>
 
 <script>
@@ -1545,14 +1664,11 @@ const DAYS=['5/14','5/15','5/16','5/17','5/18','5/19'];
 const DOW={'5/14':'木','5/15':'金','5/16':'土','5/17':'日','5/18':'月','5/19':'火'};
 const CATL={sight:'景點',food:'美食',transport:'交通',hotel:'住宿',shop:'購物'};
 const CATIC={sight:'🏯',food:'🍜',transport:'🚃',hotel:'🏨',shop:'🛍'};
-const EXPC={food:'🍜 餐飲',transport:'🚃 交通',sight:'🏯 景點',shop:'🛍 購物',hotel:'🏨 住宿',other:'📦 其他'};
-const EXCO={food:'#EC7357',transport:'#4a7aaa',sight:'#754F44',shop:'#b07820',hotel:'#7a5a9a',other:'#9a7a6e'};
 
 let curDay=DAYS[0];
 let todos=JSON.parse(localStorage.getItem('jp26t')||'[]');
 let shops=JSON.parse(localStorage.getItem('jp26s')||'[]');
 let checks=JSON.parse(localStorage.getItem('jp26c')||'{}');
-let expenses=JSON.parse(localStorage.getItem('jp26e')||'[]');
 let contacts=JSON.parse(localStorage.getItem('jp26cc')||'[]');
 let addrCur={};
 
@@ -1561,7 +1677,7 @@ window.addEventListener('load',()=>{
   const d=new Date();const dw=['日','一','二','三','四','五','六'];
   document.getElementById('headerDate').innerHTML=`${d.getMonth()+1}/${d.getDate()}<br>(${dw[d.getDay()]})`;
   buildDateBar();renderSchedule();
-  buildChecklist();renderTodos();renderShops();renderExpenses();renderContacts();
+  buildChecklist();renderTodos();renderShopGrid();renderContacts();
   document.getElementById('expDate').value=d.toISOString().split('T')[0];
 });
 
@@ -1644,6 +1760,22 @@ function handleUpload(input,gridId){
   });
 }
 
+function handleShopUpload(input){
+  const grid=document.getElementById('shopImgGrid');
+  Array.from(input.files).forEach(f=>{
+    const url=URL.createObjectURL(f);
+    const item=document.createElement('div');item.className='ii';
+    // Show delete button on each item
+    item.innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover">
+      <div class="io">
+        <div class="in" contenteditable="true" placeholder="備註…"></div>
+      </div>
+      <button onclick="this.parentElement.remove()" style="position:absolute;top:5px;right:5px;background:rgba(46,30,24,.65);border:none;border-radius:50%;width:20px;height:20px;color:#fff;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">✕</button>`;
+    item.style.position='relative';
+    grid.appendChild(item);
+  });
+}
+
 function addContact(){
   const n=document.getElementById('cName').value.trim();
   const p=document.getElementById('cNum').value.trim();
@@ -1664,47 +1796,6 @@ function renderContacts(){
         <button onclick="delContact(${i})" style="background:none;border:none;color:var(--coral);font-size:.6rem;cursor:pointer">刪除</button>
       </div>
     </div>`).join('');
-}
-
-function addExpense(){
-  const n=document.getElementById('expName').value.trim();
-  const a=parseFloat(document.getElementById('expAmt').value);
-  const c=document.getElementById('expCat').value;
-  const d=document.getElementById('expDate').value;
-  if(!n||!a)return showToast('請填寫名稱和金額');
-  expenses.push({name:n,amount:a,cat:c,date:d});
-  localStorage.setItem('jp26e',JSON.stringify(expenses));
-  document.getElementById('expName').value='';document.getElementById('expAmt').value='';
-  renderExpenses();showToast('已記帳 ¥'+a.toLocaleString());
-}
-function delExpense(i){expenses.splice(i,1);localStorage.setItem('jp26e',JSON.stringify(expenses));renderExpenses();}
-function renderExpenses(){
-  const tot=expenses.reduce((s,e)=>s+e.amount,0);
-  const byc={};expenses.forEach(e=>{byc[e.cat]=(byc[e.cat]||0)+e.amount;});
-  const mx=Math.max(...Object.values(byc),1);
-  document.getElementById('budgetSummary').innerHTML=`
-    <div class="bh-lb">TOTAL SPENT</div>
-    <div class="bh-tot">¥${tot.toLocaleString()}</div>
-    <div class="bh-ct">${expenses.length} 筆消費紀錄</div>
-    <div class="bh-bars">${Object.entries(byc).map(([cat,amt])=>`
-      <div class="bh-br">
-        <div class="bh-bl">${EXPC[cat]?.slice(2)||cat}</div>
-        <div class="bh-bt"><div class="bh-bf" style="width:${(amt/mx*100).toFixed(0)}%;background:${EXCO[cat]||'#9a7a6e'}"></div></div>
-        <div class="bh-ba">¥${amt.toLocaleString()}</div>
-      </div>`).join('')}
-    </div>`;
-  document.getElementById('expenseList').innerHTML=[...expenses].reverse().map((e,ri)=>{
-    const i=expenses.length-1-ri;
-    return`<div class="exi">
-      <div class="exl2">
-        <div class="exd" style="background:${EXCO[e.cat]||'#9a7a6e'}"></div>
-        <div><div class="exn">${e.name}</div><div class="exdt">${e.date} · ${EXPC[e.cat]?.slice(2)||e.cat}</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:.26rem">
-        <div class="exa">¥${e.amount.toLocaleString()}</div>
-        <button class="exdel" onclick="delExpense(${i})">✕</button>
-      </div>
-    </div>`;}).join('');
 }
 
 const CL=[
@@ -1802,17 +1893,145 @@ function renderTodos(){
     </div>`).join('')||'<div style="text-align:center;color:var(--ink3);font-size:.75rem;padding:1rem">尚無待辦事項</div>';
 }
 
-function addShop(){const v=document.getElementById('shopInput').value.trim();if(!v)return;shops.push({text:v,done:false});localStorage.setItem('jp26s',JSON.stringify(shops));document.getElementById('shopInput').value='';renderShops();}
-function toggleShop(i){shops[i].done=!shops[i].done;localStorage.setItem('jp26s',JSON.stringify(shops));renderShops();}
-function delShop(i){shops.splice(i,1);localStorage.setItem('jp26s',JSON.stringify(shops));renderShops();}
-function renderShops(){
-  document.getElementById('shopList').innerHTML=shops.map((s,i)=>`
-    <div class="ti ${s.done?'done':''}">
-      <div class="cb" onclick="toggleShop(${i})" style="${s.done?'background:var(--coral);border-color:var(--coral);color:#fff;width:17px;height:17px':''}">${s.done?'✓':''}</div>
-      <div class="tl2" onclick="toggleShop(${i})">${s.text}</div>
-      <button class="tdl" onclick="delShop(${i})">✕</button>
-    </div>`).join('')||'<div style="text-align:center;color:var(--ink3);font-size:.75rem;padding:1rem">尚無購物項目</div>';
+/* ── SHOP CARD SYSTEM ── */
+let shopItems = JSON.parse(localStorage.getItem('jp26si')||'[]');
+let shopEditIdx = -1;
+let shopImgData = '';
+let shopSelectedCat = '藥妝';
+
+function openShopModal(idx=-1){
+  shopEditIdx = idx;
+  shopImgData = '';
+  document.getElementById('shopModalTitle').textContent = idx>=0 ? '編輯商品' : '新增商品';
+  // reset fields
+  document.getElementById('shopItemName').value = '';
+  document.getElementById('shopItemQty').value = 1;
+  document.getElementById('shopItemBuyer').value = '';
+  document.getElementById('shopItemNote').value = '';
+  document.getElementById('shopImgPreview').style.display = 'none';
+  document.getElementById('shopImgZone').style.display = 'block';
+  shopSelectedCat = '藥妝';
+  document.querySelectorAll('.shop-cat-btn').forEach(b=>b.classList.toggle('active', b.dataset.cat==='藥妝'));
+  // fill if editing
+  if(idx>=0){
+    const s = shopItems[idx];
+    document.getElementById('shopItemName').value = s.name||'';
+    document.getElementById('shopItemQty').value = s.qty||1;
+    document.getElementById('shopItemBuyer').value = s.buyer||'';
+    document.getElementById('shopItemNote').value = s.note||'';
+    shopSelectedCat = s.cat||'藥妝';
+    document.querySelectorAll('.shop-cat-btn').forEach(b=>b.classList.toggle('active', b.dataset.cat===shopSelectedCat));
+    if(s.img){
+      shopImgData = s.img;
+      document.getElementById('shopImgEl').src = s.img;
+      document.getElementById('shopImgPreview').style.display = 'block';
+      document.getElementById('shopImgZone').style.display = 'none';
+    }
+  }
+  document.getElementById('shopModal').classList.add('show');
 }
+function closeShopModal(e){ if(e.target===document.getElementById('shopModal')) closeShopModalDirect(); }
+function closeShopModalDirect(){ document.getElementById('shopModal').classList.remove('show'); }
+
+function previewShopImg(input){
+  const f = input.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    shopImgData = e.target.result;
+    document.getElementById('shopImgEl').src = shopImgData;
+    document.getElementById('shopImgPreview').style.display = 'block';
+    document.getElementById('shopImgZone').style.display = 'none';
+  };
+  r.readAsDataURL(f);
+}
+function clearShopImg(){
+  shopImgData = '';
+  document.getElementById('shopImgPreview').style.display = 'none';
+  document.getElementById('shopImgZone').style.display = 'block';
+  document.getElementById('shopModalImg').value = '';
+}
+function adjQty(d){
+  const el = document.getElementById('shopItemQty');
+  el.value = Math.max(1, parseInt(el.value||1) + d);
+}
+// Cat button toggle
+document.addEventListener('click', e=>{
+  if(e.target.classList.contains('shop-cat-btn')){
+    document.querySelectorAll('.shop-cat-btn').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    shopSelectedCat = e.target.dataset.cat;
+  }
+});
+
+function saveShopItem(){
+  const name = document.getElementById('shopItemName').value.trim();
+  if(!name) return showToast('請填寫商品名稱');
+  const item = {
+    name,
+    cat: shopSelectedCat,
+    qty: parseInt(document.getElementById('shopItemQty').value)||1,
+    buyer: document.getElementById('shopItemBuyer').value.trim(),
+    note: document.getElementById('shopItemNote').value.trim(),
+    img: shopImgData,
+    done: false
+  };
+  if(shopEditIdx>=0){ shopItems[shopEditIdx]=item; }
+  else { shopItems.push(item); }
+  localStorage.setItem('jp26si', JSON.stringify(shopItems));
+  closeShopModalDirect();
+  renderShopGrid();
+  showToast(shopEditIdx>=0 ? '已更新商品' : '已新增商品');
+}
+function delShopItem(i){
+  shopItems.splice(i,1);
+  localStorage.setItem('jp26si', JSON.stringify(shopItems));
+  renderShopGrid();
+}
+function toggleShopDone(i){
+  shopItems[i].done = !shopItems[i].done;
+  localStorage.setItem('jp26si', JSON.stringify(shopItems));
+  renderShopGrid();
+}
+
+const SHOP_CAT_COLORS = {
+  '藥妝':'#7a5a9a','保養':'#2d5c3a','零食':'#a86020','伴手禮':'#EC7357',
+  '電器':'#245490','服飾':'#754F44','其他':'#9a7a6e'
+};
+
+function renderShopGrid(){
+  const grid = document.getElementById('shopGrid');
+  const empty = document.getElementById('shopEmpty');
+  if(!shopItems.length){ grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+  grid.innerHTML = shopItems.map((s,i)=>`
+    <div class="shop-card ${s.done?'shop-done':''}">
+      ${s.img
+        ? `<div class="shop-img" onclick="openShopModal(${i})"><img src="${s.img}" style="width:100%;height:100%;object-fit:cover"></div>`
+        : `<div class="shop-img shop-img-empty" onclick="openShopModal(${i})"><span>🛍</span></div>`
+      }
+      <div class="shop-card-body">
+        <div class="shop-card-top">
+          <div class="shop-cat-badge" style="background:${SHOP_CAT_COLORS[s.cat]||'#9a7a6e'}">${s.cat}</div>
+          <div class="shop-card-actions">
+            <button class="shop-edit-btn" onclick="openShopModal(${i})">✏️</button>
+            <button class="shop-del-btn" onclick="delShopItem(${i})">✕</button>
+          </div>
+        </div>
+        <div class="shop-card-name ${s.done?'shop-name-done':''}" onclick="toggleShopDone(${i})">${s.name}</div>
+        <div class="shop-card-meta">
+          <span class="shop-meta-chip">×${s.qty}</span>
+          ${s.buyer ? `<span class="shop-meta-chip shop-buyer-chip">👤 ${s.buyer}</span>` : ''}
+        </div>
+        ${s.note ? `<div class="shop-note">${s.note}</div>` : ''}
+        ${s.done ? '<div class="shop-done-badge">✓ 已購買</div>' : ''}
+      </div>
+    </div>`).join('');
+}
+
+// legacy stubs (kept to avoid errors if called)
+function addShop(){}
+function toggleShop(){}
+function delShop(){}
 
 function showToast(msg){
   const t=document.getElementById('toast');
