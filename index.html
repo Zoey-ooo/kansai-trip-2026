@@ -813,7 +813,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
     <button class="itb" onclick="switchInfoTab('notes',this)">📌 注意事項</button>
     <button class="itb" onclick="switchInfoTab('emergency',this)">🆘 緊急聯絡</button>
     <button class="itb" onclick="switchInfoTab('maps',this)">🚌 乘車資訊</button>
-    <button class="itb" onclick="switchInfoTab('coupons',this)">🎟 優惠卷</button>
   </div>
 
   <!-- PACT TAB -->
@@ -1480,15 +1479,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
       </div>
     </div>
 
-  </div>
-
-    <!-- COUPONS -->
-  <div class="ipanel" id="panel-coupons">
-    <div class="upz" onclick="document.getElementById('cpnUp').click()">
-      <input type="file" id="cpnUp" multiple accept="image/*" style="display:none" onchange="handleUpload(this,'cpnGrid')">
-      <div class="upz-ic">🎟</div><p>點擊上傳優惠卷</p><small>可多張上傳・點擊備註欄可編輯</small>
-    </div>
-    <div class="ig" id="cpnGrid"></div>
   </div>
 
 </div>
