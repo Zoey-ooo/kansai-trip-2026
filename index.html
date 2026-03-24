@@ -398,6 +398,21 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 .bus-step-title{font-family:'Shippori Mincho',serif;font-size:.82rem;font-weight:700;color:var(--deep);margin-bottom:.25rem}
 .bus-step-body{font-size:.71rem;color:var(--ink2);line-height:1.58}
 
+/* ── INLINE ADDRESS (schedule card) ── */
+.ev-addr-inline{margin-top:.42rem;background:var(--deep);border-radius:8px;padding:.52rem .7rem;cursor:pointer;transition:opacity .15s;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.ev-addr-inline:active{opacity:.75}
+.ev-addr-jp{font-family:'Noto Serif JP',serif;font-size:.72rem;color:rgba(255,255,255,.9);line-height:1.5;flex:1}
+.ev-addr-hint{font-size:.58rem;color:rgba(253,214,146,.7);white-space:nowrap;font-family:'Space Mono',monospace;flex-shrink:0}
+
+/* ── DRIVER LARGE CARD ── */
+.addr-driver-card{background:var(--bg-card);border-radius:20px 20px 0 0;padding:1.2rem 1.3rem 2.8rem;width:100%;max-width:480px;transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.ao.show .addr-driver-card{transform:translateY(0)}
+.addr-driver-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 1.2rem}
+.addr-driver-name{font-family:'Shippori Mincho',serif;font-size:1rem;font-weight:700;color:var(--deep);margin-bottom:.2rem;text-align:center}
+.addr-driver-label{font-size:.6rem;color:var(--ink3);letter-spacing:.14em;text-align:center;margin-bottom:.9rem}
+.addr-driver-addr{font-family:'Noto Serif JP',serif;font-size:1.55rem;font-weight:700;color:var(--ink);line-height:1.65;text-align:center;background:var(--bg-soft);border-radius:12px;padding:1.2rem 1rem;margin-bottom:1rem;border:1.5px solid #d8dc90;word-break:break-all}
+.addr-driver-btns{display:flex;gap:.5rem;margin-bottom:.6rem}
+
 /* ── TOAST ── */
 .toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--deep);color:var(--bg-warm);padding:.5rem 1.05rem;border-radius:20px;font-size:.72rem;font-family:'Noto Sans JP',sans-serif;opacity:0;transition:all .24s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:var(--sh-md)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -484,19 +499,18 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
   </div>
 </div>
 
-<!-- ADDR OVERLAY (for schedule page) -->
+<!-- ADDR OVERLAY (for schedule page) - LARGE DRIVER CARD -->
 <div class="ao" id="addrOverlay" onclick="closeAddrCard(event)">
-  <div class="as">
-    <div class="as-h"></div>
-    <div class="as-nm" id="addrTitle"></div>
-    <div class="as-jp" id="addrJp"></div>
-    <div class="as-lb">日文地址 · 可給司機看</div>
-    <div class="as-val" id="addrJpAddr"></div>
-    <div class="as-bts">
-      <a id="addrMapLink" href="#" target="_blank" class="as-bt p">🗺 Google Maps</a>
-      <button class="as-bt s" onclick="copyAddr()">📋 複製地址</button>
+  <div class="addr-driver-card">
+    <div class="addr-driver-handle"></div>
+    <div class="addr-driver-name" id="addrTitle"></div>
+    <div class="addr-driver-label">📍 日文地址・住所</div>
+    <div class="addr-driver-addr" id="addrJpAddr"></div>
+    <div class="addr-driver-btns">
+      <a id="addrMapLink" href="#" target="_blank" class="as-bt p" style="flex:1;text-align:center;padding:.65rem;font-size:.82rem">🗺 Google Maps</a>
+      <button class="as-bt s" onclick="copyAddr()" style="flex:1;padding:.65rem;font-size:.82rem">📋 複製</button>
     </div>
-    <button class="as-cl" onclick="closeAddrCardDirect()">關閉</button>
+    <button class="as-cl" onclick="closeAddrCardDirect()" style="font-size:.82rem;padding:.7rem">關閉</button>
   </div>
 </div>
 
@@ -1700,8 +1714,13 @@ function renderSchedule(){
         <div class="ev-note">${ev.note}</div>
         <div class="ev-acts">
           ${ev.map?`<a href="${ev.map}" target="_blank" class="btn-map">🗺 導航</a>`:''}
-          ${ev.addr?`<button class="btn-addr" onclick="showAddr(event,'${ev.name.replace(/'/g,"\\'")}','${ev.nameJp.replace(/'/g,"\\'")}','${ev.addr.replace(/'/g,"\\'")}','${ev.map}')">📋 地址卡</button>`:''}
         </div>
+        ${ev.addr?`
+        <div class="ev-addr-inline" onclick="showAddr(event,'${ev.name.replace(/'/g,"\\'")}','${ev.nameJp.replace(/'/g,"\\'")}','${ev.addr.replace(/'/g,"\\'")}','${ev.map}')">
+          <div class="ev-addr-jp">${ev.addr}</div>
+          <div class="ev-addr-hint">點擊放大 →</div>
+        </div>`:''}
+
       </div>
     </div>`).join('');
 }
