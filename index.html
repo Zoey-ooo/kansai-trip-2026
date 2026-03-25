@@ -402,10 +402,6 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 .addr-driver-card{background:#fff;border-radius:20px 20px 0 0;padding:1.1rem 1.3rem 2.5rem;width:100%;max-width:480px;transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
 .ao.show .addr-driver-card{transform:translateY(0)}
 .addr-driver-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 1rem}
-.addr-play-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.addr-play-label{font-family:'Noto Sans JP',sans-serif;font-size:.95rem;font-weight:500;color:var(--ink)}
-.addr-play-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border2);background:#fff;color:var(--ink3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.addr-play-btn:active{background:var(--bg-soft)}
 .addr-row{display:flex;gap:.9rem;align-items:flex-start;margin-bottom:.9rem}
 .addr-row-icon{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.15rem}
 .addr-icon-sound{color:#4a9a8a}
@@ -506,20 +502,10 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
   <div class="addr-driver-card">
     <div class="addr-driver-handle"></div>
 
-    <!-- 播放日文 header -->
-    <div class="addr-play-row">
-      <span class="addr-play-label">播放日文</span>
-      <button class="addr-play-btn" onclick="speakAddr()" title="播放日文發音">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="5 3 19 12 5 21 5 3"/>
-        </svg>
-      </button>
-    </div>
-
     <!-- 名稱 row -->
     <div class="addr-row">
       <div class="addr-row-icon addr-icon-sound">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       </div>
       <div>
         <div class="addr-row-label">名稱</div>
@@ -1756,15 +1742,6 @@ function renderSchedule(){
         </div>
       </div>
     </div>`).join('');
-}
-
-function speakAddr(){
-  const addr = document.getElementById('addrJpAddr').textContent;
-  if(!addr || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(addr);
-  u.lang = 'ja-JP'; u.rate = 0.85; u.pitch = 1;
-  window.speechSynthesis.speak(u);
 }
 
 // 事件委派：處理地址卡片按鈕點擊
