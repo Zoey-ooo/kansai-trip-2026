@@ -524,6 +524,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
       <div>
         <div class="addr-row-label">名稱</div>
         <div class="addr-row-name" id="addrTitle"></div>
+        <div class="addr-row-label" id="addrJp" style="margin-top:.25rem;font-family:'Noto Serif JP',serif;font-size:.78rem;color:var(--ink3)"></div>
       </div>
     </div>
 
@@ -1747,7 +1748,11 @@ function renderSchedule(){
         <div class="ev-note">${ev.note}</div>
         <div class="ev-acts">
           ${ev.map?`<a href="${ev.map}" target="_blank" class="btn-map">🗺 導航</a>`:''}
-          ${ev.addr?`<button class="btn-addr" onclick="showAddr(event,'${ev.name.replace(/'/g,"\\'")}','${ev.nameJp.replace(/'/g,"\\'")}','${ev.addr.replace(/'/g,"\\'")}','${ev.map}')">📋 地址卡</button>`:''}
+          ${ev.addr?`<button class="btn-addr addr-card-btn"
+            data-name="${ev.name.replace(/"/g,'&quot;')}"
+            data-namejp="${ev.nameJp.replace(/"/g,'&quot;')}"
+            data-addr="${ev.addr.replace(/"/g,'&quot;')}"
+            data-map="${(ev.map||'').replace(/"/g,'&quot;')}">📋 地址卡</button>`:''}
         </div>
       </div>
     </div>`).join('');
@@ -1762,8 +1767,19 @@ function speakAddr(){
   window.speechSynthesis.speak(u);
 }
 
-function showAddr(e,n,j,a,m){
+// 事件委派：處理地址卡片按鈕點擊
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.addr-card-btn');
+  if(!btn) return;
   e.stopPropagation();
+  const n = btn.dataset.name;
+  const j = btn.dataset.namejp;
+  const a = btn.dataset.addr;
+  const m = btn.dataset.map;
+  showAddr(n, j, a, m);
+});
+
+function showAddr(n,j,a,m){
   addrCur={n,j,a,m};
   document.getElementById('addrTitle').textContent=n;
   document.getElementById('addrJp').textContent=j;
