@@ -364,6 +364,64 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 .shop-cat-btn{font-size:.65rem;padding:.3rem .65rem;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all .15s}
 .shop-cat-btn.active{background:var(--deep);color:var(--bg-warm);border-color:var(--deep)}
 
+/* ── FORM SAVE / CANCEL (iPhone-safe) ── */
+.frm-action-zone{
+  display:flex;flex-direction:column;gap:.55rem;
+  padding-top:.4rem;
+  /* sticky footer inside the scrollable modal */
+  position:sticky;bottom:0;
+  background:var(--bg-card);
+  padding-bottom:env(safe-area-inset-bottom, .5rem);
+  border-top:1px solid var(--border);
+  margin:0 -1rem;       /* bleed to modal edge */
+  padding-left:1rem;padding-right:1rem;
+  margin-top:.5rem;
+}
+/* big primary save button */
+.frm-sub{
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  width:100%;
+  min-height:54px;          /* Apple HIG: 44pt minimum, we go larger */
+  padding:.9rem 1.2rem;
+  border:none;border-radius:14px;
+  background:var(--coral);
+  color:#fff;
+  font-family:'Shippori Mincho',serif;
+  font-size:1rem;font-weight:700;
+  letter-spacing:.06em;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(236,115,87,.45);
+  transition:transform .12s, box-shadow .12s, background .15s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.frm-sub:active{
+  transform:scale(.97);
+  box-shadow:0 2px 6px rgba(236,115,87,.3);
+  background:var(--coral2);
+}
+.frm-sub::before{content:'✓ ';font-size:1rem}
+
+/* ghost cancel — visually quiet, still tap-safe 44pt */
+.frm-cancel{
+  display:block;
+  width:100%;
+  min-height:44px;
+  padding:.6rem;
+  border:1.5px solid var(--border2);
+  border-radius:12px;
+  background:transparent;
+  color:var(--ink3);
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:.8rem;
+  cursor:pointer;
+  text-align:center;
+  transition:background .15s, color .15s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.frm-cancel:active{background:var(--border);color:var(--ink)}
+
 /* ── PACT ── */
 .pact-item{display:flex;gap:.75rem;align-items:flex-start;background:var(--bg-card);border-radius:13px;padding:.85rem 1rem;box-shadow:var(--sh-sm);border:1px solid var(--border)}
 .pact-num{width:26px;height:26px;border-radius:50%;background:var(--deep);color:var(--bg-warm);font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.08rem}
@@ -432,7 +490,7 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
 
 <!-- SHOP ITEM MODAL -->
 <div class="ao" id="shopModal" onclick="closeShopModal(event)">
-  <div class="as" style="max-height:90vh;overflow-y:auto">
+  <div class="as" style="max-height:90vh;overflow-y:auto;padding-bottom:0">
     <div class="as-h"></div>
     <div style="font-family:'Shippori Mincho',serif;font-size:1rem;font-weight:700;color:var(--deep);margin-bottom:1rem" id="shopModalTitle">新增商品</div>
 
@@ -492,8 +550,11 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink)
       <textarea id="shopItemNote" class="fi" placeholder="品牌、規格、購買地點…" style="width:100%;min-height:60px;resize:none;line-height:1.55"></textarea>
     </div>
 
-    <button class="frm-sub" onclick="saveShopItem()" style="margin-bottom:.5rem">儲存</button>
-    <button class="as-cl" onclick="closeShopModalDirect()">取消</button>
+    <!-- iPhone-safe action zone: big Save + quiet Cancel -->
+    <div class="frm-action-zone">
+      <button class="frm-sub" onclick="saveShopItem()">儲存</button>
+      <button class="frm-cancel" onclick="closeShopModalDirect()">取消</button>
+    </div>
   </div>
 </div>
 
